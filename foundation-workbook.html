@@ -489,7 +489,7 @@ function inMapFor(m,p,a){
    if(p.moonAmb)t=`What draws you sits in <em>${p.venus}</em> — ${W_VENUS[p.venus]}. What settles you sits in either <em>${p.moonAmb[0]}</em> or <em>${p.moonAmb[1]}</em>; your birth time would settle which.`;
    else if(p.moon===p.venus)t=`Both what draws you and what settles you sit in <em>${p.venus}</em> — ${W_VENUS[p.venus]}. When those two land in the same place, the heart has less to hide behind: what you want and what soothes you are the one thing.`;
    else t=`What draws you sits in <em>${p.venus}</em> — ${W_VENUS[p.venus]}. What settles you sits in <em>${p.moon}</em> — ${W_MOON[p.moon]}.`;
-   if(a&&a.layer)t+=` Your answers pointed at the <em>${a.layer}</em> layer — ${a.layerRole} — as the one asking to be worked.`;
+   if(a&&a.layer)t+=` Your answers pointed at <em>${a.layer}</em> — ${a.layerRole} — as the layer asking to be worked.`;
    return {t,q:a&&a.layerAsks?a.layerAsks:`Is the heart closed here, or simply tired? They ask for different things.`};}
   case 'orange':{
    if(!S('leadEl'))return null;
@@ -643,7 +643,7 @@ function loadPayload(){
 
 function fillCarry(p,a){
  if(!a){$('carryIn').style.display='none';return;}
- $('carryP').innerHTML=`Your onboarding answers pointed at <em>${a.pattern}</em> as the pattern running loudest, and at the <em>${a.layer}</em> layer — ${a.layerRole} — as the one asking to be worked. The counter you're practising is <em>${a.counter}</em>.`
+ $('carryP').innerHTML=`Your onboarding answers pointed at <em>${a.pattern}</em> as the pattern running loudest, and at <em>${a.layer}</em> — ${a.layerRole} — as the layer asking to be worked. The counter you're practising is <em>${a.counter}</em>.`
   +` Both of those are met properly inside the wheel: the pyramid layer at Green, the four at Red. Until then, all you have to do is notice.`;
  $('carryQ').textContent=a.asks;
  $('carryIn').style.display='block';}

@@ -244,6 +244,34 @@ a{color:var(--gold-deep)}
 .horseman-note{font-family:var(--serif);font-style:italic;color:var(--gold-deep);margin-top:15px;
   border-top:1px solid var(--line-soft);padding-top:13px}
 .q-note{color:var(--ivory-faint);font-size:.88rem;font-style:italic;margin:-8px 0 13px}
+/* p has a max-width, so inside a centred block it hugs the left edge and only
+   the text inside it centres. Auto margins put the block itself in the middle. */
+.footer p,#closing p,#closing .card p{margin-left:auto;margin-right:auto}
+/* what the community gives you — the welcome list */
+.offer{list-style:none;margin:8px 0 0;padding:0}
+.offer li{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:13px 0;
+  border-bottom:1px solid var(--line-soft);align-items:baseline}
+.offer li span{font-family:var(--serif);font-size:1.12rem;color:var(--ink)}
+.offer li p{color:var(--ivory-dim);font-size:.95rem;line-height:1.65}
+@media(max-width:560px){.offer li{grid-template-columns:1fr;gap:3px}}
+.offer-note{font-size:.93rem;color:var(--ivory-faint);margin-top:16px;line-height:1.7}
+/* part four · the nine-point spread between two named poles */
+.spread{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
+.spread .pole{font-size:.8rem;font-style:italic;color:var(--ivory-faint);line-height:1.35;max-width:11ch}
+.spread .pole.hi{text-align:right}
+.nine{display:grid;grid-template-columns:repeat(9,1fr);gap:5px}
+.nine button{border:1px solid var(--stone);background:#fff;border-radius:7px;padding:12px 0;
+  font-family:var(--sans);font-size:.82rem;font-weight:500;color:var(--ivory-faint);cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s}
+.nine button:hover{border-color:var(--ink)}
+.nine button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+@media(max-width:620px){
+  .spread{grid-template-columns:1fr;gap:7px}
+  .spread .pole{max-width:none;font-size:.78rem}
+  .spread .pole.hi{text-align:right}
+  .nine{order:2;gap:4px}
+  .nine button{padding:14px 0;font-size:.78rem}
+}
 /* ===== the three questions — who · what · where ===== */
 .map-caption{text-align:center;color:var(--ivory-faint);font-size:.92rem;max-width:60ch;
   margin:2px auto 8px;font-style:italic;line-height:1.7}
@@ -321,12 +349,33 @@ a{color:var(--gold-deep)}
     <span class="mark" id="heroMark" aria-hidden="true"></span>
     <span class="wordmark"><span class="she-is">SHE IS</span><span class="sol">SOL</span></span>
   </div>
-  <span class="kicker" style="display:block;margin-bottom:18px">Welcome in · your first hour</span>
-  <h1>Who am I?</h1>
+  <span class="kicker" style="display:block;margin-bottom:18px">Welcome in</span>
+  <h1>Who are you?</h1>
   <p style="margin-top:22px">Two things, read together. Your birth details give us the structure — <em>how you are built.</em> The questions give us the state you are actually in right now. Your Sol Map is where those two meet.</p>
   <p><em>There is no score at the end of this, and no type.</em> Nothing is ranked, nothing is graded, and nothing is compared to anybody else. Some of the questions will be uncomfortable to answer honestly — that is the work, not a side effect of it.</p>
-  <p>About twelve minutes, in one sitting. Everything stays on this device.</p>
+  <p>About fifteen minutes, in one sitting.</p>
   <p class="anchor-line">We are all Source. You already have everything inside you.</p>
+</section>
+
+<section id="whatThisIs">
+  <div class="card">
+    <span class="kicker">Before you start</span>
+    <h3>What SHE IS SOL is</h3>
+    <p>A self-led system for people ready to change themselves — structured, not soft. The whole wellness industry runs on <em>you are not enough yet.</em> This runs on the opposite: you are not deficient, you have forgotten. The work was never about becoming, it was always about returning.</p>
+    <p>Underneath it is one practice. Six colours of light, seven nights each, three times round — a hundred and twenty-six nights, three to five minutes before sleep. That is the engine, and it is deliberately small enough to actually keep.</p>
+  </div>
+  <div class="card">
+    <span class="kicker">And what the community gives you</span>
+    <h3>What you get from today</h3>
+    <ul class="offer">
+      <li><span>The rooms</span><p>Five open channels — somewhere to land, a daily conversation, wins, questions, and what's on. One post a day, and every post gets an answer.</p></li>
+      <li><span>Foundations</span><p>The six modules and the Foundation Workbook, personalised from this assessment. Open to every member from day one.</p></li>
+      <li><span>A live call each month</span><p>Open to everyone. Laura teaches something real, and you can bring a question.</p></li>
+      <li><span>Your Sol Map</span><p>This — yours to keep, and the thing your facilitator reads before they meet you.</p></li>
+    </ul>
+    <p class="offer-note">When you want to go further there is an eighteen-week guided cohort, with weekly calls and the full programme. Nobody will pitch it to you. It is there when the map starts asking a bigger question.</p>
+    <p class="offer-note">There is a sister brand, <em>SHE IS AI</em>, for the practical side — capability rather than consciousness. Two doors, one room. That's all you need to know about it for now.</p>
+  </div>
 </section>
 
 <section id="welcomeBack" class="no-print" aria-live="polite">
@@ -396,8 +445,8 @@ a{color:var(--gold-deep)}
     <div class="part-header" style="margin:44px 0 4px">
       <span class="kicker">A few honest questions</span>
       <h2>Where you are right now</h2>
-      <p>Thirty-three questions, about twelve minutes. <em>There is no score, no total, no type and no grade at the end of this</em> — nothing is ranked and nothing is compared to anyone. Some of them are deliberately uncomfortable. That is the whole point of asking them.</p>
-      <p style="margin-top:12px">This is also the first piece of the actual work: the same four patterns and the same four layers you'll meet in the course, asked once, now, before you begin. Answer for how the last few months have genuinely been.</p>
+      <p>This is the first piece of the actual work, and it runs on the structure of the course itself — four, then three, then two, then one. The <em>four</em> are the patterns that move through you. The <em>three</em> are the layers you are built on. The <em>two</em> are what the whole thing runs on. The <em>one</em> is you.</p>
+      <p style="margin-top:12px">Answer for how the last few months have genuinely been, not how you'd like them to have been.</p>
     </div>
     <div id="assessQuestions"></div>
     <p class="q-count" id="qCount"></p>
@@ -405,7 +454,7 @@ a{color:var(--gold-deep)}
 
   <div class="btn-row"><button class="btn solid" id="btnGenerate" type="button">Read my Sol Map</button></div>
   <p class="err" id="formErr" role="alert" style="text-align:center"></p>
-  <p class="disclaimer">Your details and answers stay on this device — nothing is sent anywhere, and nothing reaches a coach unless you copy it across yourself at the end. This is a mirror for self-knowing, not a substitute for medical or professional care.</p>
+  <p class="disclaimer">Your details and answers stay on this device — nothing is sent anywhere, and nothing reaches a facilitator unless you copy it across yourself at the end. This is a mirror for self-knowing, not a substitute for medical or professional care.</p>
 </section>
 
 <div id="reading" aria-live="polite">
@@ -543,16 +592,16 @@ a{color:var(--gold-deep)}
       <div id="emailCapture" style="margin-top:18px"></div>
     </div>
     <div class="card no-print" style="text-align:center" id="coachCard">
-      <span class="kicker">For your coach</span>
-      <h3>The overview your coach works from</h3>
-      <p>One paste, and your coach arrives already knowing you — so the first conversation starts somewhere real instead of at the beginning. It carries what you wrote in your own words, unedited.</p>
+      <span class="kicker">For your facilitator</span>
+      <h3>The overview your facilitator works from</h3>
+      <p>One paste, and your facilitator arrives already knowing you — so the first conversation starts somewhere real instead of at the beginning. It carries what you wrote in your own words, unedited.</p>
       <p>You're welcome to read it. Fair warning: it is written <em>about</em> you rather than to you, so it reads blunter than the page above.</p>
       <div class="btn-row">
-        <button class="btn solid" id="btnCoachCopy" type="button">Copy for my coach</button>
+        <button class="btn solid" id="btnCoachCopy" type="button">Copy for my facilitator</button>
         <button class="btn" id="btnCoachDownload" type="button">Download it</button>
         <button class="btn" id="btnCoachRead" type="button">Read it first</button>
       </div>
-      <p class="hint" id="coachCopyNote" style="display:none;margin-top:12px">Copied. Paste it wherever your coach asked you to — nothing was sent automatically.</p>
+      <p class="hint" id="coachCopyNote" style="display:none;margin-top:12px">Copied. Paste it wherever your facilitator asked you to — nothing was sent automatically.</p>
       <pre id="coachPre" style="display:none;text-align:left;white-space:pre-wrap;font-family:var(--sans);font-size:.82rem;line-height:1.65;color:var(--ivory-dim);background:var(--card);border:1px solid var(--stone);border-radius:10px;padding:20px;margin-top:16px;overflow-x:auto"></pre>
     </div>
   </section>
@@ -1084,17 +1133,17 @@ function workbookPayload(ch){
   sig:{name:sg.name,line:sg.line,sub:sg.sub},
   assess:assessPayload()};}
 /* what the workbook is allowed to know: the named pattern, its counter, and the
-   pyramid layer to work. Never the raw answers, never the coach-only material. */
+   pyramid layer to work. Never the raw answers, never the facilitator-only material. */
 function assessPayload(){
  try{
   const answered=HORSEMEN.reduce((n,h)=>{const a=A.horse[h.key]||[];h.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});return n;},0);
   // reopening a saved map doesn't re-ask the questions — keep what was already read
   if(!answered){const s=lsGet('solmap.payload.v1');
    if(s){try{return JSON.parse(s).assess||null;}catch(e){}} return null;}
-  const H=readHorsemen(A), P=readPyramid(A), R=readResponsibility(A);
+  const H=readHorsemen(A), P=readPyramid(A), R=readDisciplines(A);
   const hm=HORSEMEN.find(x=>x.key===H.active), ask=PYRAMID.find(p=>p.key===P.asking);
   return {pattern:hm.name,counter:hm.counter,asks:hm.asks,practice:hm.practice,
-          colour:hm.colour,layer:ask.name,layerRole:ask.role,layerAsks:ask.asks,carry:R.carry,
+          colour:hm.colour,layer:ask.name,layerRole:ask.sub,layerAsks:ask.asks,carry:(DISCIPLINES.find(d=>d.key===R.lower)||{}).carry,
           /* enough to rebuild the member-facing reading when she reopens the map */
           key:H.active,named:H.named,hardest:A.hardest,diverges:H.diverges,flat:H.flat,
           layerKey:P.asking,workingKey:P.working};
@@ -1103,28 +1152,29 @@ const b64url=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\
 </script>
 <script>
 'use strict';
-/* ================= THE ONBOARDING ASSESSMENT · v2 =================
-   Built to Wayne's "Two Doors, One Room" + "Diagnostic Extension" (Aug 2026),
-   pulled forward into the SHE IS SOL course spine.
+/* ================= THE ONBOARDING ASSESSMENT · v3 =================
+   Four parts, descending, and each one is a piece of the course structure:
 
-   Part 1  the four horsemen     16 items — Judgement · Jealousy · Neediness · Fear
-                                 + one self-report: which was hardest to answer honestly
-   Part 2  the pyramid           8 items — Trust · Belief · Emotion · Thought
-   Part 3  self-responsibility   4 items
-   Part 4  capacity, care, words 5 inputs
+     FOUR   the four horsemen      judgement · jealousy · neediness · fear
+     THREE  the pyramid            the ground · the energy · the blueprint
+     TWO    the two disciplines    self-responsibility · self-awareness
+     ONE    source                 who, what, where — in her own words
+
+   The four and the pyramid are separate teachings and are never blended:
+   the horsemen are what moves through you, the pyramid is what you are built on.
 
    NOTHING IS SCORED TO THE PERSON. No number, no band, no grade, no type.
-   Intensity is computed internally only to decide which pattern is loudest today
-   and which pyramid layer is asking — both of which are named as *weather*,
-   never as a verdict. "You are not deficient. You have forgotten." */
+   Intensity is computed internally only to name which pattern is loudest today
+   and which pyramid layer is asking — both as weather, never as a verdict. */
 
 const ASSESS_SCALE=['Almost never','Sometimes','Often','Almost always'];
+/* part four runs on a nine-point spread between two named poles */
+const SOURCE_SCALE_MIN=1, SOURCE_SCALE_MAX=9;
 
-/* ---- Part 1 · the four horsemen (course canon: Week 6 · Red) ----
+/* ---- PART ONE · THE FOUR (course canon: Week 6 · Red, again Week 17) ----
    "Judgement, jealousy, neediness and fear, left unobserved, will dismantle
    everything. Their counters build it back."
-   Counters per Wayne's mapping: Judgement→Compassion, Jealousy→Joy,
-   Neediness→Love, Fear→Empathy. */
+   Counters per Wayne: Judgement→Compassion, Jealousy→Joy, Neediness→Love, Fear→Empathy. */
 const HORSEMEN=[
  {key:'judgement',name:'Judgement',counter:'Compassion',colour:'--purple',
   what:`Judgement arrives fast and feels like clarity. It isn't — it's a verdict reached before the evidence is in. And the verdict you reach fastest is usually the one about yourself.`,
@@ -1133,7 +1183,7 @@ const HORSEMEN=[
   practice:`For one week, when the verdict arrives, hold it. Ask what you'd need to know for that person to be entirely reasonable. Then notice whether you offer yourself the same enquiry.`,
   items:[
    {t:`I reach a verdict on someone before I know what they're carrying.`,r:false},
-   {t:`The things I find hardest to tolerate in other people are things I've worked hard not to show in myself.`,r:false},
+   {t:`What I can't tolerate in someone else turns out to be something I don't allow in myself.`,r:false},
    {t:`When someone behaves badly, I look for the reason before I look for the fault.`,r:true},
    {t:`I run a quiet commentary on how I'm doing against how I should be doing.`,r:false}]},
  {key:'jealousy',name:'Jealousy',counter:'Joy',colour:'--turquoise',
@@ -1144,7 +1194,7 @@ const HORSEMEN=[
   items:[
    {t:`When someone gets the thing I want, something in me goes quiet rather than glad.`,r:false},
    {t:`I measure how far along I am against people who started somewhere different from me.`,r:false},
-   {t:`There is someone whose updates I avoid looking at.`,r:false},
+   {t:`I avoid looking at what someone else is doing because of how it makes me feel.`,r:false},
    {t:`I can be pleased for someone whose success shows up what I haven't done yet.`,r:true}]},
  {key:'neediness',name:'Neediness',counter:'Love',colour:'--green',
   what:`Neediness isn't wanting people. It's handing your steadiness to someone else to hold — and then quietly resenting them for holding it.`,
@@ -1157,14 +1207,14 @@ const HORSEMEN=[
    {t:`I give in ways that quietly expect something back.`,r:false},
    {t:`I can sit with someone's silence without deciding what it means about me.`,r:true}]},
  {key:'fear',name:'Fear',counter:'Empathy',colour:'--red',
-  what:`Fear is the most reasonable-sounding of the four. It borrows the language of caution, calls itself realism, and gets waved through without being questioned.`,
+  what:`Fear is the most reasonable-sounding of the four. It borrows the language of caution, calls itself realism, and gets waved through without ever being questioned.`,
   counterWhat:`Empathy. Fear is a story about what will happen to you; empathy is attention that leaves your own head. There is very little room for both at once.`,
   asks:`Is this actually risk, or is this only unfamiliar?`,
   practice:`Name one thing you called realistic this week. Say the fear version of the sentence out loud instead. Notice which of the two is the true one.`,
   items:[
-   {t:`Fear has talked me out of something I actually wanted, more than once this year.`,r:false},
+   {t:`Fear talks me out of things I actually want.`,r:false},
    {t:`I call something "being realistic" when I know underneath that it's fear.`,r:false},
-   {t:`The thing I'm most afraid of losing is something I don't fully have yet.`,r:false},
+   {t:`I brace for losing something I don't yet fully have.`,r:false},
    {t:`I can take a step before the fear has finished talking.`,r:true}]}
 ];
 const HORSE_KEYS=HORSEMEN.map(h=>h.key);
@@ -1173,65 +1223,97 @@ const HARDEST_CHOICE={
  note:`Not which scored highest — which one you had to sit with.`,
  options:[['judgement','Judgement'],['jealousy','Jealousy'],['neediness','Neediness'],['fear','Fear'],['even','They were about the same']]};
 
-/* ---- Part 2 · the Pyramid of Creation (course canon: Week 3 · Green) ----
-   "Trust is the ground. Belief is the direction. Emotion is the engine.
-   Thought is the blueprint." Base to apex. */
+/* ---- PART TWO · THE THREE (course canon: Week 3 · Green — the Pyramid of Creation) ----
+   Base to apex, three layers. Trust and belief are read together as the ground.
+   NOTE: the 18-week workbook and the Master Context state this as four —
+   "Trust is the ground. Belief is the direction. Emotion is the engine. Thought
+   is the blueprint." Laura's call (Aug 2026) merges trust and belief into one
+   ground layer so the pyramid reads on the Soul · Mind · Body spine. If that
+   change is kept, Week 3's principle line needs the same edit. */
 const PYRAMID=[
- {key:'trust',name:'Trust',role:'the ground',
-  what:`Everything above this rests on it. Trust isn't confidence — it's whether your own word means anything to you. Where it's thin, nothing built higher holds for long.`,
-  asks:`What promise to myself do I keep breaking?`,
+ {key:'ground',name:'the ground',sub:'trust and belief',
+  what:`Everything above this rests on it. Trust isn't confidence — it's whether your own word means anything to you. Belief is what you have quietly agreed is true about yourself. Where the ground is thin, nothing built higher stands for long.`,
+  asks:`What promise to myself do I keep breaking — and whose belief have I been living as though it were mine?`,
   items:[
-   {t:`I trust my own judgment more than I second-guess it.`,r:false},
-   {t:`When I make a promise to myself, I keep it.`,r:false}]},
- {key:'belief',name:'Belief',role:'the direction',
-  what:`Belief points. You don't see first and then believe — you believe first, and reality organises itself around that. Which makes a borrowed belief an expensive thing to carry.`,
-  asks:`Whose belief have I been living as though it were my own?`,
-  items:[
-   {t:`What I believe about myself today isn't borrowed from someone else's opinion of me.`,r:false},
-   {t:`I could name a belief I live by that I never actually chose.`,r:false}]},
- {key:'emotion',name:'Emotion',role:'the engine',
-  what:`Emotion is the fuel, not the noise. It's what actually moves a thing out of your head and into the world — and every one of them sits somewhere between fear and love.`,
-  asks:`What emotion have I carried more than a year, and what story keeps feeding it?`,
+   {t:`I keep the promises I make to myself.`,r:false},
+   {t:`I trust my own read on something rather than second-guessing it.`,r:false},
+   {t:`I catch myself living by a belief I never actually chose.`,r:true}]},
+ {key:'energy',name:'the energy',sub:'emotion',
+  what:`Emotion is the fuel, not the noise. It is what actually moves a thing out of your head and into the world, and every one of them sits somewhere between fear and love. Suppressed, it doesn't disappear — it just stops being available.`,
+  asks:`What am I carrying that I've never let move all the way through?`,
   items:[
    {t:`I can tell, in the moment, whether I'm moving from fear or from love.`,r:false},
-   {t:`There's an emotion I've been carrying for more than a year.`,r:true}]},
- {key:'thought',name:'Thought',role:'the blueprint',
-  what:`The most visible layer, and the one nearly everyone works first. It's also the least load-bearing — a beautiful blueprint laid over unattended ground.`,
-  asks:`Which mental loop am I choosing to keep feeding?`,
+   {t:`I let a feeling move through me rather than storing it somewhere.`,r:false},
+   {t:`I carry a feeling for weeks without knowing what started it.`,r:true}]},
+ {key:'blueprint',name:'the blueprint',sub:'thought and intent',
+  what:`The most visible layer, and the one nearly everyone works first. Thought draws the shape; intent is direction without a demand attached. It is also the least load-bearing — a beautiful blueprint laid over unattended ground.`,
+  asks:`Am I holding a direction, or a demand about how it has to arrive?`,
   items:[
    {t:`I can watch a thought without believing it.`,r:false},
-   {t:`My inner state causes my circumstances more than it results from them.`,r:false}]}
+   {t:`An intention I set in the morning is still shaping what I do by the afternoon.`,r:false},
+   {t:`I treat my inner state as the cause of what happens rather than the result of it.`,r:false}]}
 ];
 const PYR_KEYS=PYRAMID.map(p=>p.key);
 
-/* ---- Part 3 · self-responsibility (course canon: Week 16 · Orange) ----
-   "Self-responsibility is not a burden. It is the line between the old world
-   and the new one." Each item carries the question it turns into. */
-const RESPONSIBILITY=[
- {t:`When something goes wrong, my first move is to look at my own part in it.`,r:true,
-  carry:`Where does the account of what happened stop being about you? That edge is worth walking back a step.`},
- {t:`I'm still waiting on permission from someone for something I could simply do.`,r:false,
-  carry:`Whose permission are you waiting for — and what happens if you give it to yourself this week instead?`},
- {t:`There's a person or a circumstance I hold responsible for how I feel most days.`,r:false,
-  carry:`Who is holding your inner state right now, and what would it take to ask for it back? Ownership, never blame — they are not the same move.`},
- {t:`I can tell the difference between a decision I've made and a decision I'm avoiding.`,r:true,
-  carry:`Name the decision you're avoiding. Not to make it today — only to stop calling it something else.`}
+/* ---- PART THREE · THE TWO (Week 16 · Orange, and Week 7 · Purple) ----
+   Self-responsibility is the line. Self-awareness is what makes it possible. */
+const DISCIPLINES=[
+ {key:'responsibility',name:'Self-responsibility',
+  blurb:`Not guilt, and not blame turned inward. Simply where authorship sits — the difference between a life that happens to you and one you are the author of.`,
+  carry:`Find the place where your account of what happened stops being about you. Don't argue with it — just notice exactly where the line falls. That edge is the work.`,
+  items:[
+   {t:`When something goes wrong, my first move is to look at my own part in it.`,r:false},
+   {t:`I hold a person or a circumstance responsible for how I feel.`,r:true},
+   {t:`I wait on permission I could give myself.`,r:true}]},
+ {key:'awareness',name:'Self-awareness',
+  blurb:`The gap between what happens and how you respond. You are not your reactions — you are the one who can watch them arrive.`,
+  carry:`For one day, try to catch a reaction on the way up rather than on the way out. You will miss most of them. Catching one is the whole exercise.`,
+  items:[
+   {t:`I notice a reaction rising before it gets out of my mouth.`,r:false},
+   {t:`I can name what I'm feeling while I'm still feeling it.`,r:false},
+   {t:`I only see what I was actually doing once the moment has passed.`,r:true}]}
+];
+const DISC_KEYS=DISCIPLINES.map(d=>d.key);
+
+/* ---- PART FOUR · THE ONE · SOURCE ----
+   Who, what, where — answered on a nine-point spread between two named poles.
+   These read current state of consciousness, and nothing here is scored to her. */
+const SOURCE=[
+ {key:'who1',q:`Right now, how much does the person other people meet match the person you actually are?`,
+  lo:`two different people`,hi:`the same person`,band:'who'},
+ {key:'who2',q:`If someone asked who you are — and you couldn't use your job, your role, or who you're related to — how clearly could you answer?`,
+  lo:`I'd have nothing`,hi:`clearly, in my own words`,band:'who'},
+ {key:'what1',q:`How much of your week is something you actually chose, rather than something you inherited or fell into?`,
+  lo:`almost none of it`,hi:`nearly all of it`,band:'what'},
+ {key:'what2',q:`Alone, with no input — no phone, no noise, no one to be — how settled do you feel?`,
+  lo:`I avoid being there`,hi:`it's where I'm most myself`,band:'what'},
+ {key:'where1',q:`How does the world feel to you at the moment?`,
+  lo:`heavy, and closing in`,hi:`open, and moving`,band:'where'},
+ {key:'where2',q:`And your own world — the part of it you actually touch each day?`,
+  lo:`it is running me`,hi:`I am running it`,band:'where'}
 ];
 
-/* ---- Part 4 · capacity, care, words ---- */
-const CAPACITY=[
- {k:'minutes',t:`Realistically, how many minutes a night do you have?`,options:['Under 10','10–20','20–40','More than 40']},
- {k:'when',t:`When are you most likely to actually do it?`,options:['Before anyone else is up','A gap in the day','Before sleep','It will be different every day']},
- {k:'life',t:`Is there anything running in your life right now that we should know about before you start?`,options:['Nothing unusual','A lot on, but I am steady','I am in something hard at the moment','I would rather not say']}];
+/* the two free-text questions — the most useful fields in the instrument */
+const SOURCE_WORDS={
+ why:{t:`Why are you here? Not the tidy version.`,max:500,
+  ph:`There's no right answer and nobody is scoring it. Write it the way you'd say it.`},
+ want:{t:`And what do you want to be different by the end of this?`,max:300,
+  ph:`Even if it's vague. Especially if it's vague.`}};
+
+/* ---- context and care ----
+   The care signal is kept deliberately: this is the only place someone can say
+   they are in something hard, and 1737 is shown on her own result page. */
+const CONTEXT=[
+ {k:'life',t:`Where you are right now — is there anything heavy in it we should know about before you begin?`,
+  options:['Nothing unusual','A lot on, but I am steady','I am in something hard at the moment','I would rather not say']}];
 const CARE_MESSAGE=`Thank you for saying so. It changes nothing about your access, and it is not on your file as a problem.<br><br>One thing said plainly: this programme is not therapy, and it is not a substitute for it. It's a structure for working with yourself, and it works best alongside real support rather than instead of it. If you're in something heavy, please keep the people who are helping you.<br><br><em>Need to Talk 1737</em> — free call or text, any time, anywhere in New Zealand.`;
 
 /* ---- derivation (internal only — never a number, never a band, to her) ---- */
-function intensity(items,answers){ // 0–12 per group, higher = more present
+function intensity(items,answers){ // 0–(3×n), higher = more present
  let s=0; items.forEach((it,i)=>{const v=(typeof answers[i]==='number')?answers[i]:0; s+=it.r?(3-v):v;});
  return s;}
 function readHorsemen(A){
  const raw={}; HORSEMEN.forEach(h=>{raw[h.key]=intensity(h.items,(A.horse&&A.horse[h.key])||[]);});
- // most active. tie → the one she named as hardest, else earlier in list order.
  const max=Math.max(...HORSE_KEYS.map(k=>raw[k]));
  const tied=HORSE_KEYS.filter(k=>raw[k]===max);
  let active=tied[0];
@@ -1241,29 +1323,34 @@ function readHorsemen(A){
  return {raw,active,order,named,diverges:!!(named&&named!==active),flat:(max-Math.min(...HORSE_KEYS.map(k=>raw[k])))<=2};}
 function readPyramid(A){
  const raw={}; PYRAMID.forEach(p=>{raw[p.key]=intensity(p.items,(A.pyr&&A.pyr[p.key])||[]);});
- // the layer asking for attention = the lowest. tie → the lower layer (base wins) — you build from the ground.
  const min=Math.min(...PYR_KEYS.map(k=>raw[k]));
- const asking=PYR_KEYS.find(k=>raw[k]===min);
+ const asking=PYR_KEYS.find(k=>raw[k]===min);      // lowest — base wins ties, you build from the ground
  const max=Math.max(...PYR_KEYS.map(k=>raw[k]));
- const working=[...PYR_KEYS].reverse().find(k=>raw[k]===max); // where she operates from — apex wins ties
+ const working=[...PYR_KEYS].reverse().find(k=>raw[k]===max); // apex wins ties
  return {raw,asking,working};}
-function readResponsibility(A){
- const a=A.resp||[];
- let loudest=-1,loudIdx=null;
- RESPONSIBILITY.forEach((it,i)=>{const v=(typeof a[i]==='number')?a[i]:null; if(v===null)return;
-  const w=it.r?(3-v):v; if(w>loudest){loudest=w;loudIdx=i;}});
- const answered=RESPONSIBILITY.filter((_,i)=>typeof a[i]==='number').length;
- return {carry:loudIdx===null?null:RESPONSIBILITY[loudIdx].carry,answered};}
+function readDisciplines(A){
+ const raw={}; DISCIPLINES.forEach(d=>{raw[d.key]=intensity(d.items,(A.disc&&A.disc[d.key])||[]);});
+ const answered=DISCIPLINES.reduce((n,d)=>{const a=(A.disc&&A.disc[d.key])||[];d.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});return n;},0);
+ const lower=raw.responsibility<=raw.awareness?'responsibility':'awareness';
+ return {raw,answered,lower};}
+function readSource(A){
+ const v=k=>{const x=(A.source||{})[k];return (typeof x==='number')?x:null;};
+ const band=b=>{const xs=SOURCE.filter(s=>s.band===b).map(s=>v(s.key)).filter(x=>x!==null);
+  return xs.length?xs.reduce((a,c)=>a+c,0)/xs.length:null;};
+ return {who:band('who'),what:band('what'),where:band('where'),
+  answered:SOURCE.filter(s=>v(s.key)!==null).length};}
 function assessAnswered(A){
  let n=0;
  HORSEMEN.forEach(h=>{const a=(A.horse&&A.horse[h.key])||[];h.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});});
  if(A.hardest)n++;
  PYRAMID.forEach(p=>{const a=(A.pyr&&A.pyr[p.key])||[];p.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});});
- RESPONSIBILITY.forEach((_,i)=>{if(typeof (A.resp||[])[i]==='number')n++;});
- CAPACITY.forEach(c=>{if(typeof A.capacity[c.k]==='number')n++;});
- if(A.words&&A.words.trim())n++;
+ DISCIPLINES.forEach(d=>{const a=(A.disc&&A.disc[d.key])||[];d.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});});
+ SOURCE.forEach(s=>{if(typeof (A.source||{})[s.key]==='number')n++;});
+ CONTEXT.forEach(c=>{if(typeof A.context[c.k]==='number')n++;});
+ if(A.why&&A.why.trim())n++;
+ if(A.want&&A.want.trim())n++;
  return n;}
-const ASSESS_TOTAL=16+1+8+4+3+1; // 33
+const ASSESS_TOTAL=16+1+9+6+6+1+2; // 41
 </script>
 <script>
 'use strict';
@@ -1478,53 +1565,73 @@ function lightFacts(ch){
  return rows.map(r=>`<div class="fact"><span class="fact-k">${r[0]}</span><span class="fact-v">${r[1]}</span></div>`).join('');
 }
 /* ================= ASSESSMENT · UI + THE CONSCIOUSNESS MIRROR ================= */
-const A={horse:{},hardest:null,pyr:{},resp:[],capacity:{},careFree:'',words:''};
+const A={horse:{},hardest:null,pyr:{},disc:{},source:{},context:{},careFree:'',why:'',want:''};
 const part=(kick,h3,p)=>`<div class="q-part"><span class="kicker">${kick}</span><h3 class="q-part-h">${h3}</h3><p class="q-part-p">${p}</p></div>`;
 const scaleRow=attr=>{let s=`<div class="scale" ${attr}>`;ASSESS_SCALE.forEach((lab,v)=>s+=`<button type="button" data-v="${v}" aria-pressed="false">${lab}</button>`);return s+'</div>';};
 const optsRow=(attr,opts)=>{let s=`<div class="opts" ${attr}>`;opts.forEach((lab,v)=>s+=`<button type="button" data-v="${v}" aria-pressed="false">${lab}</button>`);return s+'</div>';};
+/* part four's nine-point spread, poles named at each end */
+const spreadRow=(key,lo,hi)=>{
+ let s=`<div class="spread"><span class="pole lo">${lo}</span><div class="nine" data-s="${key}" role="group" aria-label="one to nine">`;
+ for(let v=SOURCE_SCALE_MIN;v<=SOURCE_SCALE_MAX;v++)
+  s+=`<button type="button" data-v="${v}" aria-pressed="false" aria-label="${v} of 9">${v}</button>`;
+ return s+`</div><span class="pole hi">${hi}</span></div>`;};
 
 function buildAssessment(){
  const host=$('assessQuestions'); if(!host)return;
  let h='',n=0;
- /* Part 1 · the four horsemen */
- h+=part('Part one · the four','What is running the room',
-  `Four patterns dismantle a life quietly, and they rarely announce themselves. Nothing here is scored and no total is kept — these are simply worth looking at. Answer for how the last few months have actually been, not how you would prefer them to have been.`);
+
+ /* ---- FOUR ---- */
+ h+=part('Part one · the four','What moves through you',
+  `Judgement, jealousy, neediness and fear. Left unobserved these four dismantle a life quietly — not in one blow, but by making a thousand small decisions on your behalf until you can no longer tell which of them were yours. None of them announce themselves; each arrives dressed as something reasonable. Judgement arrives as discernment, jealousy as ambition, neediness as closeness, fear as good sense.<br><br>Their counters — compassion, joy, love, empathy — are not nicer feelings to have instead. They are the specific things that dismantle each one. You meet all four properly in the course; this is the first look.`);
  HORSEMEN.forEach((hm,hi)=>{A.horse[hm.key]=A.horse[hm.key]||[];
   h+=`<div class="q-group" style="--accent:var(${hm.colour})"><div class="q-group-head"><span class="kicker">${hi+1} of four · ${hm.name}</span></div><div class="q-accent"></div>`;
   hm.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-h="${hm.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
   h+=`</div>`;});
  h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-accent"></div>
   <div class="q-item"><p class="q-text">${n+1}. ${HARDEST_CHOICE.t}</p><p class="q-note">${HARDEST_CHOICE.note}</p>${optsRow('data-hardest',HARDEST_CHOICE.options.map(o=>o[1]))}</div></div>`;n++;
- /* Part 2 · the pyramid */
- h+=part('Part two · the pyramid','What you are building on',
-  `Underneath anything you make there are four layers, and they stack in one order. <em>Trust is the ground. Belief is the direction. Emotion is the engine. Thought is the blueprint.</em> Most people work the top layer and wonder why nothing holds.`);
+
+ /* ---- THREE ---- */
+ h+=part('Part two · the three','What you are built on',
+  `A separate thing entirely from the four above. Underneath anything you make there are three layers, and they stack in one order only. <em>Trust and belief are the ground. Emotion is the energy. Thought and intent are the blueprint.</em> Most people work the top layer and wonder why nothing holds.`);
  PYRAMID.forEach(p=>{A.pyr[p.key]=A.pyr[p.key]||[];
-  h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-group-head"><span class="kicker">${p.name} · ${p.role}</span></div><div class="q-accent"></div>`;
+  h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-group-head"><span class="kicker">${p.name} · ${p.sub}</span></div><div class="q-accent"></div>`;
   p.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-p="${p.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
   h+=`</div>`;});
- /* Part 3 · self-responsibility */
- h+=part('Part three · the line','Self-responsibility',
-  `The gate this whole thing runs on. Not guilt, and not blame turned inward — simply the difference between a life that happens to you and one you are the author of.`);
- h+=`<div class="q-group" style="--accent:var(--orange)"><div class="q-accent"></div>`;
- RESPONSIBILITY.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-r="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
- h+=`</div>`;
- /* Part 4 · capacity, care, words */
- h+=part('Part four · in your words','What you can give, and why you came',
-  `Short and plain. The last question is the most useful thing in the whole assessment.`);
+
+ /* ---- TWO ---- */
+ h+=part('Part three · the two','What the whole thing runs on',
+  `Two disciplines, and everything else depends on them. One is the line between a life that happens to you and one you are the author of. The other is what makes crossing it possible.`);
+ DISCIPLINES.forEach(d=>{A.disc[d.key]=A.disc[d.key]||[];
+  h+=`<div class="q-group" style="--accent:var(--orange)"><div class="q-group-head"><span class="kicker">${d.name}</span></div><div class="q-accent"></div>
+   <p class="q-note" style="margin:2px 0 8px">${d.blurb}</p>`;
+  d.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-d="${d.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
+  h+=`</div>`;});
+
+ /* ---- ONE ---- */
+ h+=part('Part four · the one','Source',
+  `Three questions sit underneath everything here: <em>who are you, what are you, where are you.</em> Nobody answers them once. These six read where you're standing today — slide to wherever is honest, and don't tidy it up on the way.`);
  h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-accent"></div>`;
- CAPACITY.forEach(c=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${c.t}</p>${optsRow(`data-c="${c.k}"`,c.options)}</div>`;n++;});
- h+=`<div class="q-item"><p class="q-text">Is there anything you'd rather we didn't bring up in a group setting? <span style="color:var(--ivory-faint)">(optional)</span></p><textarea data-free="careFree" maxlength="200" placeholder="Only if you want to. It goes to your coach and nowhere else."></textarea></div>`;
- h+=`<div class="q-item"><p class="q-text">${n+1}. What made you join, in your own words? Not the tidy version.</p><textarea data-free="words" maxlength="500" placeholder="There's no right answer here and nobody is scoring it. Write it the way you'd say it."></textarea></div>`;n++;
+ SOURCE.forEach(s=>{
+  h+=`<div class="q-item"><p class="q-text">${n+1}. ${s.q}</p>${spreadRow(s.key,s.lo,s.hi)}</div>`;n++;});
  h+=`</div>`;
+ h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-accent"></div>`;
+ h+=`<div class="q-item"><p class="q-text">${n+1}. ${SOURCE_WORDS.why.t}</p><textarea data-free="why" maxlength="${SOURCE_WORDS.why.max}" placeholder="${SOURCE_WORDS.why.ph}"></textarea></div>`;n++;
+ h+=`<div class="q-item"><p class="q-text">${n+1}. ${SOURCE_WORDS.want.t}</p><textarea data-free="want" maxlength="${SOURCE_WORDS.want.max}" placeholder="${SOURCE_WORDS.want.ph}"></textarea></div>`;n++;
+ CONTEXT.forEach(c=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${c.t}</p>${optsRow(`data-c="${c.k}"`,c.options)}</div>`;n++;});
+ h+=`<div class="q-item"><p class="q-text">Anything you'd rather wasn't raised in a group? <span style="color:var(--ivory-faint)">(optional)</span></p><textarea data-free="careFree" maxlength="200" placeholder="Only if you want to. It goes to your facilitator and nowhere else."></textarea></div>`;
+ h+=`</div>`;
+
  host.innerHTML=h;
  host.addEventListener('click',e=>{const b=e.target.closest('button[data-v]');if(!b)return;
-  const box=b.parentElement;[...box.children].forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');
+  const box=b.parentElement;[...box.children].forEach(x=>{if(x.tagName==='BUTTON')x.setAttribute('aria-pressed','false');});
+  b.setAttribute('aria-pressed','true');
   const v=+b.dataset.v;
   if(box.dataset.h!==undefined&&box.dataset.i!==undefined)A.horse[box.dataset.h][+box.dataset.i]=v;
   else if(box.dataset.p!==undefined&&box.dataset.i!==undefined)A.pyr[box.dataset.p][+box.dataset.i]=v;
-  else if(box.dataset.r!==undefined)A.resp[+box.dataset.r]=v;
+  else if(box.dataset.d!==undefined&&box.dataset.i!==undefined)A.disc[box.dataset.d][+box.dataset.i]=v;
+  else if(box.dataset.s!==undefined)A.source[box.dataset.s]=v;
   else if(box.hasAttribute('data-hardest'))A.hardest=HARDEST_CHOICE.options[v][0];
-  else if(box.dataset.c!==undefined)A.capacity[box.dataset.c]=v;
+  else if(box.dataset.c!==undefined)A.context[box.dataset.c]=v;
   updateQCount();});
  host.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.free){A[t.dataset.free]=t.value;updateQCount();}});
  updateQCount();
@@ -1534,9 +1641,11 @@ function updateQCount(){const el=$('qCount');if(!el)return;const n=assessAnswere
  el.classList.toggle('done',n>=ASSESS_TOTAL);}
 
 /* ---- the pyramid drawn: base Trust → apex Thought, the asking layer marked ---- */
+const cap1=s=>s.charAt(0).toUpperCase()+s.slice(1);
 function pyramidSvg(asking){
  const apexX=140,apexY=16,baseY=232,halfW=124,H=baseY-apexY;
- const yAt=i=>apexY+H*i/4, wAt=y=>halfW*(y-apexY)/H;
+ const N=PYRAMID.length;
+ const yAt=i=>apexY+H*i/N, wAt=y=>halfW*(y-apexY)/H;
  const rows=[...PYRAMID].reverse(); // apex → base for drawing
  let bands='',labels='';
  rows.forEach((p,i)=>{
@@ -1545,12 +1654,12 @@ function pyramidSvg(asking){
     fill="${on?'rgba(201,162,77,.16)':'#FFFFFF'}" stroke="rgba(26,27,32,.20)" stroke-width="1"/>`;
   const my=(y0+y1)/2;
   labels+=`<text x="292" y="${my-3}" font-family="Cormorant Garamond,Georgia,serif" font-size="17"
-     fill="${on?'#8F6B2A':'#1A1B20'}">${p.name}</text>
+     fill="${on?'#8F6B2A':'#1A1B20'}">${cap1(p.name)}</text>
    <text x="292" y="${my+15}" font-family="Inter,sans-serif" font-size="10.5" letter-spacing="1.6"
-     fill="rgba(26,27,32,.44)">${p.role.toUpperCase()}</text>
+     fill="rgba(26,27,32,.44)">${p.sub.toUpperCase()}</text>
    <line x1="276" y1="${my-14}" x2="276" y2="${my+20}" stroke="${on?'#C9A24D':'rgba(26,27,32,.13)'}" stroke-width="${on?2:1}"/>`;
  });
- return `<svg viewBox="0 0 420 252" role="img" aria-label="The Pyramid of Creation — Trust at the base, then Belief, Emotion and Thought at the apex.">
+ return `<svg viewBox="0 0 420 252" role="img" aria-label="The Pyramid of Creation — the ground of trust and belief at the base, emotion as the energy above it, thought and intent as the blueprint at the apex.">
   ${bands}${labels}</svg>`;
 }
 
@@ -1564,7 +1673,7 @@ function renderConsciousness(ch){
   A.hardest=prior.hardest||null;
   return renderConsciousnessFrom({active:prior.key,named:prior.named||null,diverges:!!prior.diverges,flat:!!prior.flat},
    {asking:prior.layerKey,working:prior.workingKey},{carry:prior.carry,answered:prior.carry?1:0},ch);}
- const H=readHorsemen(A), P=readPyramid(A), R=readResponsibility(A);
+ const H=readHorsemen(A), P=readPyramid(A), R=readDisciplines(A);
  return renderConsciousnessFrom(H,P,R,ch);
 }
 function renderConsciousnessFrom(H,P,R,ch){
@@ -1600,21 +1709,22 @@ function renderConsciousnessFrom(H,P,R,ch){
  /* --- the pyramid --- */
  const ask=PYRAMID.find(p=>p.key===P.asking), work=PYRAMID.find(p=>p.key===P.working);
  $('pyramidFig').innerHTML=pyramidSvg(P.asking);
- let pyrTxt=`The layer asking for attention right now is <em>${ask.name}</em> — ${ask.role}. ${ask.what}`;
+ let pyrTxt=`The layer asking for attention right now is <em>${ask.name}</em> — ${ask.sub}. ${ask.what}`;
  if(work.key!==ask.key)pyrTxt+=`<br><br>The layer you're most at home in is <em>${work.name}</em>. That's a real strength and it isn't the thing to work. Where results won't come, the block is almost never the layer you're already good at.`;
  $('pyramidCopy').innerHTML=pyrTxt;
  $('pyramidAsk').innerHTML=`<span class="kicker">The question this layer asks</span><p style="margin-top:8px;font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--ink)">${ask.asks}</p>`;
 
  /* --- the line --- */
- if(R.carry){
-  $('respCopy').innerHTML=`<em>Self-responsibility is not a burden. It is the line between the old world and the new one.</em><br><br>It is not the same as blame pointed at yourself, and it is not about being at fault. It's about where authorship sits. Nothing in your answers is a verdict on which side of that line you're standing — but one of them is worth carrying into your first week.`;
-  $('respCarry').innerHTML=`<span class="kicker">To carry</span><p style="margin-top:8px">${R.carry}</p>`;
+ const thin=DISCIPLINES.find(d=>d.key===R.lower);
+ if(R.answered&&thin){
+  $('respCopy').innerHTML=`<em>Self-responsibility is not a burden. It is the line between the old world and the new one.</em> And self-awareness is what makes crossing it possible — you cannot take ownership of something you never saw yourself do.<br><br>Neither of them is about fault. Both are about where authorship sits. Nothing in your answers is a verdict on which side of the line you're standing — but of the two, <em>${thin.name.toLowerCase()}</em> is the one with less under it at the moment, so that is the one worth carrying into your first week.`;
+  $('respCarry').innerHTML=`<span class="kicker">To carry</span><p style="margin-top:8px">${thin.carry}</p>`;
   $('respSection').style.display='block';
  }else $('respSection').style.display='none';
 
  /* --- care --- */
  const care=$('careNote');
- if(care){ if(A.capacity.life===2){care.innerHTML=`<div class="card" style="border-left:3px solid var(--red)"><span class="kicker">A word first</span><p style="margin-top:8px">${CARE_MESSAGE}</p></div>`;care.style.display='block';}
+ if(care){ if(A.context.life===2){care.innerHTML=`<div class="card" style="border-left:3px solid var(--red)"><span class="kicker">A word first</span><p style="margin-top:8px">${CARE_MESSAGE}</p></div>`;care.style.display='block';}
   else care.style.display='none';}
 
  ['patternSection','pyramidSection'].forEach(id=>{if($(id))$(id).style.display='block';});
@@ -1674,12 +1784,15 @@ const CHANNEL_STEER={
  jealousy:{ch:'Wins and shares',why:`Jealousy's counter is joy, and joy for someone else is a skill you build by using it. Find a win that is not yours and say the glad thing underneath it, out loud, where they can read it.`},
  neediness:{ch:'Clarity conversation',why:`Neediness's counter is love that doesn't need an answer back. Go and answer somebody else's post before you write your own. Give first, from full, and notice whether you were waiting to be filled.`},
  fear:{ch:'Welcome and start here',why:`Fear's counter is empathy — attention that leaves your own head. Post before you feel ready, which is the only time it counts, and then read three other introductions properly.`}};
-const CAPACITY_LINE=[
- `Under ten minutes a night is enough. The pyramid is three to five, and it was designed for exactly this. Do not add anything to it.`,
- `Ten to twenty minutes is a comfortable fit. Three to five on the pyramid, and the rest of it on whatever surfaced.`,
- `Twenty to forty minutes is more than the practice needs. Keep the pyramid short and give the extra to the two questions at the end of each module, in writing.`,
- `More than forty minutes is generous, and the risk in it is intensity. Seven gentle nights beat one long forced session — hold the practice short and let the time go elsewhere.`];
-const WHEN_LINE=['before anyone else is up','in a gap in the day','before sleep','at a different time each day'];
+/* the pacing line is read from where she said she is standing, not from minutes
+   in a diary — someone whose world currently feels heavy needs a different first
+   week from someone whose doesn't. */
+function pacingLine(){
+ const S=readSource(A);
+ if(S.where===null)return `Three to five minutes a night is the whole practice. It was built short on purpose — consistency does the work, not intensity.`;
+ if(S.where<3.5)return `You put the world somewhere heavy at the moment, so start smaller than you think you should. Three minutes, one colour, seven nights. Nothing else. A practice you can keep on a hard week is worth more than one you abandon on a good one.`;
+ if(S.where<6.5)return `Three to five minutes a night, and no more to begin with. If a week goes sideways, drop back to the pyramid alone and let the writing wait — nothing is broken by missing a night.`;
+ return `You put yourself somewhere fairly open, which usually means the temptation will be to take on more than the practice asks for. Resist it. Three to five minutes, seven nights, one colour at a time.`;}
 
 function renderNav(ch){
  const a=assessPayload();
@@ -1698,17 +1811,7 @@ function renderNav(ch){
    <p>${c.why}</p>
    <p class="nav-note">This is the one thing on the page that is not general advice. It comes from what your own answers pointed at, and it is a suggestion, not an instruction.</p></div></div>`;}
  /* three — foundations + the practice */
- const mins=(typeof A.capacity.minutes==='number')?A.capacity.minutes:null;
- const when=(typeof A.capacity.when==='number')?A.capacity.when:null;
- let cap='';
- if(mins!==null){
-  cap=CAPACITY_LINE[mins];
-  if(when!==null){
-   const tail=when===2?' — which is where it clears most deeply, so that is the easiest start anyone gets.'
-    :when===3?', so hold the seven nights loosely and count the round rather than the streak.'
-    :'. The pyramid does its deepest work at night, so move it later if that ever becomes possible.';
-   cap+=` You said you're most likely to do it <em>${WHEN_LINE[when]}</em>${tail}`;}
-  cap=`<p>${cap}</p>`;}
+ const cap=`<p>${pacingLine()}</p>`;
  h+=`<div class="nav-step"><span class="nav-n">${a&&CHANNEL_STEER[a.key]?'03':'02'}</span><div>
   <h3>Open the Foundation Workbook and begin Purple</h3>
   <p>Foundations is open to every member from day one. Six modules, seven nights each, worked in order — Purple, Blue, Green, Orange, Turquoise, Red. Each written module has a short video beside it. There is no rush and no way to fall behind.</p>
@@ -1801,31 +1904,33 @@ The layer I'm building from that needs the work: ${p.layer} — ${p.layerRole}. 
 Carrying into this week: ${p.carry}`:''}
 `;}
 
-/* the coach's consciousness overview — written about her, never to her.
+/* the facilitator's consciousness overview — written about her, never to her.
    No numbers anywhere: intensity is expressed as rank order only. Items kept
    verbatim are kept verbatim — a paraphrase is always worse and she'll notice. */
 function assessBrief(ch){
  const answeredH=HORSEMEN.reduce((n,h)=>{const a=A.horse[h.key]||[];h.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});return n;},0);
  if(answeredH===0)return '';
- const H=readHorsemen(A), P=readPyramid(A), R=readResponsibility(A), sg=signature(ch);
+ const H=readHorsemen(A), P=readPyramid(A), R=readDisciplines(A), sg=signature(ch);
  const nm=k=>HORSEMEN.find(h=>h.key===k).name;
- const pn=k=>PYRAMID.find(p=>p.key===k).name;
+ const pn=k=>cap1(PYRAMID.find(p=>p.key===k).name);
  const hm=HORSEMEN.find(h=>h.key===H.active);
  const dt=new Date(Date.UTC(ch.inp.y,ch.inp.mo-1,ch.inp.d)).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
  const joined=new Date().toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'});
- const cap=[A.capacity.minutes!==undefined?CAPACITY[0].options[A.capacity.minutes]:null,
-            A.capacity.when!==undefined?CAPACITY[1].options[A.capacity.when]:null].filter(Boolean);
- const life=A.capacity.life!==undefined?CAPACITY[2].options[A.capacity.life]:'—';
- const care=A.capacity.life===2?'\n  ⚑ CARE FLAG — in something hard right now. 1737 shown on her result page.':'';
+ const life=A.context.life!==undefined?CONTEXT[0].options[A.context.life]:'—';
+ const S=readSource(A);
+ const spread=x=>x===null?'—':(x<3.5?'low ('+x.toFixed(1)+'/9)':x<6.5?'mid ('+x.toFixed(1)+'/9)':'high ('+x.toFixed(1)+'/9)');
+ const dn=k=>DISCIPLINES.find(d=>d.key===k).name;
+ const care=A.context.life===2?'\n  ⚑ CARE FLAG — in something hard right now. 1737 shown on her result page.':'';
  const noRaise=(A.careFree&&A.careFree.trim())?`\n  ⚑ DO NOT RAISE IN GROUP: ${A.careFree.trim()}`:'';
  const named=H.named?nm(H.named):(A.hardest==='even'?'all about the same':'—');
  const diverge=H.diverges
   ? `⚑ DIVERGENCE — she can see ${nm(H.named)}; ${nm(H.active)} is the one running.\n                    Open on the one she named. Do not lead with the other.`
   : (H.named?`Aligned — she names the same one her answers point at. Further on than most.`:`She didn't single one out.`);
  const flat=H.flat?'\n                    All four ran close — no single dominant pattern; read her words, not the ranking.':'';
- const respLine=R.answered?`Carry given to her: "${R.carry}"`:'Not answered.';
+ const carryTxt=(DISCIPLINES.find(d=>d.key===R.lower)||{}).carry||'';
+ const respLine=R.answered?`${dn(R.lower)} is the thinner of the two.\n                    Carry given to her: "${carryTxt}"`:'Not answered.';
  return `
-──────────────── CONSCIOUSNESS OVERVIEW · COACHES ONLY ────────────────
+──────────────── CONSCIOUSNESS OVERVIEW · FACILITATORS ONLY ────────────────
 ${ch.inp.name||'—'} · joined ${joined} · born ${dt}, ${ch.inp.placeStr}
 Sol Signature: ${sg.name}
 
@@ -1835,27 +1940,34 @@ SHE NAMED           ${named} (hardest to answer honestly)
 THE FOUR, RANKED    ${H.order.map(nm).join('  ▸  ')}   (most active → least)
 
 PYRAMID
-  Asking for work    ${pn(P.asking)} — ${PYRAMID.find(p=>p.key===P.asking).role}
+  Asking for work    ${pn(P.asking)} — ${PYRAMID.find(p=>p.key===P.asking).sub}
   At home in         ${pn(P.working)}
   Read               Work the ground she stands on, not the layer she's fluent in.
 
-SELF-RESPONSIBILITY ${respLine}
+THE TWO             ${respLine}
+
+SOURCE · WHO        ${spread(S.who)}   how much the public self matches the private one
+SOURCE · WHAT       ${spread(S.what)}   how much of the week is chosen, and how she is alone
+SOURCE · WHERE      ${spread(S.where)}   how the world feels, and whether she is running her own
+                    Read these three together. A low WHERE with a high WHO is
+                    circumstance; a low WHO with a high WHERE is the harder one.
 
 CHART SAYS          Sun ${signOf(ch.pos.sun).n}${ch.ascSign?', '+ch.ascSign.n+' rising':' (no birth time — no rising, no houses)'}, ${ch.leadEl}-led, ${TEMPERAMENT[ch.temper].name}.
                     Moon ${signOf(ch.pos.moon).n} · Mercury ${signOf(ch.pos.mercury).n} · Saturn ${signOf(ch.pos.saturn).n}
 WHERE TO WATCH      ${chartTension(ch,H,P)}
 
-CAPACITY            ${cap.join(', ')||'—'}
 LIFE RIGHT NOW      ${life}${care}${noRaise}
 
-IN HER WORDS        "${(A.words||'').trim()||'—'}"
+WHY SHE IS HERE     "${(A.why||'').trim()||'—'}"
+WHAT SHE WANTS      "${(A.want||'').trim()||'—'}"
 
-The course meets ${nm(H.active)} in Week 6 (Red) and again in Week 17. The
-${pn(P.asking)} layer is Week 3 (Green). Self-responsibility is Week 16 (Orange).
+The course meets ${nm(H.active)} in Week 6 (Red) and again in Week 17.
+${cap1(PYRAMID.find(p=>p.key===P.asking).name)} is Week 3 (Green). Self-responsibility is Week 16 (Orange),
+self-awareness Week 7 (Purple).
 Nothing above was shown to her as a score, a band or a type.
 ────────────────────────────────────────────────────────────────────────
 `;}
-/* one line for the coach: where the chart and the answers pull against each other.
+/* one line for the facilitator: where the chart and the answers pull against each other.
    Provisional — the six-point chart mapping is still open (build brief §7.1). */
 function chartTension(ch,H,P){
  const sat=signOf(ch.pos.saturn).n, mer=signOf(ch.pos.mercury).n, mo=signOf(ch.pos.moon).n;
@@ -1864,7 +1976,7 @@ function chartTension(ch,H,P){
   jealousy:`Venus in ${signOf(ch.pos.venus).n} shows what she measures worth by; that's the yardstick to loosen.`,
   neediness:`Moon in ${mo} is where she goes for steadiness — the reassurance has a shape, and that's it.`,
   fear:`Saturn in ${sat} is where she braces. Fear will sound most reasonable in that territory.`};
- return byPattern[H.active]+` Pyramid: ${ch.leadEl}-led temperaments tend to over-trust the ${ch.leadEl==='Air'?'Thought':ch.leadEl==='Water'?'Emotion':ch.leadEl==='Fire'?'Belief':'Trust'} layer.`;
+ return byPattern[H.active]+` Pyramid: ${ch.leadEl}-led temperaments tend to over-trust ${ch.leadEl==='Air'?'the blueprint':ch.leadEl==='Water'?'the energy':ch.leadEl==='Fire'?'the blueprint':'the ground'}.`;
 }
 function fallbackCopy(text){
  const ta=document.createElement('textarea');ta.value=text;
@@ -2009,7 +2121,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const blob=new Blob([window._aiText],{type:'text/plain'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download='my-sol-map-profile.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});
- // the coach's consciousness overview — copied by her, never sent automatically
+ // the facilitator's consciousness overview — copied by her, never sent automatically
  const cCopy=$('btnCoachCopy'),cDl=$('btnCoachDownload'),cRead=$('btnCoachRead');
  if(cCopy)cCopy.addEventListener('click',()=>{
   if(!window._coachText)return;
