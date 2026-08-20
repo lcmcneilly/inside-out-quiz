@@ -526,8 +526,9 @@ function solMark(pyDark,pyLight,rayColour){
   <defs><radialGradient id="${uid}" cx="50%" cy="50%" r="50%">
     <stop offset="0%" stop-color="#fff" stop-opacity="1"/><stop offset="60%" stop-color="#fff" stop-opacity=".95"/>
     <stop offset="86%" stop-color="#fff" stop-opacity=".55"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-   </radialGradient><mask id="${uid}m"><rect width="${S}" height="${S}" fill="url(#${uid})"/></mask></defs>
-  <g mask="url(#${uid}m)">${rays}</g>
+   </radialGradient><mask id="${uid}m"><rect width="${S}" height="${S}" fill="url(#${uid})"/></mask>
+   <clipPath id="${uid}c"><rect x="0" y="0" width="${S}" height="${bY}"/></clipPath></defs>
+  <g mask="url(#${uid}m)" clip-path="url(#${uid}c)">${rays}</g>
   <circle cx="${cx}" cy="${cy}" r="${.42*R}" fill="${RC}" opacity=".07"/>
   <circle cx="${cx}" cy="${cy}" r="${.20*R}" fill="${RC}" opacity=".16"/>
   <path d="M${cx} ${cy} L${cx-hW} ${bY} L${cx} ${bY} Z" fill="${pyDark}"/>

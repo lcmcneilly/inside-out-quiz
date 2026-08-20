@@ -361,20 +361,21 @@ a{color:var(--gold-deep)}
   <div class="card">
     <span class="kicker">Before you start</span>
     <h3>What SHE IS SOL is</h3>
-    <p>A self-led system for people ready to change themselves — structured, not soft. The whole wellness industry runs on <em>you are not enough yet.</em> This runs on the opposite: you are not deficient, you have forgotten. The work was never about becoming, it was always about returning.</p>
+    <p>A self-led system for people ready to meet themselves honestly. It has a shape and a rhythm, and you run it yourself. The whole wellness industry runs on <em>you are not enough yet.</em> This runs on the opposite: you are not deficient, you have forgotten. The work was never about becoming, it was always about returning.</p>
     <p>Underneath it is one practice. Six colours of light, seven nights each, three times round — a hundred and twenty-six nights, three to five minutes before sleep. That is the engine, and it is deliberately small enough to actually keep.</p>
   </div>
   <div class="card">
-    <span class="kicker">And what the community gives you</span>
-    <h3>What you get from today</h3>
+    <span class="kicker">The room</span>
+    <h3>Lumina</h3>
+    <p>Lumina is where SHE IS SOL and SHE IS AI meet — two doors into one community. You came in through the first: knowing yourself. The second is learning to use AI as a tool, and recognising how much power you actually have to build something with it.</p>
+    <p>They sit in one room on purpose. Capability handed to someone who doesn't yet know herself only moves faster in the wrong direction. You build from the foundation of knowing yourself first, and then the tools are worth having.</p>
     <ul class="offer">
-      <li><span>The rooms</span><p>Five open channels — somewhere to land, a daily conversation, wins, questions, and what's on. One post a day, and every post gets an answer.</p></li>
-      <li><span>Foundations</span><p>The six modules and the Foundation Workbook, personalised from this assessment. Open to every member from day one.</p></li>
-      <li><span>A live call each month</span><p>Open to everyone. Laura teaches something real, and you can bring a question.</p></li>
-      <li><span>Your Sol Map</span><p>This — yours to keep, and the thing your facilitator reads before they meet you.</p></li>
+      <li><span>The conversation</span><p>Open channels, and people standing at roughly the same point in it as you.</p></li>
+      <li><span>The videos</span><p>A welcome from Laura, and one alongside each of the six modules.</p></li>
+      <li><span>Foundations</span><p>The six modules and the Foundation Workbook, personalised from this assessment.</p></li>
+      <li><span>The tools</span><p>The AI and Ivorey tools held in the community, to use on your own work.</p></li>
     </ul>
-    <p class="offer-note">When you want to go further there is an eighteen-week guided cohort, with weekly calls and the full programme. Nobody will pitch it to you. It is there when the map starts asking a bigger question.</p>
-    <p class="offer-note">There is a sister brand, <em>SHE IS AI</em>, for the practical side — capability rather than consciousness. Two doors, one room. That's all you need to know about it for now.</p>
+    <p class="offer-note">When you want to go further there is an eighteen-week guided cohort with weekly calls. Nobody will pitch it to you. It is there when the map starts asking a bigger question.</p>
   </div>
 </section>
 
@@ -445,7 +446,7 @@ a{color:var(--gold-deep)}
     <div class="part-header" style="margin:44px 0 4px">
       <span class="kicker">A few honest questions</span>
       <h2>Where you are right now</h2>
-      <p>This is the first piece of the actual work, and it runs on the structure of the course itself — four, then three, then two, then one. The <em>four</em> are the patterns that move through you. The <em>three</em> are the layers you are built on. The <em>two</em> are what the whole thing runs on. The <em>one</em> is you.</p>
+      <p>This is the first piece of the actual work, and it runs on the structure of the course itself — four, three, two, one. The <em>four</em> are the patterns that move through you. The <em>three</em> are the layers you are built on. The <em>two</em> are what the whole thing runs on. The <em>one</em> is you.</p>
       <p style="margin-top:12px">Answer for how the last few months have genuinely been, not how you'd like them to have been.</p>
     </div>
     <div id="assessQuestions"></div>
@@ -523,7 +524,7 @@ a{color:var(--gold-deep)}
     <div class="part-header">
       <span class="kicker">The Pyramid of Creation</span>
       <h2>What you are building on</h2>
-      <p>Everything you make stands on four layers, and they stack in one order only. <em>Trust is the ground. Belief is the direction. Emotion is the engine. Thought is the blueprint.</em></p>
+      <p>Everything you make stands on three layers, and they stack in one order only. <em>Trust and belief are the ground. Emotion is the energy. Thought and intent are the blueprint.</em></p>
     </div>
     <div class="pyr-fig" id="pyramidFig"></div>
     <div class="card"><p id="pyramidCopy"></p></div>
@@ -1263,15 +1264,13 @@ const DISCIPLINES=[
   carry:`Find the place where your account of what happened stops being about you. Don't argue with it — just notice exactly where the line falls. That edge is the work.`,
   items:[
    {t:`When something goes wrong, my first move is to look at my own part in it.`,r:false},
-   {t:`I hold a person or a circumstance responsible for how I feel.`,r:true},
-   {t:`I wait on permission I could give myself.`,r:true}]},
+   {t:`I hold a person or a circumstance responsible for how I feel.`,r:true}]},
  {key:'awareness',name:'Self-awareness',
   blurb:`The gap between what happens and how you respond. You are not your reactions — you are the one who can watch them arrive.`,
   carry:`For one day, try to catch a reaction on the way up rather than on the way out. You will miss most of them. Catching one is the whole exercise.`,
   items:[
    {t:`I notice a reaction rising before it gets out of my mouth.`,r:false},
-   {t:`I can name what I'm feeling while I'm still feeling it.`,r:false},
-   {t:`I only see what I was actually doing once the moment has passed.`,r:true}]}
+   {t:`I can name what I'm feeling while I'm still feeling it.`,r:false}]}
 ];
 const DISC_KEYS=DISCIPLINES.map(d=>d.key);
 
@@ -1350,7 +1349,7 @@ function assessAnswered(A){
  if(A.why&&A.why.trim())n++;
  if(A.want&&A.want.trim())n++;
  return n;}
-const ASSESS_TOTAL=16+1+9+6+6+1+2; // 41
+const ASSESS_TOTAL=16+1+9+4+6+1+2; // 39
 </script>
 <script>
 'use strict';
@@ -1792,7 +1791,7 @@ function pacingLine(){
  if(S.where===null)return `Three to five minutes a night is the whole practice. It was built short on purpose — consistency does the work, not intensity.`;
  if(S.where<3.5)return `You put the world somewhere heavy at the moment, so start smaller than you think you should. Three minutes, one colour, seven nights. Nothing else. A practice you can keep on a hard week is worth more than one you abandon on a good one.`;
  if(S.where<6.5)return `Three to five minutes a night, and no more to begin with. If a week goes sideways, drop back to the pyramid alone and let the writing wait — nothing is broken by missing a night.`;
- return `You put yourself somewhere fairly open, which usually means the temptation will be to take on more than the practice asks for. Resist it. Three to five minutes, seven nights, one colour at a time.`;}
+ return `Three to five minutes a night, and no more than that to begin with. Seven nights with one colour does more than one long, forced session ever will.`;}
 
 function renderNav(ch){
  const a=assessPayload();
@@ -2003,8 +2002,9 @@ function solMark(pyDark,pyLight){
   <defs><radialGradient id="${uid}" cx="50%" cy="50%" r="50%">
     <stop offset="0%" stop-color="#fff" stop-opacity="1"/><stop offset="60%" stop-color="#fff" stop-opacity=".95"/>
     <stop offset="86%" stop-color="#fff" stop-opacity=".55"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/>
-   </radialGradient><mask id="${uid}m"><rect width="${S}" height="${S}" fill="url(#${uid})"/></mask></defs>
-  <g mask="url(#${uid}m)">${rays}</g>
+   </radialGradient><mask id="${uid}m"><rect width="${S}" height="${S}" fill="url(#${uid})"/></mask>
+   <clipPath id="${uid}c"><rect x="0" y="0" width="${S}" height="${bY}"/></clipPath></defs>
+  <g mask="url(#${uid}m)" clip-path="url(#${uid}c)">${rays}</g>
   <circle cx="${cx}" cy="${cy}" r="${.42*R}" fill="${GOLD}" opacity=".07"/>
   <circle cx="${cx}" cy="${cy}" r="${.20*R}" fill="${GOLD}" opacity=".16"/>
   <path d="M${cx} ${cy} L${cx-hW} ${bY} L${cx} ${bY} Z" fill="${pyDark}"/>
