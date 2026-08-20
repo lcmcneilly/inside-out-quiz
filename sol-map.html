@@ -303,7 +303,7 @@ a{color:var(--gold-deep)}
 .nav-step p + p{margin-top:11px}
 .nav-note{font-style:italic;color:var(--ivory-faint);font-size:.9rem;border-top:1px solid var(--line-soft);padding-top:11px}
 @media(max-width:520px){.nav-step{gap:14px}.nav-n{font-size:1.25rem;min-width:26px}}
-#patternSection,#pyramidSection,#respSection,#coachCard{display:none}
+#patternSection,#pyramidSection,#respSection{display:none}
 /* the pattern to watch */
 .pattern-card{border:1px solid var(--stone);border-left:3px solid var(--accent,var(--gold));border-radius:12px;
   background:#FFFFFF;box-shadow:0 1px 2px rgba(26,27,32,.03);padding:32px 34px;margin:18px 0}
@@ -455,7 +455,7 @@ a{color:var(--gold-deep)}
 
   <div class="btn-row"><button class="btn solid" id="btnGenerate" type="button">Read my Sol Map</button></div>
   <p class="err" id="formErr" role="alert" style="text-align:center"></p>
-  <p class="disclaimer">Your details and answers stay on this device — nothing is sent anywhere, and nothing reaches a facilitator unless you copy it across yourself at the end. This is a mirror for self-knowing, not a substitute for medical or professional care.</p>
+  <p class="disclaimer" id="privacyLine"></p>
 </section>
 
 <div id="reading" aria-live="polite">
@@ -547,8 +547,7 @@ a{color:var(--gold-deep)}
     <div class="part-header">
       <span class="kicker">What you'll actually work through</span>
       <h2>Six lights, seven nights, three times</h2>
-      <p>The practice underneath everything is one nightly visualisation, three to five minutes as you settle for sleep. Seven nights with one colour, then the next. Six colours make a round; three rounds make the first eighteen weeks — one hundred and twenty-six nights exactly.</p>
-      <p style="margin-top:12px">The order never changes and it isn't personalised. Red is always last, because presence built on everything already cleared is solid rather than reactive. <em>Nothing you answered above moves your place in it.</em></p>
+      <p>Six colours, seven nights each, worked in order. The workbook takes you through it — this is just what's coming.</p>
     </div>
     <div class="ahead-row">
       <div class="ahead" style="--accent:var(--purple)"><span class="kicker">One · Purple</span><h3>The Clear Eye</h3><p>Clarity. Clearing the mental noise until you can hear your own read on something.</p></div>
@@ -592,19 +591,6 @@ a{color:var(--gold-deep)}
       <p class="hint" id="aiCopyNote" style="display:none;margin-top:12px">Copied. Paste it into ChatGPT, Claude, or any assistant with a line like <em>"this is my profile — keep it in mind when you help me."</em></p>
       <div id="emailCapture" style="margin-top:18px"></div>
     </div>
-    <div class="card no-print" style="text-align:center" id="coachCard">
-      <span class="kicker">For your facilitator</span>
-      <h3>The overview your facilitator works from</h3>
-      <p>One paste, and your facilitator arrives already knowing you — so the first conversation starts somewhere real instead of at the beginning. It carries what you wrote in your own words, unedited.</p>
-      <p>You're welcome to read it. Fair warning: it is written <em>about</em> you rather than to you, so it reads blunter than the page above.</p>
-      <div class="btn-row">
-        <button class="btn solid" id="btnCoachCopy" type="button">Copy for my facilitator</button>
-        <button class="btn" id="btnCoachDownload" type="button">Download it</button>
-        <button class="btn" id="btnCoachRead" type="button">Read it first</button>
-      </div>
-      <p class="hint" id="coachCopyNote" style="display:none;margin-top:12px">Copied. Paste it wherever your facilitator asked you to — nothing was sent automatically.</p>
-      <pre id="coachPre" style="display:none;text-align:left;white-space:pre-wrap;font-family:var(--sans);font-size:.82rem;line-height:1.65;color:var(--ivory-dim);background:var(--card);border:1px solid var(--stone);border-radius:10px;padding:20px;margin-top:16px;overflow-x:auto"></pre>
-    </div>
   </section>
 
 </div>
@@ -624,6 +610,23 @@ const LINKS = {
   workbook: "foundation-workbook.html" // or https://workbook.sheissol.ai when hosted
 };
 const FORM_ENDPOINT = ""; // optional: paste a form endpoint (Kit / Formspree / etc.) to enable email capture
+
+/* ================= WHERE THE ASSESSMENT GOES =================
+   Paste a Formspree / Google Form / Zapier-catch endpoint here and every
+   completed assessment is POSTed to it as one flat record, so facilitators get
+   a spreadsheet instead of waiting for someone to paste something across.
+
+   Leave it blank and nothing is transmitted — the map still works exactly the
+   same, everything simply stays in the browser.
+
+   Two rules this code keeps and should keep:
+     · the reading is rendered BEFORE the send is attempted, and a failed send
+       is swallowed, so a network problem can never cost her the map;
+     · she is told plainly, above the button, that it goes to a facilitator.
+   This is personal information about someone's emotional state. Under the NZ
+   Privacy Act you need a stated purpose, a retention period, and a way to
+   delete on request before this is switched on. */
+const FACILITATOR_ENDPOINT = "";
 
 /* ================= DATA — signs, correspondences (sourced) =================
    Melothesia + cell salts: traditional correspondences (Carey & Perry biochemic
@@ -1302,9 +1305,7 @@ const SOURCE_WORDS={
 /* ---- context and care ----
    The care signal is kept deliberately: this is the only place someone can say
    they are in something hard, and 1737 is shown on her own result page. */
-const CONTEXT=[
- {k:'life',t:`Where you are right now — is there anything heavy in it we should know about before you begin?`,
-  options:['Nothing unusual','A lot on, but I am steady','I am in something hard at the moment','I would rather not say']}];
+const CONTEXT=[];
 const CARE_MESSAGE=`Thank you for saying so. It changes nothing about your access, and it is not on your file as a problem.<br><br>One thing said plainly: this programme is not therapy, and it is not a substitute for it. It's a structure for working with yourself, and it works best alongside real support rather than instead of it. If you're in something heavy, please keep the people who are helping you.<br><br><em>Need to Talk 1737</em> — free call or text, any time, anywhere in New Zealand.`;
 
 /* ---- derivation (internal only — never a number, never a band, to her) ---- */
@@ -1349,7 +1350,7 @@ function assessAnswered(A){
  if(A.why&&A.why.trim())n++;
  if(A.want&&A.want.trim())n++;
  return n;}
-const ASSESS_TOTAL=16+1+9+4+6+1+2; // 39
+const ASSESS_TOTAL=16+1+9+4+6+2; // 38
 </script>
 <script>
 'use strict';
@@ -1616,8 +1617,6 @@ function buildAssessment(){
  h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-accent"></div>`;
  h+=`<div class="q-item"><p class="q-text">${n+1}. ${SOURCE_WORDS.why.t}</p><textarea data-free="why" maxlength="${SOURCE_WORDS.why.max}" placeholder="${SOURCE_WORDS.why.ph}"></textarea></div>`;n++;
  h+=`<div class="q-item"><p class="q-text">${n+1}. ${SOURCE_WORDS.want.t}</p><textarea data-free="want" maxlength="${SOURCE_WORDS.want.max}" placeholder="${SOURCE_WORDS.want.ph}"></textarea></div>`;n++;
- CONTEXT.forEach(c=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${c.t}</p>${optsRow(`data-c="${c.k}"`,c.options)}</div>`;n++;});
- h+=`<div class="q-item"><p class="q-text">Anything you'd rather wasn't raised in a group? <span style="color:var(--ivory-faint)">(optional)</span></p><textarea data-free="careFree" maxlength="200" placeholder="Only if you want to. It goes to your facilitator and nowhere else."></textarea></div>`;
  h+=`</div>`;
 
  host.innerHTML=h;
@@ -1764,10 +1763,10 @@ function renderReading(ch){
  // the overview is hers to keep too — so reopening the map doesn't lose it
  window._coachText=assessBrief(ch)||lsGet('solmap.coach.v1')||'';
  if(window._coachText)lsSet('solmap.coach.v1',window._coachText);
- if($('coachCard'))$('coachCard').style.display=window._coachText?'block':'none';
  try{$('btnWorkbook').href=new URL((LINKS.workbook||'foundation-workbook.html'),location.href).href;}catch(e){}
  if(LINKS.skool)$('btnMapCommunity').href=LINKS.skool;else $('btnMapCommunity').style.display='none';
  renderCapture();
+ sendToFacilitators(ch);   // after the render, and it swallows its own failures
  $('formSection').style.display='none';
  $('welcomeBack').style.display='none';
  $('reading').style.display='block';
@@ -1779,10 +1778,10 @@ function renderReading(ch){
    The counter to each pattern is a thing to do in a specific channel — which is
    the only reason a room beats a book. */
 const CHANNEL_STEER={
- judgement:{ch:'Ask anything',why:`Judgement's counter is compassion, and the fastest way in is to need something in public. Ask the question you'd rather work out privately. Watch what it costs, and watch what comes back.`},
- jealousy:{ch:'Wins and shares',why:`Jealousy's counter is joy, and joy for someone else is a skill you build by using it. Find a win that is not yours and say the glad thing underneath it, out loud, where they can read it.`},
- neediness:{ch:'Clarity conversation',why:`Neediness's counter is love that doesn't need an answer back. Go and answer somebody else's post before you write your own. Give first, from full, and notice whether you were waiting to be filled.`},
- fear:{ch:'Welcome and start here',why:`Fear's counter is empathy — attention that leaves your own head. Post before you feel ready, which is the only time it counts, and then read three other introductions properly.`}};
+ judgement:{short:`Ask the question you would rather work out privately. Judgement softens fastest in public.`,ch:'Ask anything',why:`Judgement's counter is compassion, and the fastest way in is to need something in public. Ask the question you'd rather work out privately. Watch what it costs, and watch what comes back.`},
+ jealousy:{short:`Find a win that is not yours and say the glad thing out loud.`,ch:'Wins and shares',why:`Jealousy's counter is joy, and joy for someone else is a skill you build by using it. Find a win that is not yours and say the glad thing underneath it, out loud, where they can read it.`},
+ neediness:{short:`Answer someone else's post before you write your own.`,ch:'Clarity conversation',why:`Neediness's counter is love that doesn't need an answer back. Go and answer somebody else's post before you write your own. Give first, from full, and notice whether you were waiting to be filled.`},
+ fear:{short:`Post before you feel ready. That is the only time it counts.`,ch:'Welcome and start here',why:`Fear's counter is empathy — attention that leaves your own head. Post before you feel ready, which is the only time it counts, and then read three other introductions properly.`}};
 /* the pacing line is read from where she said she is standing, not from minutes
    in a diary — someone whose world currently feels heavy needs a different first
    week from someone whose doesn't. */
@@ -1800,26 +1799,24 @@ function renderNav(ch){
  let h='';
  /* one — the room */
  h+=`<div class="nav-step"><span class="nav-n">01</span><div>
-  <h3>Start in <em>Welcome and start here</em></h3>
-  <p>Five channels are open to you from today: <em>Welcome and start here</em> · <em>Clarity conversation</em>, which is the daily one · <em>Wins and shares</em> · <em>Ask anything</em> · <em>What's on</em>. One post a day goes up in the open room, and every post gets a reply — including the ones nobody else answers.</p>
-  <p>Your first one is the line you wrote at the end of the assessment. Not a tidied version of it. The one you actually typed.</p></div></div>`;
+  <h3>Introduce yourself</h3>
+  <p>Post what you wrote at the end of this — the untidied version. Then watch Laura's welcome video.</p></div></div>`;
  /* two — the channel matched to the pattern */
  if(a&&CHANNEL_STEER[a.key]){const c=CHANNEL_STEER[a.key];
   h+=`<div class="nav-step"><span class="nav-n">02</span><div>
-   <h3>Then <em>${c.ch}</em> — for a specific reason</h3>
-   <p>${c.why}</p>
-   <p class="nav-note">This is the one thing on the page that is not general advice. It comes from what your own answers pointed at, and it is a suggestion, not an instruction.</p></div></div>`;}
+   <h3>Then <em>${c.ch}</em></h3>
+   <p>${c.short}</p>
+   <p class="nav-note">Drawn from your own answers, and a suggestion rather than an instruction.</p></div></div>`;}
  /* three — foundations + the practice */
  const cap=`<p>${pacingLine()}</p>`;
  h+=`<div class="nav-step"><span class="nav-n">${a&&CHANNEL_STEER[a.key]?'03':'02'}</span><div>
-  <h3>Open the Foundation Workbook and begin Purple</h3>
-  <p>Foundations is open to every member from day one. Six modules, seven nights each, worked in order — Purple, Blue, Green, Orange, Turquoise, Red. Each written module has a short video beside it. There is no rush and no way to fall behind.</p>
+  <h3>Open the workbook and start Purple</h3>
+  <p>Six modules, each with a short video. No rush, and no way to fall behind.</p>
   ${cap}</div></div>`;
  /* four — the rhythm */
  h+=`<div class="nav-step"><span class="nav-n">${a&&CHANNEL_STEER[a.key]?'04':'03'}</span><div>
-  <h3>Learn the week</h3>
-  <p>Monday a clarity prompt · Tuesday something practical · Wednesday a member moment · Thursday what's on · Friday one small thing to try before Monday. There's a live call once a month, open to everyone.</p>
-  <p>You don't have to be at all of it. Turning up on the same day each week does more than turning up everywhere once.</p></div></div>`;
+  <h3>Use what's in there</h3>
+  <p>The AI and Ivorey tools live in the community, alongside a monthly live call. Turning up on the same day each week does more than turning up everywhere once.</p></div></div>`;
  /* five — what this is pointing at */
  h+=`<div class="nav-step"><span class="nav-n">${a&&CHANNEL_STEER[a.key]?'05':'04'}</span><div>
   <h3>And when the map starts asking a bigger question</h3>
@@ -1892,6 +1889,49 @@ Temperament: ${t.name} (${t.el}) — ${strip(t.copy)}
 ${myPatternText()}
 — Generated by the SHE IS SOL · Sol Map. A mirror for self-knowing, not a substitute for medical or professional care.`;
  return out;}
+/* ---- the record sent to the facilitators' sheet ----
+   One flat object, one row. Raw scores are included because a baseline is only
+   useful if you can re-measure against it in eighteen weeks — she is never
+   shown any of these numbers, and the page never displays a total. */
+function facilitatorRecord(ch){
+ const H=readHorsemen(A), P=readPyramid(A), D=readDisciplines(A), S=readSource(A), sg=signature(ch);
+ const r={
+  submitted:new Date().toISOString(),
+  name:ch.inp.name||'',
+  born:`${ch.inp.d}/${ch.inp.mo}/${ch.inp.y}`,
+  birth_time:ch.inp.timeKnown?`${pad2(ch.inp.h)}:${pad2(ch.inp.mi)}`:'unknown',
+  birthplace:ch.inp.placeStr||'',
+  signature:sg.name,
+  sun:signOf(ch.pos.sun).n, moon:signOf(ch.pos.moon).n,
+  rising:ch.ascSign?ch.ascSign.n:'', element:ch.leadEl,
+  pattern_running:HORSEMEN.find(h=>h.key===H.active).name,
+  counter:HORSEMEN.find(h=>h.key===H.active).counter,
+  she_named:H.named?HORSEMEN.find(h=>h.key===H.named).name:(A.hardest==='even'?'about the same':''),
+  diverges:H.diverges?'YES':'no',
+  four_ranked:H.order.map(k=>HORSEMEN.find(h=>h.key===k).name).join(' > '),
+  layer_asking:PYRAMID.find(p=>p.key===P.asking).name,
+  layer_strongest:PYRAMID.find(p=>p.key===P.working).name,
+  thinner_discipline:DISCIPLINES.find(d=>d.key===D.lower).name,
+  why_here:(A.why||'').trim(),
+  what_they_want:(A.want||'').trim()};
+ /* raw, for the baseline — never rendered anywhere */
+ HORSE_KEYS.forEach(k=>r['score_'+k]=H.raw[k]);          // 0–12
+ PYR_KEYS.forEach(k=>r['score_'+k]=P.raw[k]);            // 0–9
+ DISC_KEYS.forEach(k=>r['score_'+k]=D.raw[k]);           // 0–6
+ SOURCE.forEach(q=>r['source_'+q.key]=(A.source||{})[q.key]??''); // 1–9
+ r.source_who=S.who===null?'':S.who.toFixed(2);
+ r.source_what=S.what===null?'':S.what.toFixed(2);
+ r.source_where=S.where===null?'':S.where.toFixed(2);
+ return r;}
+function sendToFacilitators(ch){
+ if(!FACILITATOR_ENDPOINT)return;
+ try{
+  const body=new FormData();
+  const rec=facilitatorRecord(ch);
+  Object.keys(rec).forEach(k=>body.append(k,rec[k]));
+  fetch(FACILITATOR_ENDPOINT,{method:'POST',body,mode:'no-cors'}).catch(()=>{});
+ }catch(e){/* a failed send must never cost her the reading */}}
+
 /* the member's own copy of the pattern — plain, non-clinical, no ranking. */
 function myPatternText(){
  const p=assessPayload(); if(!p)return '';
@@ -2105,6 +2145,10 @@ function initForm(){
 document.addEventListener('DOMContentLoaded',()=>{
  initForm();
  buildAssessment();
+ // the privacy line has to tell the truth about wherever the answers actually go
+ if($('privacyLine'))$('privacyLine').innerHTML=FACILITATOR_ENDPOINT
+  ? `Your map is yours and stays on this device. Your answers are also sent to the SHE IS SOL facilitators, so the person who meets you has already read them — nobody else sees them. This is a mirror for self-knowing, not a substitute for medical or professional care.`
+  : `Your details and answers stay on this device — nothing is sent anywhere. This is a mirror for self-knowing, not a substitute for medical or professional care.`;
  // the brand-level mark stays gold
  if($('heroMark'))$('heroMark').innerHTML=solMark();
  $('btnPdf').addEventListener('click',()=>window.print());
