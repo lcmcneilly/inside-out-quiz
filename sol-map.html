@@ -227,6 +227,8 @@ a{color:var(--gold-deep)}
 .q-part .kicker{display:block;margin-bottom:10px;color:var(--gold-deep)}
 .q-part-h{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2rem);color:var(--ink);margin-bottom:10px}
 .q-part-p{color:var(--ivory-dim);max-width:56ch;margin:0 auto;font-size:.98rem}
+.q-sub{font-family:var(--serif);font-weight:400;font-size:1.28rem;color:var(--ink);
+  margin:26px 0 10px;text-align:center}
 .opts{display:flex;flex-direction:column;gap:8px}
 .opts button{border:1px solid var(--stone);background:#fff;border-radius:9px;padding:13px 16px;text-align:left;
   font-family:var(--sans);font-size:.95rem;color:var(--ink);cursor:pointer;transition:background .15s,color .15s,border-color .15s}
@@ -284,6 +286,9 @@ a{color:var(--gold-deep)}
   line-height:1.35;color:var(--gold-deep);max-width:26ch;margin-bottom:22px}
 .qa-body p{color:var(--ivory-dim)}
 .qa-body p + p{margin-top:14px}
+/* the question handed back — never a conclusion */
+.qa-ask{font-family:var(--serif);font-style:italic;font-size:1.15rem;line-height:1.6;
+  color:var(--ink);border-top:1px solid var(--line-soft);padding-top:18px;margin-top:20px!important}
 /* the diagram */
 .lm-fig{display:flex;justify-content:center;margin:6px 0 30px}
 .lm-fig svg{max-width:440px;width:100%;height:auto}
@@ -351,9 +356,8 @@ a{color:var(--gold-deep)}
   </div>
   <span class="kicker" style="display:block;margin-bottom:18px">Welcome in</span>
   <h1>Who are you?</h1>
-  <p style="margin-top:22px">Two things, read together. Your birth details give us the structure — <em>how you are built.</em> The questions give us the state you are actually in right now. Your Sol Map is where those two meet.</p>
-  <p><em>There is no score at the end of this, and no type.</em> Nothing is ranked, nothing is graded, and nothing is compared to anybody else. Some of the questions will be uncomfortable to answer honestly — that is the work, not a side effect of it.</p>
-  <p>About fifteen minutes, in one sitting.</p>
+  <p style="margin-top:22px">Welcome to the Sol Map. It takes about fifteen minutes: you give us your birth details, answer a set of questions, and at the end you get a report on where you are right now.</p>
+  <p><em>It is a baseline, not a rank.</em> Nothing in it is scored, graded, or compared to anybody else, and there is no good or bad result. Some of the questions are uncomfortable to answer honestly. Answer them honestly anyway — that is the only thing that makes the report worth having.</p>
   <p class="anchor-line">We are all Source. You already have everything inside you.</p>
 </section>
 
@@ -368,9 +372,9 @@ a{color:var(--gold-deep)}
     <span class="kicker">The room</span>
     <h3>Lumina</h3>
     <p>Lumina is where SHE IS SOL and SHE IS AI meet — two doors into one community. You came in through the first: knowing yourself. The second is learning to use AI as a tool, and recognising how much power you actually have to build something with it.</p>
-    <p>They sit in one room on purpose. Capability handed to someone who doesn't yet know herself only moves faster in the wrong direction. You build from the foundation of knowing yourself first, and then the tools are worth having.</p>
+    <p>They sit in one room on purpose. Capability handed to someone who doesn't yet know themselves only moves faster in the wrong direction. You build from the foundation of knowing yourself first, and then the tools are worth having.</p>
     <ul class="offer">
-      <li><span>The conversation</span><p>Open channels, and people standing at roughly the same point in it as you.</p></li>
+      <li><span>The conversation</span><p>Open channels, and people to think out loud with.</p></li>
       <li><span>The videos</span><p>A welcome from Laura, and one alongside each of the six modules.</p></li>
       <li><span>Foundations</span><p>The six modules and the Foundation Workbook, personalised from this assessment.</p></li>
       <li><span>The tools</span><p>The AI and Ivorey tools held in the community, to use on your own work.</p></li>
@@ -446,8 +450,8 @@ a{color:var(--gold-deep)}
     <div class="part-header" style="margin:44px 0 4px">
       <span class="kicker">A few honest questions</span>
       <h2>Where you are right now</h2>
-      <p>This is the first piece of the actual work, and it runs on the structure of the course itself — four, three, two, one. The <em>four</em> are the patterns that move through you. The <em>three</em> are the layers you are built on. The <em>two</em> are what the whole thing runs on. The <em>one</em> is you.</p>
-      <p style="margin-top:12px">Answer for how the last few months have genuinely been, not how you'd like them to have been.</p>
+      <p>Four short sections. Each one looks at a different level of where you are at — what you feel, what you are standing on, how you meet what happens to you, and how you would describe yourself right now.</p>
+      <p style="margin-top:12px">We are exploring the levels of where you are at. There are no right answers.</p>
     </div>
     <div id="assessQuestions"></div>
     <p class="q-count" id="qCount"></p>
@@ -500,7 +504,6 @@ a{color:var(--gold-deep)}
     </div>
     <div class="lm-fig" id="lightFig"></div>
     <div class="lm-facts" id="lightFacts"></div>
-    <p class="bridge">Nothing here is a prediction and nothing here is fixed. It is a position — and a position is only useful because it tells you which way you are facing.</p>
   </section>
 
   <section id="patternSection">
@@ -529,7 +532,7 @@ a{color:var(--gold-deep)}
     <div class="pyr-fig" id="pyramidFig"></div>
     <div class="card"><p id="pyramidCopy"></p></div>
     <div class="card insight-card" id="pyramidAsk" style="text-align:left"></div>
-    <p class="bridge">Where results won't come, one of these four is the real block — and it is almost never the one you've been working on.</p>
+    <p class="bridge">Where results won't come, one of these three is the real block — and it is almost never the one you've been working on.</p>
   </section>
 
   <section id="respSection">
@@ -621,8 +624,8 @@ const FORM_ENDPOINT = ""; // optional: paste a form endpoint (Kit / Formspree / 
 
    Two rules this code keeps and should keep:
      · the reading is rendered BEFORE the send is attempted, and a failed send
-       is swallowed, so a network problem can never cost her the map;
-     · she is told plainly, above the button, that it goes to a facilitator.
+       is swallowed, so a network problem can never cost anyone their map;
+     · the person is told plainly, above the button, that it goes to a facilitator.
    This is personal information about someone's emotional state. Under the NZ
    Privacy Act you need a stated purpose, a retention period, and a way to
    delete on request before this is switched on. */
@@ -1148,7 +1151,7 @@ function assessPayload(){
   const hm=HORSEMEN.find(x=>x.key===H.active), ask=PYRAMID.find(p=>p.key===P.asking);
   return {pattern:hm.name,counter:hm.counter,asks:hm.asks,practice:hm.practice,
           colour:hm.colour,layer:ask.name,layerRole:ask.sub,layerAsks:ask.asks,carry:(DISCIPLINES.find(d=>d.key===R.lower)||{}).carry,
-          /* enough to rebuild the member-facing reading when she reopens the map */
+          /* enough to rebuild the member-facing reading when someone reopens the map */
           key:H.active,named:H.named,hardest:A.hardest,diverges:H.diverges,flat:H.flat,
           layerKey:P.asking,workingKey:P.working};
  }catch(e){return null;}}
@@ -1162,7 +1165,7 @@ const b64url=o=>btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\
      FOUR   the four horsemen      judgement · jealousy · neediness · fear
      THREE  the pyramid            the ground · the energy · the blueprint
      TWO    the two disciplines    self-responsibility · self-awareness
-     ONE    source                 who, what, where — in her own words
+     ONE    source                 who, what, where — in their own words
 
    The four and the pyramid are separate teachings and are never blended:
    the horsemen are what moves through you, the pyramid is what you are built on.
@@ -1279,7 +1282,7 @@ const DISC_KEYS=DISCIPLINES.map(d=>d.key);
 
 /* ---- PART FOUR · THE ONE · SOURCE ----
    Who, what, where — answered on a nine-point spread between two named poles.
-   These read current state of consciousness, and nothing here is scored to her. */
+   These read current state of consciousness, and nothing here is scored back to them. */
 const SOURCE=[
  {key:'who1',q:`Right now, how much does the person other people meet match the person you actually are?`,
   lo:`two different people`,hi:`the same person`,band:'who'},
@@ -1292,8 +1295,19 @@ const SOURCE=[
  {key:'where1',q:`How does the world feel to you at the moment?`,
   lo:`heavy, and closing in`,hi:`open, and moving`,band:'where'},
  {key:'where2',q:`And your own world — the part of it you actually touch each day?`,
-  lo:`it is running me`,hi:`I am running it`,band:'where'}
+  lo:`it is running me`,hi:`I am running it`,band:'where'},
+ /* the third of each band. where3 carries the care signal: a low answer here is
+    the only route to the 1737 line, so its wording has to be unmistakable. */
+ {key:'who3',q:`How much of what you show people is the whole of you, rather than the part that goes down easiest?`,
+  lo:`a carefully chosen part`,hi:`most of it`,band:'who'},
+ {key:'what3',q:`How much does what you feel match what you let yourself say?`,
+  lo:`they are far apart`,hi:`they are the same thing`,band:'what'},
+ {key:'where3',q:`And how heavy is what you are carrying at the moment?`,
+  lo:`I am in something hard right now`,hi:`nothing unusual`,band:'where',care:true}
 ];
+/* a low answer on the care question surfaces support on their own result page */
+const CARE_THRESHOLD=3;
+const careFlagged=A=>{const v=(A.source||{}).where3;return typeof v==='number'&&v<=CARE_THRESHOLD;};
 
 /* the two free-text questions — the most useful fields in the instrument */
 const SOURCE_WORDS={
@@ -1304,11 +1318,10 @@ const SOURCE_WORDS={
 
 /* ---- context and care ----
    The care signal is kept deliberately: this is the only place someone can say
-   they are in something hard, and 1737 is shown on her own result page. */
-const CONTEXT=[];
+   they are in something hard, and 1737 is shown on their own result page. */
 const CARE_MESSAGE=`Thank you for saying so. It changes nothing about your access, and it is not on your file as a problem.<br><br>One thing said plainly: this programme is not therapy, and it is not a substitute for it. It's a structure for working with yourself, and it works best alongside real support rather than instead of it. If you're in something heavy, please keep the people who are helping you.<br><br><em>Need to Talk 1737</em> — free call or text, any time, anywhere in New Zealand.`;
 
-/* ---- derivation (internal only — never a number, never a band, to her) ---- */
+/* ---- derivation (internal only — never a number, never a band, shown back) ---- */
 function intensity(items,answers){ // 0–(3×n), higher = more present
  let s=0; items.forEach((it,i)=>{const v=(typeof answers[i]==='number')?answers[i]:0; s+=it.r?(3-v):v;});
  return s;}
@@ -1346,11 +1359,10 @@ function assessAnswered(A){
  PYRAMID.forEach(p=>{const a=(A.pyr&&A.pyr[p.key])||[];p.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});});
  DISCIPLINES.forEach(d=>{const a=(A.disc&&A.disc[d.key])||[];d.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});});
  SOURCE.forEach(s=>{if(typeof (A.source||{})[s.key]==='number')n++;});
- CONTEXT.forEach(c=>{if(typeof A.context[c.k]==='number')n++;});
  if(A.why&&A.why.trim())n++;
  if(A.want&&A.want.trim())n++;
  return n;}
-const ASSESS_TOTAL=16+1+9+4+6+2; // 38
+const ASSESS_TOTAL=16+1+9+4+9+2; // 41
 </script>
 <script>
 'use strict';
@@ -1363,111 +1375,82 @@ const lsSet=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 const lsDel=k=>{try{localStorage.removeItem(k);}catch(e){}};
 
 /* ================= THE SOL MAP · WHO · WHAT · WHERE =================
-   Not a chart reading. The sky at a birth is a geometry problem before it is
-   anything else, and that is the only part used here: a position on one circle,
-   a phase of reflected light, a horizon line, and a state of matter.
+   Three sections, on one structure: the part of you that doesn't change, the
+   part that moves, and the part you can put your hand on. The chart marks a
+   position at each. It never says who anybody is — every section ends by
+   handing the question back, because that answer isn't ours to give.
 
-   Rules held throughout: no astrology vocabulary on screen (no cardinal/fixed/
-   mutable, no houses, no nodes, no aspects, no ruler, no temperament), nothing
-   a skeptic has to accept on faith, and nothing longer than it needs to be.
-   Lineage register: the sign as a principle of nature (De Stefano), the circle
-   divided by thirty-six rather than twelve (the traditional decans, Chaldean
-   order — Bonacci's line of it). Both are named as tradition, never as fact. */
+   No astrology vocabulary on screen: no houses, nodes, aspects, rulers,
+   modalities by name, temperaments, or anything medical.
 
-/* the twelve as principles of nature — never personality, never a label */
-const SIGN_PRINCIPLE={
- Aries:{n:'the first push',p:`The seed cracking its own shell. Nothing is weighed and nothing is asked — something simply begins, and everything else has to reorganise around the fact that it did.`},
- Taurus:{n:'the holding',p:`Force slowing down until it becomes a thing you can put your hand on. This is the principle by which anything at all gets to stay.`},
- Gemini:{n:'the pair',p:`One becomes two, and the space between them starts talking. Nothing can be known until there is something else to compare it against.`},
- Cancer:{n:'the vessel',p:`Something is enclosed so that it can be kept, fed and remembered. Every living thing begins inside a container that protects it before it can protect itself.`},
- Leo:{n:'the centre',p:`A single point radiating outward — the arrangement everything in this solar system is built on. One source, and the rest in orbit around the warmth of it.`},
- Virgo:{n:'the sorting',p:`The harvest cut from the field and the useful separated from the rest. Nothing becomes usable until something has been left behind.`},
- Libra:{n:'the balance',p:`Two weights meeting, and the exact moment when neither one wins. Not compromise — equilibrium, which is a real and specific point.`},
- Scorpio:{n:'the descent',p:`What is finished breaks down so the substance inside it can be used again. Nothing in nature is thrown away; it is taken apart and reissued.`},
- Sagittarius:{n:'the aim',p:`Distance sighted before it is travelled. The arrow leaves the bow on the strength of something not yet arrived at.`},
- Capricorn:{n:'the climb',p:`Time applied to matter until it becomes structure. Everything that stands up was pressed into shape by how long it was held.`},
- Aquarius:{n:'the pouring out',p:`What was held in one place is distributed across the whole. The vessel is tipped, deliberately, and what was private becomes common.`},
- Pisces:{n:'the dissolving',p:`Edges soften and everything returns to the water it came from. The end of the round, which is also the condition for there being another one.`}};
+   THE THIRTY-SIX. The circle has always been cut two ways. Twelve gives the
+   signs, thirty degrees each. Thirty-six gives ten-day stretches — and that is
+   where the number 360 came from in the first place: the Egyptian year ran on
+   thirty-six ten-day weeks, each one marked by the star that rose at dawn in
+   it. Each ten-day stretch inside a sign belongs to one of the three signs
+   sharing that sign's element. So across a sign the element never changes —
+   only its phase does, from starting to holding to spreading. That is the
+   whole mechanism, and it is why the thirty-six says something the twelve
+   cannot: it tells you which part of your element's cycle you arrived in. */
 
-/* the circle divided by thirty-six — traditional decans, Chaldean order.
-   The sign is the season; this is the ten days inside it. */
-const DECAN_RULERS={
- Aries:['Mars','Sun','Venus'],Taurus:['Mercury','Moon','Saturn'],Gemini:['Jupiter','Mars','Sun'],
- Cancer:['Venus','Mercury','Moon'],Leo:['Saturn','Jupiter','Mars'],Virgo:['Sun','Venus','Mercury'],
- Libra:['Moon','Saturn','Jupiter'],Scorpio:['Mars','Sun','Venus'],Sagittarius:['Mercury','Moon','Saturn'],
- Capricorn:['Jupiter','Mars','Sun'],Aquarius:['Venus','Mercury','Moon'],Pisces:['Saturn','Jupiter','Mars']};
-const DECAN_LINE={
- Aries:[`the push at its most undiluted — force meeting force, with nothing in between.`,
-        `the push made visible — beginning something other people can see and gather around.`,
-        `the push that wants company — starting, and then reaching for someone to start with.`],
- Taurus:[`form that can be described — holding a thing still enough to name it.`,
-        `form that remembers — what gets kept because it fed you once.`,
-        `form that lasts — the slow build that outlives the mood which started it.`],
- Gemini:[`the pair widening — two becoming many, and an appetite for more of them.`,
-        `the pair arguing — the space between two things sharpened into an edge.`,
-        `the pair resolved — many voices gathered back to the one that meant it.`],
- Cancer:[`the vessel that draws in — what is held because it is loved.`,
-        `the vessel that speaks — feeling put into words before it has time to harden.`,
-        `the vessel at full — holding, tide and memory with nothing in between them.`],
- Leo:[`the centre that has been tested — radiance that had to be earned first.`,
-        `the centre that warms outward — light given away without anyone counting it.`,
-        `the centre that will not be moved — presence with an edge behind it.`],
- Virgo:[`the sorting done in daylight — knowing exactly what the work is for.`,
-        `the sorting done with care — refinement as a form of love.`,
-        `the sorting at its finest — the useful separated from the rest, precisely.`],
- Libra:[`the balance felt rather than calculated — weighed by how it sits in the body.`,
-        `the balance held under load — fairness that costs something and is kept anyway.`,
-        `the balance opened out — the meeting point widened until more people can stand on it.`],
- Scorpio:[`the descent taken at speed — straight down to where the thing actually is.`,
-        `the descent survived — what comes back up carries light with it.`,
-        `the descent made for someone — depth entered because of what you love.`],
- Sagittarius:[`the aim described — the road named before it is walked.`,
-        `the aim felt — moving toward what pulls rather than toward what is proven.`,
-        `the aim disciplined — the far thing reached because the walking was kept up.`],
- Capricorn:[`the climb with a view — building because you can already see what it becomes.`,
-        `the climb by force — the ascent made on will alone when nothing else was available.`,
-        `the climb arrived at — the structure standing, and the light landing on top of it.`],
- Aquarius:[`the pouring out done gladly — what is shared because the sharing was the point.`,
-        `the pouring out as signal — one idea distributed until the whole shape changes.`,
-        `the pouring out from feeling — the many held the way one person would be.`],
- Pisces:[`the dissolving with a floor under it — softening that still knows where the edge was.`,
-        `the dissolving into everything — the boundary given up on purpose, and gladly.`,
-        `the dissolving that pushes back — the last of the round refusing to go quietly, and starting the next.`]};
-const PLANET_QUALITY={Mars:'edge and force',Sun:'centre and radiance',Venus:'attraction and binding',
- Mercury:'exchange and transmission',Moon:'reflection and tide',Jupiter:'widening and increase',Saturn:'limit and time'};
+const SIGN_EL={Aries:['Fire','Cardinal'],Taurus:['Earth','Fixed'],Gemini:['Air','Mutable'],
+ Cancer:['Water','Cardinal'],Leo:['Fire','Fixed'],Virgo:['Earth','Mutable'],
+ Libra:['Air','Cardinal'],Scorpio:['Water','Fixed'],Sagittarius:['Fire','Mutable'],
+ Capricorn:['Earth','Cardinal'],Aquarius:['Air','Fixed'],Pisces:['Water','Mutable']};
+const EL_ORDER={Fire:['Aries','Leo','Sagittarius'],Earth:['Taurus','Virgo','Capricorn'],
+ Air:['Gemini','Libra','Aquarius'],Water:['Cancer','Scorpio','Pisces']};
 
-/* the four as states of matter — the least mystical way to say it, and the truest */
-const ELEMENT_MATTER={
- Fire:{s:'the state that holds no shape',p:`Fire is the only one of the four that keeps no form of its own. It converts one thing into another and gives off light while doing it. Built on this, you run warm, you change what you touch, and you go out if nothing is feeding you.`},
- Earth:{s:'the state that holds shape',p:`Earth is form itself — the principle that something can be located, weighed, and found in the same place tomorrow. Built on this, you are slow to move and very hard to move back, and what you make tends to still be there later.`},
- Air:{s:'the state that fills',p:`Air takes the shape of whatever contains it and travels between everything. It is the principle of relation — of one thing being carried to another. Built on this, you live in the space between people and ideas rather than inside any one of them.`},
- Water:{s:'the state that takes shape',p:`Water becomes the container it is poured into, and wears stone down by returning rather than by force. Built on this, you take the temperature of a room before you have decided to, and you get where you are going by persistence rather than by push.`}};
+/* element × phase — twelve lines, and every sign is one of them.
+   Plain physical description of how that energy actually behaves. */
+const EL_PHASE={
+ 'Fire-Cardinal':{n:'fire at the strike',p:`Heat at the moment it catches. It starts things, and it is spent quickly if nothing is put underneath it.`},
+ 'Fire-Fixed':{n:'fire kept burning',p:`Heat that has settled into a steady flame — it warms a room rather than flaring, and it goes out if it is not fed.`},
+ 'Fire-Mutable':{n:'fire spreading',p:`Heat travelling outward, catching on whatever it reaches. It covers ground fast and rarely stays in one place.`},
+ 'Earth-Cardinal':{n:'earth being shaped',p:`Matter under pressure, being pushed into a form. Slow, deliberate, and what comes out of it holds.`},
+ 'Earth-Fixed':{n:'earth at rest',p:`Matter that has settled and stays put. Very hard to shift, and very reliable once it is where it means to be.`},
+ 'Earth-Mutable':{n:'earth being sorted',p:`Material broken down and separated — the useful kept, the rest let go. Precise, and never quite finished.`},
+ 'Air-Cardinal':{n:'air finding its balance',p:`Pressure equalising between two sides until it settles. It moves toward the point where nothing is straining.`},
+ 'Air-Fixed':{n:'air holding a pattern',p:`A current that keeps its shape over distance — a steady wind rather than a gust. It carries a long way without changing.`},
+ 'Air-Mutable':{n:'air moving',p:`Currents crossing, picking things up in one place and setting them down in another. Quick, and always carrying something.`},
+ 'Water-Cardinal':{n:'water gathering',p:`Water collecting and held in one place so that it can feed something. It draws inward before it gives anything out.`},
+ 'Water-Fixed':{n:'water under pressure',p:`Depth, and what happens to anything left down there long enough. Still on the surface, and enormously strong underneath.`},
+ 'Water-Mutable':{n:'water dispersing',p:`Mist and rain — edges softening, one thing running into the next, everything finding its way back to the whole.`}};
+const elPhase=sign=>EL_PHASE[SIGN_EL[sign][0]+'-'+SIGN_EL[sign][1]];
+/* which of the three same-element signs owns each ten-day stretch of a sign */
+function decanSign(sign,i){const el=SIGN_EL[sign][0],ring=EL_ORDER[el];
+ return ring[(ring.indexOf(sign)+i)%3];}
+const ORD=['first','second','third'];
 
-/* the three as the phase of a season — factual: the four turning points are the solstices and equinoxes */
-const MODE_SEASON={
- Cardinal:{s:'at the turn of a season',p:`Weigh the whole of it and most of your chart gathers at the turning points — the solstices and the equinoxes, the four exact hinges where one season becomes another. Things that begin, begin there. Starting comes easier to you than staying.`},
- Fixed:{s:'at the depth of a season',p:`Weigh the whole of it and most of your chart gathers in the middle of a season, where it is most fully itself and least willing to move. That is the part that holds. Holding comes easier to you than turning.`},
- Mutable:{s:'at the dissolving of a season',p:`Weigh the whole of it and most of your chart gathers in the part of a season already becoming the next one. Nothing there is fixed, and that is the function rather than the flaw. Adapting comes easier to you than settling.`}};
+/* how feeling tends to move, read from the moon's element */
+const MOON_EL={
+ Fire:`Feeling arrives fast and shows on the outside before you have decided anything about it. It burns off about as quickly as it came.`,
+ Earth:`Feeling arrives slowly and settles into the body rather than the voice. It takes a while to register, and a while to leave.`,
+ Air:`Feeling gets thought about almost immediately — turned into words, explained, talked through. Naming it is how it moves.`,
+ Water:`Feeling arrives whole and unannounced, often before there is any reason attached to it. It moves in tides rather than events.`};
+/* how thought tends to run, read from Mercury's element */
+const MIND_EL={
+ Fire:`quickly, and out loud before it is finished`,
+ Earth:`slowly, and stays where it lands`,
+ Air:`widely, several threads at once`,
+ Water:`in images and impressions rather than sentences`};
 
-/* moon phase — the angle between sun and moon, which is all a phase ever is */
+/* moon phase — the angle between the two lights, which is all a phase ever is */
 function moonPhase(sunLon,moonLon){
  const d=((moonLon-sunLon)%360+360)%360;
- const lit=(1-Math.cos(d*RAD))/2; // illuminated fraction
+ const lit=(1-Math.cos(d*RAD))/2;
  const names=[
-  ['dark',`almost none of it was showing. You arrived at the dark of the moon — the part of the cycle before anything is visible, where the work is done unseen.`],
-  ['a thin growing edge',`a thin edge of it was showing, and filling. The very start of something being visible.`],
-  ['half, and building',`half of it was showing and building — the moon at a right angle to the sun. This is the point in the cycle where the thing stops being easy and starts requiring you.`],
-  ['most of it, still filling',`most of it was showing and still filling. Nearly there, and not yet.`],
-  ['the whole face',`all of it was showing. You arrived with the moon exactly opposite the sun, the entire reflected face lit. Nothing was hidden, and nothing could be.`],
-  ['most of it, emptying',`most of it was still showing, and beginning to empty. The part of the cycle that gives back.`],
-  ['half, and releasing',`half of it was showing and releasing. The turn from holding to letting go.`],
-  ['a thin last edge',`a thin edge was left, almost returned to dark. The end of the round, and the quiet before the next one.`]];
+  ['dark',`almost nothing was showing — the part of the cycle where the work happens out of sight`],
+  ['a thin growing edge',`a thin edge was showing and filling`],
+  ['half, and building',`half was showing and building — the point in the cycle that starts to ask something of you`],
+  ['most of it, still filling',`most of it was showing and still filling`],
+  ['the whole face',`the whole face was lit, the two lights exactly opposite each other — nothing hidden`],
+  ['most of it, emptying',`most of it was showing and beginning to empty`],
+  ['half, and releasing',`half was showing and releasing`],
+  ['a thin last edge',`a thin edge was left, almost back to dark`]];
  const i=Math.floor(((d+22.5)%360)/45);
  return {deg:d,lit,name:names[i][0],copy:names[i][1]};
 }
-const ORD=['first','second','third'];
-/* the moon drawn as the lune it actually was: one semicircle for the outer limb,
-   one ellipse for the terminator, signed so it bulges the correct way past half. */
+/* the moon drawn as the lune it actually was */
 function moonGlyph(x,y,r,ph){
  const waxing=ph.deg<180, outer=waxing?1:0, rx=r*(1-2*ph.lit);
  const inner=rx<0?outer:1-outer;
@@ -1475,43 +1458,46 @@ function moonGlyph(x,y,r,ph){
   <path d="M${x.toFixed(1)} ${(y-r).toFixed(1)} A${r} ${r} 0 0 ${outer} ${x.toFixed(1)} ${(y+r).toFixed(1)} A${Math.abs(rx).toFixed(2)} ${r} 0 0 ${inner} ${x.toFixed(1)} ${(y-r).toFixed(1)} Z" fill="#FFFFFF"/>
   <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="none" stroke="rgba(26,27,32,.42)" stroke-width=".9"/>`;}
 
-/* ---- the three questions ---- */
+/* ---- ONE · the part that doesn't change (the sun) ---- */
 function readWho(ch){
- const s=signOf(ch.pos.sun), sp=SIGN_PRINCIPLE[s.n], deg=degIn(ch.pos.sun);
- const di=Math.min(2,Math.floor(deg/10)), ruler=DECAN_RULERS[s.n][di];
- const pct=(ch.pos.sun/360*100);
+ const s=signOf(ch.pos.sun), deg=degIn(ch.pos.sun), ph=elPhase(s.n);
+ const di=Math.min(2,Math.floor(deg/10)), ds=decanSign(s.n,di), dp=elPhase(ds);
  return {
-  head:`${sp.n}`,
-  body:`<p>At the minute you were born the sun stood at <em>${deg.toFixed(0)}°</em> of ${s.n} — ${pct.toFixed(0)} per cent of the way around the circle, counting from the March equinox, which is where the circle is measured from. That is a position, not a label. What sits at that position is <em>${sp.n}</em>.</p>
-   <p>${sp.p}</p>
-   <p>The circle divides into thirty-six as readily as into twelve, and the older maps use both. Yours is the <em>${ORD[di]} ten degrees</em> of ${s.n}, which that tradition marks with ${PLANET_QUALITY[ruler]}: ${DECAN_LINE[s.n][di]}</p>`,
-  line:`You are ${sp.n}, carrying ${PLANET_QUALITY[ruler]}.`};
+  head:`the sun stood at ${deg.toFixed(0)}° of ${s.n}`,
+  body:`<p>There are three parts to a person, and everything in this map is arranged on them. The first is the part that was there before anything happened to you and is still there underneath all of it. The sun marks where it stood.</p>
+   <p>${s.n} is <em>${ph.n}</em>. ${ph.p}</p>
+   <p>Inside every sign there are three ten-day stretches, and they belong to the three signs that share its element — so the element holds steady across a sign and only the phase turns. Yours is the ${ORD[di]} ten days, which belongs to ${ds}: <em>${dp.n}</em>.</p>
+   <p class="qa-ask">Does any of that describe the part of you that has never really changed? Nobody can answer that from the outside, and this map is not going to try. It marks a position. What you are is yours to work out.</p>`};
 }
+/* ---- TWO · the part that moves (the moon, and what feeling does) ---- */
 function readWhat(ch){
- const em=ELEMENT_MATTER[ch.leadEl], md=MODE_SEASON[ch.leadMode];
- return {
-  head:`${em.s}`,
-  body:`<p>There are four states a thing can be in, and the old maps use them as the four materials a person is built from. Weighing everything in your chart, yours is <em>${ch.leadEl.toLowerCase()}</em> — ${em.s}.</p>
-   <p>${em.p}</p>
-   <p>${md.p}</p>`,
-  line:`You are built on ${ch.leadEl.toLowerCase()}, gathered ${md.s}.`};
-}
-function readWhere(ch){
+ const mo=signOf(ch.pos.moon), mel=SIGN_EL[mo.n][0], ph=elPhase(mo.n);
+ const mer=signOf(ch.pos.mercury), merEl=SIGN_EL[mer.n][0];
  const mp=moonPhase(ch.pos.sun,ch.pos.moon);
- const asc=ch.ascSign;
- const zone=asc?SIGNS.find(x=>x.n===asc.n).zone:SIGNS.find(x=>x.n===signOf(ch.pos.sun).n).zone;
- let body=`<p>${mp.copy.charAt(0).toUpperCase()+mp.copy.slice(1)}</p>`;
+ let body=`<p>The second part is the one that moves — thought and feeling, which are closer to each other than they are usually allowed to be. The moon marks it.</p>`;
+ if(ch.moonAmbiguous)body+=`<p>The moon changed sign on the day you were born, so it stood in either <em>${ch.moonAmbiguous[0]}</em> or <em>${ch.moonAmbiguous[1]}</em>. Your birth time settles which, and the two read differently enough to be worth finding out.</p>`;
+ else body+=`<p>Yours stood in <em>${mo.n}</em> — ${ph.n}. ${MOON_EL[mel]}</p>`;
+ body+=`<p>Of the moon itself, ${mp.copy}. That is simply the angle the two lights were standing at, and it is the same for everyone born that night.</p>`;
+ body+=`<p>Thought runs on a different current again: yours is ${merEl.toLowerCase()}, which tends to move ${MIND_EL[merEl]}.</p>`;
+ body+=`<p class="qa-ask">Is that how feeling actually moves in you — and is it the same thing as how you think? Most people find those two are not on speaking terms. Noticing the gap is more useful than agreeing with the description.</p>`;
+ return {head:ch.moonAmbiguous?`the moon changed sign that day`:`the moon stood at ${degIn(ch.pos.moon).toFixed(0)}° of ${mo.n}`,body};
+}
+/* ---- THREE · the part you can put your hand on (the physical body) ----
+   Tendencies to notice, never diagnosis, and nothing medical. */
+function readWhere(ch){
+ const asc=ch.ascSign, sat=signOf(ch.pos.saturn);
+ const zoneOf=n=>SIGNS.find(x=>x.n===n).zone;
+ let body=`<p>The third part is the one you can put your hand on. Feeling doesn't stay in the mind — it lands somewhere physical, and when it isn't allowed to move it tends to stay in the same place each time.</p>`;
  if(asc){
-  const dayBirth=ch.houses&&ch.houses.sun>=7;
-  body+=`<p>The sun itself was <em>${dayBirth?'above the horizon':'below the horizon'}</em> — you arrived ${dayBirth?'into the light of a day already underway':'into the dark, with the light on the other side of the earth'}.</p>`;
-  body+=`<p>And in the east, where the sky met the ground at ${ch.inp.placeStr.split(',')[0]}, the horizon line cut the circle at <em>${degIn(ch.asc).toFixed(0)}° of ${asc.n}</em>. This is not a personality; it is an angle. It is the exact slope at which the light was entering the world at the place you turned up, and people meet it before they meet anything else about you.</p>`;
-  body+=`<p>That same line is traditionally read down into the body, and it points at <em>${zone}</em> — where your attention tends to live, and where you will feel a thing before you have thought it.</p>`;
+  const ael=SIGN_EL[asc.n][0];
+  body+=`<p>The eastern horizon at your birth cut the circle at <em>${degIn(ch.asc).toFixed(0)}° of ${asc.n}</em> — ${elPhase(asc.n).n}. That line is read down into the body, and it points at <em>${zoneOf(asc.n)}</em>. That is where the map would expect you to feel something before you have thought it, and where it would collect if you sat on it.</p>`;
+  body+=`<p>The place the map marks as tightening is <em>${zoneOf(sat.n)}</em> — where holding on has somewhere to go. Held long enough, that is usually the first place to complain.</p>`;
  }else{
-  body+=`<p><em>The rest of this answer is waiting on your birth time.</em> Whether the sun was above or below the horizon, and the exact angle of the eastern horizon itself, both turn on the minute. Add the time one day and this section fills in.</p>`;
+  body+=`<p><em>This section needs your birth time.</em> The eastern horizon turns a full circle every twenty-four hours, so without the minute there is no way to know where it stood — and that is the line the body is read from.</p>`;
+  body+=`<p>What can be said without it: the place the map marks as tightening is <em>${zoneOf(sat.n)}</em>.</p>`;
  }
- return {head:asc?`${degIn(ch.asc).toFixed(0)}° of ${asc.n} on the eastern horizon`:`the light, and the missing minute`,
-  body, line:asc?`You arrived ${ch.houses&&ch.houses.sun>=7?'in the day':'in the night'}, with ${mp.name} of the moon showing.`
-   :`You arrived with ${mp.name} of the moon showing.`};
+ body+=`<p class="qa-ask">Where does it actually go in you, when something is not dealt with? You already know the answer to that one — it is the place you would have named before reading any of this.</p>`;
+ return {head:asc?`the horizon cut the circle at ${degIn(ch.asc).toFixed(0)}° of ${asc.n}`:`waiting on your birth time`,body};
 }
 
 /* ---- the diagram: one circle, one horizon, two lights ---- */
@@ -1550,23 +1536,33 @@ function lightMapSvg(ch){
  s+=`<text x="${ml[0].toFixed(1)}" y="${ml[1].toFixed(1)}" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" letter-spacing="1.5" fill="rgba(26,27,32,.44)">MOON</text>`;
  return s+'</svg>';
 }
+/* the summary — every row says what it is in the same breath as the number,
+   so nothing on it needs decoding. */
 function lightFacts(ch){
- const s=signOf(ch.pos.sun), deg=degIn(ch.pos.sun), ph=moonPhase(ch.pos.sun,ch.pos.moon);
+ const s=signOf(ch.pos.sun), deg=degIn(ch.pos.sun);
+ const mo=signOf(ch.pos.moon), ph=moonPhase(ch.pos.sun,ch.pos.moon);
+ const di=Math.min(2,Math.floor(deg/10)), ds=decanSign(s.n,di);
  const rows=[
-  ['Your position on the circle',`${deg.toFixed(0)}° of ${s.n} · ${(ch.pos.sun/360*100).toFixed(0)}% of one turn`],
-  ['Your ten degrees of it',`the ${ORD[Math.min(2,Math.floor(deg/10))]} third of ${s.n}`],
-  ['Light showing that night',`${(ph.lit*100).toFixed(0)}% of the moon · ${ph.name}`],
-  ['What you are built on',`${ch.leadEl.toLowerCase()} — ${ELEMENT_MATTER[ch.leadEl].s}`],
-  ['Where in the season',`${MODE_SEASON[ch.leadMode].s}`]];
+  ['The part that doesn\'t change',`the sun in ${s.n} — ${elPhase(s.n).n}`],
+  ['Its ten days',`${ds}'s stretch of ${s.n} — ${elPhase(ds).n}`],
+  ['The part that moves',ch.moonAmbiguous
+    ? `the moon in ${ch.moonAmbiguous[0]} or ${ch.moonAmbiguous[1]} — your birth time settles it`
+    : `the moon in ${mo.n} — ${elPhase(mo.n).n}`],
+  ['The moon that night',`${ph.name}, ${(ph.lit*100).toFixed(0)}% lit`]];
  if(ch.ascSign){
-  rows.push(['The eastern horizon',`${degIn(ch.asc).toFixed(0)}° of ${ch.ascSign.n}`]);
-  rows.push(['The sun itself',(ch.houses&&ch.houses.sun>=7)?'above the horizon — a daylight birth':'below the horizon — a night birth']);}
- else rows.push(['The eastern horizon','waiting on your birth time']);
+  rows.push(['The part you can touch',`${ch.ascSign.n} rising — read to ${SIGNS.find(x=>x.n===ch.ascSign.n).zone}`]);
+  rows.push(['Born',(ch.houses&&ch.houses.sun>=7)?'in daylight, the sun above the horizon':'at night, the sun below the horizon']);}
+ else rows.push(['The part you can touch','waiting on your birth time']);
+ rows.push(['Most of your chart sits in',`${ch.leadEl.toLowerCase()}`]);
  return rows.map(r=>`<div class="fact"><span class="fact-k">${r[0]}</span><span class="fact-v">${r[1]}</span></div>`).join('');
 }
 /* ================= ASSESSMENT · UI + THE CONSCIOUSNESS MIRROR ================= */
-const A={horse:{},hardest:null,pyr:{},disc:{},source:{},context:{},careFree:'',why:'',want:''};
-const part=(kick,h3,p)=>`<div class="q-part"><span class="kicker">${kick}</span><h3 class="q-part-h">${h3}</h3><p class="q-part-p">${p}</p></div>`;
+const A={horse:{},hardest:null,pyr:{},disc:{},source:{},why:'',want:''};
+const part=(kick,h3,p,sub,framing)=>`<div class="q-part"><span class="kicker">${kick}</span><h3 class="q-part-h">${h3}</h3>`
+ +`<p class="q-part-p">${p}</p>`
+ +(sub?`<h4 class="q-sub">${sub}</h4>`:'')
+ +(framing?`<p class="q-part-p">${framing}</p>`:'')
+ +`</div>`;
 const scaleRow=attr=>{let s=`<div class="scale" ${attr}>`;ASSESS_SCALE.forEach((lab,v)=>s+=`<button type="button" data-v="${v}" aria-pressed="false">${lab}</button>`);return s+'</div>';};
 const optsRow=(attr,opts)=>{let s=`<div class="opts" ${attr}>`;opts.forEach((lab,v)=>s+=`<button type="button" data-v="${v}" aria-pressed="false">${lab}</button>`);return s+'</div>';};
 /* part four's nine-point spread, poles named at each end */
@@ -1582,7 +1578,9 @@ function buildAssessment(){
 
  /* ---- FOUR ---- */
  h+=part('Part one · the four','What moves through you',
-  `Judgement, jealousy, neediness and fear. Left unobserved these four dismantle a life quietly — not in one blow, but by making a thousand small decisions on your behalf until you can no longer tell which of them were yours. None of them announce themselves; each arrives dressed as something reasonable. Judgement arrives as discernment, jealousy as ambition, neediness as closeness, fear as good sense.<br><br>Their counters — compassion, joy, love, empathy — are not nicer feelings to have instead. They are the specific things that dismantle each one. You meet all four properly in the course; this is the first look.`);
+  `This section is based on emotional elements — four of them, and they are the four that do the most damage when nobody is watching them: judgement, jealousy, neediness and fear.`,
+  'Why these four',
+  `They rarely announce themselves. Each one arrives dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Left unwatched they don't take a life apart in one blow; they make a thousand small decisions on your behalf until you can't tell which of them were yours.<br><br>Each has a counter: compassion, joy, love, empathy. Not nicer feelings to have instead — the specific things that take each one apart. The questions below simply ask how often each shows up.`);
  HORSEMEN.forEach((hm,hi)=>{A.horse[hm.key]=A.horse[hm.key]||[];
   h+=`<div class="q-group" style="--accent:var(${hm.colour})"><div class="q-group-head"><span class="kicker">${hi+1} of four · ${hm.name}</span></div><div class="q-accent"></div>`;
   hm.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-h="${hm.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
@@ -1592,7 +1590,9 @@ function buildAssessment(){
 
  /* ---- THREE ---- */
  h+=part('Part two · the three','What you are built on',
-  `A separate thing entirely from the four above. Underneath anything you make there are three layers, and they stack in one order only. <em>Trust and belief are the ground. Emotion is the energy. Thought and intent are the blueprint.</em> Most people work the top layer and wonder why nothing holds.`);
+  `The Pyramid of Creation is the model underneath everything taught here. It says that anything you build in your life rests on three layers, in a fixed order, and that a thing only holds if the layer under it is sound.`,
+  'The three layers',
+  `<em>Trust and belief are the ground</em> — whether your own word means anything to you, and what you have quietly agreed is true about yourself. <em>Emotion is the energy</em> — the fuel that actually moves something out of your head and into the world. <em>Thought and intent are the blueprint</em> — the shape you draw and the direction you hold.<br><br>Almost everyone works the blueprint, because it is the visible one, and then can't understand why nothing stands up. These questions look at all three.`);
  PYRAMID.forEach(p=>{A.pyr[p.key]=A.pyr[p.key]||[];
   h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-group-head"><span class="kicker">${p.name} · ${p.sub}</span></div><div class="q-accent"></div>`;
   p.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-p="${p.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
@@ -1629,7 +1629,6 @@ function buildAssessment(){
   else if(box.dataset.d!==undefined&&box.dataset.i!==undefined)A.disc[box.dataset.d][+box.dataset.i]=v;
   else if(box.dataset.s!==undefined)A.source[box.dataset.s]=v;
   else if(box.hasAttribute('data-hardest'))A.hardest=HARDEST_CHOICE.options[v][0];
-  else if(box.dataset.c!==undefined)A.context[box.dataset.c]=v;
   updateQCount();});
  host.addEventListener('input',e=>{const t=e.target;if(t.dataset&&t.dataset.free){A[t.dataset.free]=t.value;updateQCount();}});
  updateQCount();
@@ -1722,7 +1721,7 @@ function renderConsciousnessFrom(H,P,R,ch){
 
  /* --- care --- */
  const care=$('careNote');
- if(care){ if(A.context.life===2){care.innerHTML=`<div class="card" style="border-left:3px solid var(--red)"><span class="kicker">A word first</span><p style="margin-top:8px">${CARE_MESSAGE}</p></div>`;care.style.display='block';}
+ if(care){ if(careFlagged(A)){care.innerHTML=`<div class="card" style="border-left:3px solid var(--red)"><span class="kicker">A word first</span><p style="margin-top:8px">${CARE_MESSAGE}</p></div>`;care.style.display='block';}
   else care.style.display='none';}
 
  ['patternSection','pyramidSection'].forEach(id=>{if($(id))$(id).style.display='block';});
@@ -1760,7 +1759,7 @@ function renderReading(ch){
  const payload=workbookPayload(ch);
  lsSet('solmap.payload.v1',JSON.stringify(payload));
  window._aiText=buildAiText(ch);
- // the overview is hers to keep too — so reopening the map doesn't lose it
+ // the overview is theirs to keep too — so reopening the map doesn't lose it
  window._coachText=assessBrief(ch)||lsGet('solmap.coach.v1')||'';
  if(window._coachText)lsSet('solmap.coach.v1',window._coachText);
  try{$('btnWorkbook').href=new URL((LINKS.workbook||'foundation-workbook.html'),location.href).href;}catch(e){}
@@ -1782,7 +1781,7 @@ const CHANNEL_STEER={
  jealousy:{short:`Find a win that is not yours and say the glad thing out loud.`,ch:'Wins and shares',why:`Jealousy's counter is joy, and joy for someone else is a skill you build by using it. Find a win that is not yours and say the glad thing underneath it, out loud, where they can read it.`},
  neediness:{short:`Answer someone else's post before you write your own.`,ch:'Clarity conversation',why:`Neediness's counter is love that doesn't need an answer back. Go and answer somebody else's post before you write your own. Give first, from full, and notice whether you were waiting to be filled.`},
  fear:{short:`Post before you feel ready. That is the only time it counts.`,ch:'Welcome and start here',why:`Fear's counter is empathy — attention that leaves your own head. Post before you feel ready, which is the only time it counts, and then read three other introductions properly.`}};
-/* the pacing line is read from where she said she is standing, not from minutes
+/* the pacing line is read from where they said they are standing, not from minutes
    in a diary — someone whose world currently feels heavy needs a different first
    week from someone whose doesn't. */
 function pacingLine(){
@@ -1891,7 +1890,7 @@ ${myPatternText()}
  return out;}
 /* ---- the record sent to the facilitators' sheet ----
    One flat object, one row. Raw scores are included because a baseline is only
-   useful if you can re-measure against it in eighteen weeks — she is never
+   useful if you can re-measure against it in eighteen weeks — the person is never
    shown any of these numbers, and the page never displays a total. */
 function facilitatorRecord(ch){
  const H=readHorsemen(A), P=readPyramid(A), D=readDisciplines(A), S=readSource(A), sg=signature(ch);
@@ -1930,7 +1929,7 @@ function sendToFacilitators(ch){
   const rec=facilitatorRecord(ch);
   Object.keys(rec).forEach(k=>body.append(k,rec[k]));
   fetch(FACILITATOR_ENDPOINT,{method:'POST',body,mode:'no-cors'}).catch(()=>{});
- }catch(e){/* a failed send must never cost her the reading */}}
+ }catch(e){/* a failed send must never cost anyone the reading */}}
 
 /* the member's own copy of the pattern — plain, non-clinical, no ranking. */
 function myPatternText(){
@@ -1943,9 +1942,9 @@ The layer I'm building from that needs the work: ${p.layer} — ${p.layerRole}. 
 Carrying into this week: ${p.carry}`:''}
 `;}
 
-/* the facilitator's consciousness overview — written about her, never to her.
+/* the facilitator's consciousness overview — written about the member, never to them.
    No numbers anywhere: intensity is expressed as rank order only. Items kept
-   verbatim are kept verbatim — a paraphrase is always worse and she'll notice. */
+   verbatim are kept verbatim — a paraphrase is always worse and they will notice. */
 function assessBrief(ch){
  const answeredH=HORSEMEN.reduce((n,h)=>{const a=A.horse[h.key]||[];h.items.forEach((_,i)=>{if(typeof a[i]==='number')n++;});return n;},0);
  if(answeredH===0)return '';
@@ -1955,39 +1954,39 @@ function assessBrief(ch){
  const hm=HORSEMEN.find(h=>h.key===H.active);
  const dt=new Date(Date.UTC(ch.inp.y,ch.inp.mo-1,ch.inp.d)).toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'});
  const joined=new Date().toLocaleDateString('en-NZ',{day:'numeric',month:'short',year:'numeric'});
- const life=A.context.life!==undefined?CONTEXT[0].options[A.context.life]:'—';
+ const life=(typeof (A.source||{}).where3==='number')?`${A.source.where3}/9 on what they are carrying`:'—';
  const S=readSource(A);
  const spread=x=>x===null?'—':(x<3.5?'low ('+x.toFixed(1)+'/9)':x<6.5?'mid ('+x.toFixed(1)+'/9)':'high ('+x.toFixed(1)+'/9)');
  const dn=k=>DISCIPLINES.find(d=>d.key===k).name;
- const care=A.context.life===2?'\n  ⚑ CARE FLAG — in something hard right now. 1737 shown on her result page.':'';
+ const care=careFlagged(A)?'\n  ⚑ CARE FLAG — in something hard right now. 1737 shown on their result page.':'';
  const noRaise=(A.careFree&&A.careFree.trim())?`\n  ⚑ DO NOT RAISE IN GROUP: ${A.careFree.trim()}`:'';
  const named=H.named?nm(H.named):(A.hardest==='even'?'all about the same':'—');
  const diverge=H.diverges
-  ? `⚑ DIVERGENCE — she can see ${nm(H.named)}; ${nm(H.active)} is the one running.\n                    Open on the one she named. Do not lead with the other.`
-  : (H.named?`Aligned — she names the same one her answers point at. Further on than most.`:`She didn't single one out.`);
- const flat=H.flat?'\n                    All four ran close — no single dominant pattern; read her words, not the ranking.':'';
+  ? `⚑ DIVERGENCE — they can see ${nm(H.named)}; ${nm(H.active)} is the one running.\n                    Open on the one they named. Do not lead with the other.`
+  : (H.named?`Aligned — they name the same one their answers point at. Further on than most.`:`They didn't single one out.`);
+ const flat=H.flat?'\n                    All four ran close — no single dominant pattern; read their words, not the ranking.':'';
  const carryTxt=(DISCIPLINES.find(d=>d.key===R.lower)||{}).carry||'';
- const respLine=R.answered?`${dn(R.lower)} is the thinner of the two.\n                    Carry given to her: "${carryTxt}"`:'Not answered.';
+ const respLine=R.answered?`${dn(R.lower)} is the thinner of the two.\n                    Carry given to them: "${carryTxt}"`:'Not answered.';
  return `
 ──────────────── CONSCIOUSNESS OVERVIEW · FACILITATORS ONLY ────────────────
 ${ch.inp.name||'—'} · joined ${joined} · born ${dt}, ${ch.inp.placeStr}
 Sol Signature: ${sg.name}
 
 PATTERN RUNNING     ${nm(H.active)}  →  counter to practise: ${hm.counter}
-SHE NAMED           ${named} (hardest to answer honestly)
+THEY NAMED          ${named} (hardest to answer honestly)
                     ${diverge}${flat}
 THE FOUR, RANKED    ${H.order.map(nm).join('  ▸  ')}   (most active → least)
 
 PYRAMID
   Asking for work    ${pn(P.asking)} — ${PYRAMID.find(p=>p.key===P.asking).sub}
   At home in         ${pn(P.working)}
-  Read               Work the ground she stands on, not the layer she's fluent in.
+  Read               Work the ground they stand on, not the layer they are fluent in.
 
 THE TWO             ${respLine}
 
 SOURCE · WHO        ${spread(S.who)}   how much the public self matches the private one
-SOURCE · WHAT       ${spread(S.what)}   how much of the week is chosen, and how she is alone
-SOURCE · WHERE      ${spread(S.where)}   how the world feels, and whether she is running her own
+SOURCE · WHAT       ${spread(S.what)}   how much of the week is chosen, and how they are when alone
+SOURCE · WHERE      ${spread(S.where)}   how the world feels, and whether they are running their own
                     Read these three together. A low WHERE with a high WHO is
                     circumstance; a low WHO with a high WHERE is the harder one.
 
@@ -1997,13 +1996,13 @@ WHERE TO WATCH      ${chartTension(ch,H,P)}
 
 LIFE RIGHT NOW      ${life}${care}${noRaise}
 
-WHY SHE IS HERE     "${(A.why||'').trim()||'—'}"
-WHAT SHE WANTS      "${(A.want||'').trim()||'—'}"
+WHY THEY ARE HERE   "${(A.why||'').trim()||'—'}"
+WHAT THEY WANT      "${(A.want||'').trim()||'—'}"
 
 The course meets ${nm(H.active)} in Week 6 (Red) and again in Week 17.
 ${cap1(PYRAMID.find(p=>p.key===P.asking).name)} is Week 3 (Green). Self-responsibility is Week 16 (Orange),
 self-awareness Week 7 (Purple).
-Nothing above was shown to her as a score, a band or a type.
+Nothing above was shown to them as a score, a band or a type.
 ────────────────────────────────────────────────────────────────────────
 `;}
 /* one line for the facilitator: where the chart and the answers pull against each other.
@@ -2011,10 +2010,10 @@ Nothing above was shown to her as a score, a band or a type.
 function chartTension(ch,H,P){
  const sat=signOf(ch.pos.saturn).n, mer=signOf(ch.pos.mercury).n, mo=signOf(ch.pos.moon).n;
  const byPattern={
-  judgement:`Mercury in ${mer} shapes how she frames people — the verdict has her thinking style in it.`,
-  jealousy:`Venus in ${signOf(ch.pos.venus).n} shows what she measures worth by; that's the yardstick to loosen.`,
-  neediness:`Moon in ${mo} is where she goes for steadiness — the reassurance has a shape, and that's it.`,
-  fear:`Saturn in ${sat} is where she braces. Fear will sound most reasonable in that territory.`};
+  judgement:`Mercury in ${mer} shapes how they frame people — the verdict has their thinking style in it.`,
+  jealousy:`Venus in ${signOf(ch.pos.venus).n} shows what they measure worth by; that's the yardstick to loosen.`,
+  neediness:`Moon in ${mo} is where they go for steadiness — the reassurance has a shape, and that's it.`,
+  fear:`Saturn in ${sat} is where they brace. Fear will sound most reasonable in that territory.`};
  return byPattern[H.active]+` Pyramid: ${ch.leadEl}-led temperaments tend to over-trust ${ch.leadEl==='Air'?'the blueprint':ch.leadEl==='Water'?'the energy':ch.leadEl==='Fire'?'the blueprint':'the ground'}.`;
 }
 function fallbackCopy(text){
