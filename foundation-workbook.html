@@ -476,36 +476,28 @@ function inMapFor(m,p,a){
  switch(m.key){
   case 'purple':{
    if(!S('sun'))return null;
-   let t=`Your map puts the sun in <em>${p.sun}</em> — ${W_PRINCIPLE[p.sun]}. That is the shape clarity tends to take in you once the noise drops.`;
-   if(a&&a.pattern&&W_HEAD[a.pattern])t+=` Your answers put <em>${a.pattern}</em> in the room more than the other three, ${W_HEAD[a.pattern]}.`;
-   return {t,q:`When the spinning stops, is the thought underneath actually yours — or one you picked up somewhere and never questioned?`};}
+   return {t:`Sun in <em>${p.sun}</em>${a&&a.pattern?`. Your assessment put <em>${a.pattern}</em> loudest of the four`:''}.`,
+    q:`This week, notice when the noise is loudest — and whether the thought underneath it is yours.`};}
   case 'blue':{
    if(!full)return null;
-   return {t:`Your map puts thinking and speech in <em>${p.mercury}</em> — ${W_MERCURY[p.mercury]}.`,
-    q:`When you swallow the true thing, is it the words that are missing — or the permission?`};}
+   return {t:`Mercury in <em>${p.mercury}</em> — how your thinking runs.`,
+    q:`Notice one thing you swallow this week. Just notice it; you don't have to say it yet.`};}
   case 'green':{
    if(!full)return null;
-   let t;
-   if(p.moonAmb)t=`What draws you sits in <em>${p.venus}</em> — ${W_VENUS[p.venus]}. What settles you sits in either <em>${p.moonAmb[0]}</em> or <em>${p.moonAmb[1]}</em>; your birth time would settle which.`;
-   else if(p.moon===p.venus)t=`Both what draws you and what settles you sit in <em>${p.venus}</em> — ${W_VENUS[p.venus]}. When those two land in the same place, the heart has less to hide behind: what you want and what soothes you are the one thing.`;
-   else t=`What draws you sits in <em>${p.venus}</em> — ${W_VENUS[p.venus]}. What settles you sits in <em>${p.moon}</em> — ${W_MOON[p.moon]}.`;
-   if(a&&a.layer)t+=` Your answers pointed at <em>${a.layer}</em> — ${a.layerRole} — as the layer asking to be worked.`;
-   return {t,q:a&&a.layerAsks?a.layerAsks:`Is the heart closed here, or simply tired? They ask for different things.`};}
+   return {t:`Venus in <em>${p.venus}</em>, Moon in <em>${p.moonAmb?p.moonAmb[0]+' or '+p.moonAmb[1]:p.moon}</em>${a&&a.layer?`. Your assessment pointed at <em>${a.layer}</em>`:''}.`,
+    q:`Notice where you harden this week, and what it is protecting.`};}
   case 'orange':{
    if(!S('leadEl'))return null;
-   let t=`You are built on <em>${p.leadEl.toLowerCase()}</em> — ${W_ELEMENT[p.leadEl]}. ${p.asc?`Where the body tends to speak first for you is <em>${WSIGNS[p.asc].zone}</em>.`:''}`;
-   return {t,q:a&&a.carry?a.carry:`Where does your gut speak first — and how quickly do you talk it back down?`};}
+   return {t:`<em>${p.leadEl}</em>-led${p.asc?`, body read to ${WSIGNS[p.asc].zone}`:''}.`,
+    q:`Notice one decision your gut answered before your mind did.`};}
   case 'turquoise':{
    if(!S('leadEl'))return null;
-   return {t:`<em>${p.leadEl}</em>-led${full&&p.mars?`, with drive that moves <em>${W_MARS[p.mars]}</em>`:''}. That is the grain your making runs along, and it is easier to work with it than against it.`,
-    q:`What would you make this week if nobody was ever going to see it?`};}
+   return {t:`<em>${p.leadEl}</em>-led${full&&p.mars?`, drive in <em>${p.mars}</em>`:''}.`,
+    q:`Make one thing this week with your hands. It does not have to be good.`};}
   case 'red':{
    if(!full)return null;
-   let t=p.asc?`The eastern horizon at your birth was <em>${p.asc}</em> — the angle people meet before they meet anything else about you.`
-              :`Your rising sign is still waiting on your birth time — the part of the map that reads how you are met.`;
-   t+=` The place the map says you tighten is around <em>${W_SATURN[p.saturn]}</em>.`;
-   if(a&&a.pattern)t+=` And your answers named <em>${a.pattern}</em>; its counter is <em>${a.counter}</em>. Red is where the two of them meet.`;
-   return {t,q:`Where do you shrink — and is it the room, or is it the pattern following you into the room?`};}
+   return {t:`${p.asc?`<em>${p.asc}</em> rising`:`Rising sign waiting on your birth time`}, Saturn in <em>${p.saturn}</em>${a&&a.pattern?`. Counter to practise: <em>${a.counter}</em>`:''}.`,
+    q:`Notice one room you make yourself smaller for. Walk into the next one fully.`};}
  }
  return null;
 }
