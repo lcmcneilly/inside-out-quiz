@@ -356,9 +356,9 @@ a{color:var(--gold-deep)}
   </div>
   <span class="kicker" style="display:block;margin-bottom:18px">Welcome in</span>
   <h1>Who are you?</h1>
-  <p style="margin-top:22px">Welcome to the Sol Map. It takes about fifteen minutes: you give us your birth details, answer a set of questions, and at the end you get a report on where you are right now.</p>
-  <p><em>It is a baseline, not a rank.</em> Nothing in it is scored, graded, or compared to anybody else, and there is no good or bad result. Some of the questions are uncomfortable to answer honestly. Answer them honestly anyway — that is the only thing that makes the report worth having.</p>
-  <p class="anchor-line">We are all Source. You already have everything inside you.</p>
+  <p style="margin-top:22px">Welcome to the Sol Map. It takes about fifteen minutes, and will give you a personalised map to begin with, based on your answers and your birth details.</p>
+  <p><em>It is a baseline, not a rank.</em> Nothing in it is scored, graded, or compared to anybody else, and there is no good or bad result. Some of the questions are uncomfortable to answer honestly. Answer them with the first thing that comes to your mind.</p>
+  <p class="anchor-line">You already have everything inside you. We are all Source.</p>
 </section>
 
 <section id="whatThisIs">
@@ -371,8 +371,8 @@ a{color:var(--gold-deep)}
   <div class="card">
     <span class="kicker">The room</span>
     <h3>Lumina</h3>
-    <p>Lumina is where SHE IS SOL and SHE IS AI meet — two doors into one community. You came in through the first: knowing yourself. The second is learning to use AI as a tool, and recognising how much power you actually have to build something with it.</p>
-    <p>They sit in one room on purpose. Capability handed to someone who doesn't yet know themselves only moves faster in the wrong direction. You build from the foundation of knowing yourself first, and then the tools are worth having.</p>
+    <p>Lumina is where SHE IS SOL and SHE IS AI meet — two doors into one community. SOL is about knowing yourself. SHE IS AI will help you use AI as a tool. The space is here for you to recognise how much power you have, and to build something with it.</p>
+    <p>They sit in one room on purpose. When you build from the foundation of knowing yourself first, then the tools are worth having.</p>
     <ul class="offer">
       <li><span>The conversation</span><p>Open channels, and people to think out loud with.</p></li>
       <li><span>The videos</span><p>A welcome from Laura, and one alongside each of the six modules.</p></li>
@@ -504,6 +504,8 @@ a{color:var(--gold-deep)}
       <p id="lightLead"></p>
     </div>
     <div class="lm-fig" id="lightFig"></div>
+    <div class="lm-facts" id="lightKey"></div>
+    <p class="bridge" style="margin:34px auto 26px">Everything you have just read came from positions and relationships on this one circle. The geometry is astronomical and checkable. The reading of it — light as centre, movement as mind, horizon as body — is this system's way of looking at it, and yours to accept or refuse.</p>
     <div class="lm-facts" id="lightFacts"></div>
   </section>
 
@@ -511,7 +513,7 @@ a{color:var(--gold-deep)}
     <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
     <div class="part-header">
       <span class="kicker">What your answers show</span>
-      <h2>The four that dismantle quietly</h2>
+      <h2>The four horsemen</h2>
       <p>Judgement, jealousy, neediness and fear. Left unobserved they take a life apart slowly, and none of them announce themselves — each one arrives dressed as something reasonable. Their counters are what build it back.</p>
       <p style="margin-top:12px"><em>Nothing below is a score or a type.</em> It is a reading of what is loudest in you this month, which is a different thing entirely — and it is meant to be argued with.</p>
     </div>
@@ -527,7 +529,7 @@ a{color:var(--gold-deep)}
     <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
     <div class="part-header">
       <span class="kicker">The Pyramid of Creation</span>
-      <h2>What you are building on</h2>
+      <h2>What is holding it up</h2>
       <p>Everything you make stands on three layers, and they stack in one order only. <em>Trust and belief are the ground. Emotion is the energy. Thought and intent are the blueprint.</em></p>
     </div>
     <div class="pyr-fig" id="pyramidFig"></div>
@@ -1459,84 +1461,130 @@ function moonGlyph(x,y,r,ph){
   <path d="M${x.toFixed(1)} ${(y-r).toFixed(1)} A${r} ${r} 0 0 ${outer} ${x.toFixed(1)} ${(y+r).toFixed(1)} A${Math.abs(rx).toFixed(2)} ${r} 0 0 ${inner} ${x.toFixed(1)} ${(y-r).toFixed(1)} Z" fill="#FFFFFF"/>
   <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="none" stroke="rgba(26,27,32,.42)" stroke-width=".9"/>`;}
 
-/* ---- ONE · the part that doesn't change (the sun) ---- */
+/* ---- ONE · WHO — the centre (Soul · the Sun) ----
+   Architecture: centre → relationship → observer. This is the centre.
+   The Sun is not read as personality; it is read as the central organising
+   light, and the element × phase table describes the quality of that light. */
 function readWho(ch){
  const s=signOf(ch.pos.sun), deg=degIn(ch.pos.sun), ph=elPhase(s.n);
  const di=Math.min(2,Math.floor(deg/10)), ds=decanSign(s.n,di), dp=elPhase(ds);
  return {
   head:`the sun stood at ${deg.toFixed(0)}° of ${s.n}`,
-  body:`<p>There are three parts to a person, and everything in this map is arranged on them. The first is the part that was there before anything happened to you and is still there underneath all of it. The sun marks where it stood.</p>
-   <p>${s.n} is <em>${ph.n}</em>. ${ph.p}</p>
-   <p>Inside every sign there are three ten-day stretches, and they belong to the three signs that share its element — so the element holds steady across a sign and only the phase turns. Yours is the ${ORD[di]} ten days, which belongs to ${ds}: <em>${dp.n}</em>.</p>
-   <p class="qa-ask">Does any of that describe the part of you that has never really changed? Nobody can answer that from the outside, and this map is not going to try. It marks a position. What you are is yours to work out.</p>`};
+  body:`<p>A birth chart is not a personality test. It is a picture of where things stood in relation to each other at one moment, seen from one place on the earth. This map reads it in three layers, and this is the first.</p>
+   <p>Everything in a solar system is arranged around one light. Nothing orbits the moon or the planets — they orbit the sun, and their positions only make sense measured against it. The Sol Map uses that same arrangement to ask about the part of a person that stays most fundamentally them, underneath thought, mood, circumstance and everything they were taught.</p>
+   <p>Yours stood in <em>${s.n}</em>, which this system reads as <em>${ph.n}</em>. ${ph.p}</p>
+   <p>Each sign also divides into three ten-day stretches, belonging to the three signs that share its element — so across a sign the element never changes, only its phase does. Yours is the ${ORD[di]}, which belongs to ${ds}: <em>${dp.n}</em>.</p>
+   <p class="qa-ask">That is the quality of light your sun occupied. Whether it describes something that has genuinely never changed in you is not something this map can tell you — it marks a position, and you are the one standing in it. <em>Who are you?</em></p>`};
 }
-/* ---- TWO · the part that moves (the moon, and what feeling does) ---- */
+/* ---- TWO · WHAT — differentiation (Mind · the Moon, and the wider field) ----
+   The Moon is the visible anchor, not the whole mind. The point of the section
+   is that one centre moves through several distinct faculties, and the moon
+   phase makes that concrete: a phase IS an angular relationship, nothing else. */
 function readWhat(ch){
  const mo=signOf(ch.pos.moon), mel=SIGN_EL[mo.n][0], ph=elPhase(mo.n);
  const mer=signOf(ch.pos.mercury), merEl=SIGN_EL[mer.n][0];
  const mp=moonPhase(ch.pos.sun,ch.pos.moon);
- let body=`<p>The second part is the one that moves — thought and feeling, which are closer to each other than they are usually allowed to be. The moon marks it.</p>`;
- if(ch.moonAmbiguous)body+=`<p>The moon changed sign on the day you were born, so it stood in either <em>${ch.moonAmbiguous[0]}</em> or <em>${ch.moonAmbiguous[1]}</em>. Your birth time settles which, and the two read differently enough to be worth finding out.</p>`;
- else body+=`<p>Yours stood in <em>${mo.n}</em> — ${ph.n}. ${MOON_EL[mel]}</p>`;
- body+=`<p>Of the moon itself, ${mp.copy}. That is simply the angle the two lights were standing at, and it is the same for everyone born that night.</p>`;
- body+=`<p>Thought runs on a different current again: yours is ${merEl.toLowerCase()}, which tends to move ${MIND_EL[merEl]}.</p>`;
- body+=`<p class="qa-ask">Is that how feeling actually moves in you — and is it the same thing as how you think? Most people find those two are not on speaking terms. Noticing the gap is more useful than agreeing with the description.</p>`;
+ let body=`<p>One centre, but experience does not arrive through one channel. Feeling is not thought. Thought is not wanting. Wanting is not doing. They work on each other constantly, and they are not the same faculty — which is why a chart has more than one marker in it.</p>
+  <p>The moon is the one this map reads first, because it marks reception: what reaches you, how it arrives, and how it moves once it has.</p>`;
+ if(ch.moonAmbiguous)body+=`<p>Yours crossed between signs on the day you were born, so it stood in either <em>${ch.moonAmbiguous[0]}</em> or <em>${ch.moonAmbiguous[1]}</em>. The birth time settles it, and the two read differently enough to be worth finding out.</p>`;
+ else body+=`<p>Yours stood in <em>${mo.n}</em> — <em>${ph.n}</em>. ${MOON_EL[mel]}</p>`;
+ body+=`<p>The moon was ${(mp.lit*100).toFixed(0)} per cent lit that night, and that figure is not symbolic — a phase is only ever the angle between the sun, the earth and the moon. Nothing about the moon changes; what changes is where it stands in relation to the light. ${mp.copy[0].toUpperCase()+mp.copy.slice(1)}. That is worth noticing for its own sake: it is the clearest evidence in the whole map that a chart is built from <em>relationships</em>, not from labels attached to things.</p>`;
+ body+=`<p>Thought is marked separately, and yours runs ${merEl.toLowerCase()} — ${MIND_EL[merEl]}.</p>`;
+ body+=`<p class="qa-ask">So there are at least two currents here, and they are rarely in step. How does experience actually move through you — what reaches you first, and what does it have to pass through before you can say it? <em>What are you?</em></p>`;
  return {head:ch.moonAmbiguous?`the moon changed sign that day`:`the moon stood at ${degIn(ch.pos.moon).toFixed(0)}° of ${mo.n}`,body};
 }
-/* ---- THREE · the part you can put your hand on (the physical body) ----
-   Tendencies to notice, never diagnosis, and nothing medical. */
+/* ---- THREE · WHERE — the observer (Body · the Ascendant) ----
+   The ascendant is not another personality sign. It is the only part of the
+   chart produced by time AND place, which is precisely what makes it the
+   embodied point the rest is viewed from. Body correspondence stays
+   observational: the map points, the person checks. */
 function readWhere(ch){
  const asc=ch.ascSign, sat=signOf(ch.pos.saturn);
  const zoneOf=n=>SIGNS.find(x=>x.n===n).zone;
- let body=`<p>The third part is the one you can put your hand on. Feeling doesn't stay in the mind — it lands somewhere physical, and when it isn't allowed to move it tends to stay in the same place each time.</p>`;
+ let body=`<p>The sun and the planets describe the pattern that was in the sky. They were the same for everyone alive that day. What was not the same is where it was being seen from — and that is this layer.</p>
+  <p>The rising sign is the only part of the chart made from your time <em>and</em> your place. It marks the degree that was climbing over the eastern horizon at the minute you arrived, at the spot on the earth where you arrived. It moves through the whole circle every twenty-four hours, so a few hours or a few hundred miles gives a different one. It is not another sign describing your character; it is the standpoint the rest of the pattern was observed from.</p>`;
  if(asc){
-  const ael=SIGN_EL[asc.n][0];
-  body+=`<p>The eastern horizon at your birth cut the circle at <em>${degIn(ch.asc).toFixed(0)}° of ${asc.n}</em> — ${elPhase(asc.n).n}. That line is read down into the body, and it points at <em>${zoneOf(asc.n)}</em>. That is where the map would expect you to feel something before you have thought it, and where it would collect if you sat on it.</p>`;
-  body+=`<p>The place the map marks as tightening is <em>${zoneOf(sat.n)}</em> — where holding on has somewhere to go. Held long enough, that is usually the first place to complain.</p>`;
+  body+=`<p>Yours was <em>${degIn(ch.asc).toFixed(0)}° of ${asc.n}</em> — <em>${elPhase(asc.n).n}</em>. Because it is the embodied point, tradition reads it down into the body, and for ${asc.n} that points at <em>${zoneOf(asc.n)}</em>.</p>`;
+  body+=`<p>A secondary marker, used lightly: the map associates holding and tightening with <em>${zoneOf(sat.n)}</em>.</p>`;
+  body+=`<p>The map cannot tell you what your body actually feels. It can only say where it would look first.</p>`;
  }else{
-  body+=`<p><em>This section needs your birth time.</em> The eastern horizon turns a full circle every twenty-four hours, so without the minute there is no way to know where it stood — and that is the line the body is read from.</p>`;
-  body+=`<p>What can be said without it: the place the map marks as tightening is <em>${zoneOf(sat.n)}</em>.</p>`;
+  body+=`<p><em>Without your birth time this layer stays closed.</em> There is no way to know which degree was rising, and no honest way to guess it — so the map leaves it rather than filling it in.</p>`;
+  body+=`<p>What can still be said: the map associates holding and tightening with <em>${zoneOf(sat.n)}</em>.</p>`;
  }
- body+=`<p class="qa-ask">Where does it actually go in you, when something is not dealt with? You already know the answer to that one — it is the place you would have named before reading any of this.</p>`;
+ body+=`<p class="qa-ask">So: notice whether that region is anywhere you carry tension, sensation or feeling — and notice where it actually goes in you when something is not dealt with. You already know that answer. <em>Where are you?</em></p>`;
  return {head:asc?`the horizon cut the circle at ${degIn(ch.asc).toFixed(0)}° of ${asc.n}`:`waiting on your birth time`,body};
 }
 
-/* ---- the diagram: one circle, one horizon, two lights ---- */
+/* ---- the diagram: the evidence the whole reading was read off ----
+   Shows, in order of weight: sky above / earth below, the twelve signs, the
+   thirty-six ten-degree stretches with theirs picked out, the horizon and the
+   overhead line, and the two lights where they actually stood — the moon drawn
+   at the fraction that was genuinely lit. */
 function lightMapSvg(ch){
- const W=420,H=340,cx=210,cy=168,R=125;
- const asc=ch.ascSign?ch.asc:0;
+ const W=520,H=430,cx=260,cy=212,R=150;
+ const asc=ch.ascSign?ch.asc:0, known=!!ch.ascSign;
  const ang=L=>(180+(L-asc))*RAD;
  const pt=(L,r)=>[cx+r*Math.cos(ang(L)),cy-r*Math.sin(ang(L))];
- let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Your circle: the horizon line, the position of the sun, and the position of the moon at your birth.">`;
- // ground below the horizon
- if(ch.ascSign)s+=`<path d="M${cx-R} ${cy} A${R} ${R} 0 0 0 ${cx+R} ${cy} Z" fill="rgba(26,27,32,.045)"/>`;
- // the thirty-six divisions
- const sunDeg=ch.pos.sun, dStart=Math.floor(sunDeg/10)*10;
+ const f=n=>n.toFixed(1);
+ let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="The circle of the sky at your birth: the horizon, the twelve signs, the thirty-six ten-degree stretches, and the sun and moon where they stood.">`;
+ /* sky and earth */
+ if(known){
+  s+=`<path d="M${cx-R} ${cy} A${R} ${R} 0 0 1 ${cx+R} ${cy} Z" fill="rgba(201,162,77,.05)"/>`;
+  s+=`<path d="M${cx-R} ${cy} A${R} ${R} 0 0 0 ${cx+R} ${cy} Z" fill="rgba(26,27,32,.055)"/>`;}
+ /* the twelve — long spokes at every 30° */
+ for(let L=0;L<360;L+=30){
+  const a=pt(L,R), b=pt(L,R*0.80);
+  s+=`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" stroke="rgba(26,27,32,.17)" stroke-width="0.9"/>`;}
+ /* the thirty-six — short ticks at every 10° */
  for(let L=0;L<360;L+=10){
-  const a=pt(L,R), b=pt(L,R*0.945);
-  s+=`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="rgba(26,27,32,.20)" stroke-width="0.7"/>`;}
- s+=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="rgba(26,27,32,.30)" stroke-width="1"/>`;
- // the person's ten degrees of it, thickened on the rim itself
+  if(L%30===0)continue;
+  const a=pt(L,R), b=pt(L,R*0.935);
+  s+=`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" stroke="rgba(26,27,32,.16)" stroke-width="0.6"/>`;}
+ s+=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="rgba(26,27,32,.32)" stroke-width="1"/>`;
+ s+=`<circle cx="${cx}" cy="${cy}" r="${R*0.80}" fill="none" stroke="rgba(26,27,32,.10)" stroke-width="0.8"/>`;
+ /* their ten degrees, on the rim */
+ const dStart=Math.floor(ch.pos.sun/10)*10;
  const a0=pt(dStart,R), a1=pt(dStart+10,R);
- s+=`<path d="M${a0[0].toFixed(1)} ${a0[1].toFixed(1)} A${R} ${R} 0 0 0 ${a1[0].toFixed(1)} ${a1[1].toFixed(1)}" fill="none" stroke="#C9A24D" stroke-width="3" stroke-linecap="round"/>`;
- // the horizon
- if(ch.ascSign){
-  s+=`<line x1="${cx-R-26}" y1="${cy}" x2="${cx+R+26}" y2="${cy}" stroke="rgba(26,27,32,.45)" stroke-width="1"/>
-   <text x="${cx-R-30}" y="${cy-9}" text-anchor="end" font-family="Inter,sans-serif" font-size="9" letter-spacing="1.5" fill="rgba(26,27,32,.44)">EAST</text>
-   <text x="${cx-R-30}" y="${cy+16}" text-anchor="end" font-family="Inter,sans-serif" font-size="8.5" letter-spacing="1.2" fill="rgba(26,27,32,.30)">HORIZON</text>`;}
- // the sun
- const sp=pt(ch.pos.sun,R);
- s+=`<circle cx="${sp[0].toFixed(1)}" cy="${sp[1].toFixed(1)}" r="7.5" fill="#C9A24D"/>
-   <circle cx="${sp[0].toFixed(1)}" cy="${sp[1].toFixed(1)}" r="13" fill="none" stroke="#C9A24D" stroke-width=".7" opacity=".45"/>`;
- // the moon, drawn at the fraction actually lit that night
- const mp=pt(ch.pos.moon,R), ph=moonPhase(ch.pos.sun,ch.pos.moon);
- s+=moonGlyph(mp[0],mp[1],8.5,ph);
- // labels
- const sl=pt(ch.pos.sun,R+30), ml=pt(ch.pos.moon,R+28);
- s+=`<text x="${sl[0].toFixed(1)}" y="${sl[1].toFixed(1)}" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" letter-spacing="1.5" fill="#8F6B2A">SUN</text>`;
- s+=`<text x="${ml[0].toFixed(1)}" y="${ml[1].toFixed(1)}" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" letter-spacing="1.5" fill="rgba(26,27,32,.44)">MOON</text>`;
+ s+=`<path d="M${f(a0[0])} ${f(a0[1])} A${R} ${R} 0 0 0 ${f(a1[0])} ${f(a1[1])}" fill="none" stroke="#C9A24D" stroke-width="3.4" stroke-linecap="round"/>`;
+ /* the sign names, small, around the rim */
+ for(let i=0;i<12;i++){
+  const mid=i*30+15, p=pt(mid,R*0.875), nm=SIGNS[i].n.slice(0,3).toUpperCase();
+  s+=`<text x="${f(p[0])}" y="${f(p[1]+3)}" text-anchor="middle" font-family="Inter,sans-serif" font-size="7.5" letter-spacing="1.1" fill="rgba(26,27,32,.34)">${nm}</text>`;}
+ /* the horizon, and the overhead line */
+ if(known){
+  s+=`<line x1="${cx-R-34}" y1="${cy}" x2="${cx+R+34}" y2="${cy}" stroke="rgba(26,27,32,.5)" stroke-width="1"/>`;
+  s+=`<line x1="${cx}" y1="${cy-R-16}" x2="${cx}" y2="${cy+R+16}" stroke="rgba(26,27,32,.16)" stroke-width="0.8" stroke-dasharray="3 4"/>`;
+  const lab=(x,y,t,anchor,dim)=>`<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="Inter,sans-serif" font-size="8.5" letter-spacing="1.4" fill="rgba(26,27,32,${dim?'.30':'.46'})">${t}</text>`;
+  s+=lab(cx-R-38,cy-8,'EAST','end')+lab(cx-R-38,cy+14,'RISING','end',1);
+  s+=lab(cx+R+38,cy-8,'WEST','start')+lab(cx+R+38,cy+14,'SETTING','start',1);
+  s+=`<text x="${cx+R+38}" y="${cy-30}" text-anchor="start" font-family="Inter,sans-serif" font-size="8" letter-spacing="1.2" fill="rgba(201,162,77,.85)">SKY</text>`;
+  s+=`<text x="${cx+R+38}" y="${cy+42}" text-anchor="start" font-family="Inter,sans-serif" font-size="8" letter-spacing="1.2" fill="rgba(26,27,32,.30)">EARTH</text>`;
+ }
+ /* the line between the two lights — the phase, made visible */
+ const spr=pt(ch.pos.sun,R), mpr=pt(ch.pos.moon,R);
+ s+=`<line x1="${f(spr[0])}" y1="${f(spr[1])}" x2="${f(mpr[0])}" y2="${f(mpr[1])}" stroke="rgba(201,162,77,.30)" stroke-width="0.9" stroke-dasharray="2 4"/>`;
+ /* the two lights */
+ s+=`<circle cx="${f(spr[0])}" cy="${f(spr[1])}" r="8" fill="#C9A24D"/>
+   <circle cx="${f(spr[0])}" cy="${f(spr[1])}" r="14" fill="none" stroke="#C9A24D" stroke-width=".7" opacity=".45"/>`;
+ const ph=moonPhase(ch.pos.sun,ch.pos.moon);
+ s+=moonGlyph(mpr[0],mpr[1],9,ph);
+ const sl=pt(ch.pos.sun,R+32), ml=pt(ch.pos.moon,R+31);
+ s+=`<text x="${f(sl[0])}" y="${f(sl[1])}" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" letter-spacing="1.5" fill="#8F6B2A">SUN</text>`;
+ s+=`<text x="${f(ml[0])}" y="${f(ml[1])}" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" letter-spacing="1.5" fill="rgba(26,27,32,.44)">MOON</text>`;
  return s+'</svg>';
 }
+/* what the reader should be able to find on it, and why any of it matters */
+function lightMapKey(ch){
+ const rows=[
+  ['The circle','Three hundred and sixty degrees of sky, as it stood that minute.'],
+  ['The twelve, and the thirty-six','The long spokes are the signs. The short ticks are the ten-degree stretches — the finer division. Yours is picked out in gold.'],
+  ['The sun','The centre everything else is measured against. This is where <em>who</em> was read from.'],
+  ['The moon, and the dotted line','The angle between them <em>is</em> the phase — that is why it is drawn. This is where <em>what</em> was read from.'],
+  ['The horizon','Only this line needed your time and place. This is where <em>where</em> was read from.']];
+ if(!ch.ascSign)rows[4]=['The horizon','Missing, because it needs your birth time — it is the one line that does.'];
+ return rows.map(r=>`<div class="fact"><span class="fact-k">${r[0]}</span><span class="fact-v" style="font-family:var(--sans);font-size:.92rem;color:var(--ivory-dim);text-align:right;max-width:34ch">${r[1]}</span></div>`).join('');
+}
+
 /* the summary — every row says what it is in the same breath as the number,
    so nothing on it needs decoding. */
 function lightFacts(ch){
@@ -1578,7 +1626,7 @@ function buildAssessment(){
  let h='',n=0;
 
  /* ---- FOUR ---- */
- h+=part('Part one · the four','What moves through you',
+ h+=part('Part one · the four','What is moving through you?',
   `This section is based on emotional elements — four of them, and they are the four that do the most damage when nobody is watching them: judgement, jealousy, neediness and fear.`,
   'Why these four',
   `They rarely announce themselves. Each one arrives dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Left unwatched they don't take a life apart in one blow; they make a thousand small decisions on your behalf until you can't tell which of them were yours.<br><br>Each has a counter: compassion, joy, love, empathy. Not nicer feelings to have instead — the specific things that take each one apart. The questions below simply ask how often each shows up.`);
@@ -1590,18 +1638,18 @@ function buildAssessment(){
   <div class="q-item"><p class="q-text">${n+1}. ${HARDEST_CHOICE.t}</p><p class="q-note">${HARDEST_CHOICE.note}</p>${optsRow('data-hardest',HARDEST_CHOICE.options.map(o=>o[1]))}</div></div>`;n++;
 
  /* ---- THREE ---- */
- h+=part('Part two · the three','What you are built on',
+ h+=part('Part two · the three','The structure beneath it',
   `The Pyramid of Creation is the model underneath everything taught here. It says that anything you build in your life rests on three layers, in a fixed order, and that a thing only holds if the layer under it is sound.`,
   'The three layers',
-  `<em>Trust and belief are the ground</em> — whether your own word means anything to you, and what you have quietly agreed is true about yourself. <em>Emotion is the energy</em> — the fuel that actually moves something out of your head and into the world. <em>Thought and intent are the blueprint</em> — the shape you draw and the direction you hold.<br><br>Almost everyone works the blueprint, because it is the visible one, and then can't understand why nothing stands up. These questions look at all three.`);
+  `<em>Trust and belief are the ground</em> — do you trust yourself, and what do you believe about yourself? <em>Emotion is the energy</em> — the fuel that actually moves something into reality. <em>Thought and intent are the blueprint</em> — the shape you draw and the direction you hold.<br><br>These questions help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
  PYRAMID.forEach(p=>{A.pyr[p.key]=A.pyr[p.key]||[];
   h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-group-head"><span class="kicker">${p.name} · ${p.sub}</span></div><div class="q-accent"></div>`;
   p.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-p="${p.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
   h+=`</div>`;});
 
  /* ---- TWO ---- */
- h+=part('Part three · the two','What the whole thing runs on',
-  `Two disciplines, and everything else depends on them. One is the line between a life that happens to you and one you are the author of. The other is what makes crossing it possible.`);
+ h+=part('Part three · the two','What choices are you making?',
+  `Both of these are choices, made again every day rather than once. One is choosing to be responsible for your own state instead of handing it to whatever happened. The other is choosing to look — because you cannot take responsibility for something you never noticed yourself doing. Everything else in this work rests on those two decisions.`);
  DISCIPLINES.forEach(d=>{A.disc[d.key]=A.disc[d.key]||[];
   h+=`<div class="q-group" style="--accent:var(--orange)"><div class="q-group-head"><span class="kicker">${d.name}</span></div><div class="q-accent"></div>
    <p class="q-note" style="margin:2px 0 8px">${d.blurb}</p>`;
@@ -1610,7 +1658,7 @@ function buildAssessment(){
 
  /* ---- ONE ---- */
  h+=part('Part four · the one','Source',
-  `Three questions sit underneath everything here: <em>who are you, what are you, where are you.</em> Nobody answers them once. These six read where you're standing today — slide to wherever is honest, and don't tidy it up on the way.`);
+  `Three questions sit underneath everything here: <em>who are you? what are you? where are you?</em> Nobody can answer these for you. These questions read where you're standing today — slide to wherever is honest, and don't tidy it up on the way.`);
  h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-accent"></div>`;
  SOURCE.forEach(s=>{
   h+=`<div class="q-item"><p class="q-text">${n+1}. ${s.q}</p>${spreadRow(s.key,s.lo,s.hi)}</div>`;n++;});
@@ -1751,6 +1799,7 @@ function renderReading(ch){
   ? `This is the whole of it. A circle of three hundred and sixty degrees, divided into thirty-six; the line where the sky met the ground in the east; and the two lights, where they actually stood. Everything above was read off this.`
   : `This is the whole of it. A circle of three hundred and sixty degrees, divided into thirty-six, and the two lights where they actually stood. <em>The horizon line is missing because it needs your birth time</em> — without the minute there is no way to know which way up the circle sat.`;
  $('lightFig').innerHTML=lightMapSvg(ch);
+ if($('lightKey'))$('lightKey').innerHTML=lightMapKey(ch);
  $('lightFacts').innerHTML=lightFacts(ch);
  // the assessment mirror
  window._assess=renderConsciousness(ch);
