@@ -1423,6 +1423,12 @@ const elPhase=sign=>EL_PHASE[SIGN_EL[sign][0]+'-'+SIGN_EL[sign][1]];
 function decanSign(sign,i){const el=SIGN_EL[sign][0],ring=EL_ORDER[el];
  return ring[(ring.indexOf(sign)+i)%3];}
 const ORD=['first','second','third'];
+/* the secondary holding note is used lightly (brief §4), so it takes a softer,
+   less anatomical form of the same twelve zones */
+const HOLD_ZONE={Aries:'the head and jaw',Taurus:'the neck and throat',Gemini:'the shoulders and hands',
+ Cancer:'the chest and stomach',Leo:'the heart and upper back',Virgo:'the gut',
+ Libra:'the lower back',Scorpio:'the pelvis and hips',Sagittarius:'the hips and thighs',
+ Capricorn:'the knees and joints',Aquarius:'the ankles and circulation',Pisces:'the feet'};
 
 /* how feeling tends to move, read from the moon's element */
 const MOON_EL={
@@ -1470,8 +1476,7 @@ function readWho(ch){
  const di=Math.min(2,Math.floor(deg/10)), ds=decanSign(s.n,di), dp=elPhase(ds);
  return {
   head:`the sun stood at ${deg.toFixed(0)}° of ${s.n}`,
-  body:`<p>A birth chart is not a personality test. It is a picture of where things stood in relation to each other at one moment, seen from one place on the earth. This map reads it in three layers, and this is the first.</p>
-   <p>Everything in a solar system is arranged around one light. Nothing orbits the moon or the planets — they orbit the sun, and their positions only make sense measured against it. The Sol Map uses that same arrangement to ask about the part of a person that stays most fundamentally them, underneath thought, mood, circumstance and everything they were taught.</p>
+  body:`<p>A birth chart is not a personality test. It is a picture of where things stood in relation to each other at one moment, seen from one place on the earth — and it starts with a centre. Nothing orbits the moon or the planets; they orbit the sun, and their positions only mean anything measured against it. This map borrows that arrangement to ask about the part of you that stays most fundamentally you, underneath thought, mood and everything you were taught.</p>
    <p>Yours stood in <em>${s.n}</em>, which this system reads as <em>${ph.n}</em>. ${ph.p}</p>
    <p>Each sign also divides into three ten-day stretches, belonging to the three signs that share its element — so across a sign the element never changes, only its phase does. Yours is the ${ORD[di]}, which belongs to ${ds}: <em>${dp.n}</em>.</p>
    <p class="qa-ask">That is the quality of light your sun occupied. Whether it describes something that has genuinely never changed in you is not something this map can tell you — it marks a position, and you are the one standing in it. <em>Who are you?</em></p>`};
@@ -1484,11 +1489,10 @@ function readWhat(ch){
  const mo=signOf(ch.pos.moon), mel=SIGN_EL[mo.n][0], ph=elPhase(mo.n);
  const mer=signOf(ch.pos.mercury), merEl=SIGN_EL[mer.n][0];
  const mp=moonPhase(ch.pos.sun,ch.pos.moon);
- let body=`<p>One centre, but experience does not arrive through one channel. Feeling is not thought. Thought is not wanting. Wanting is not doing. They work on each other constantly, and they are not the same faculty — which is why a chart has more than one marker in it.</p>
-  <p>The moon is the one this map reads first, because it marks reception: what reaches you, how it arrives, and how it moves once it has.</p>`;
+ let body=`<p>One centre, but experience does not arrive through one channel. Feeling is not thought; thought is not wanting; wanting is not doing. They work on each other constantly and they are not the same faculty — which is why a chart carries more than one marker. The moon is the one read first here, because it marks reception: what reaches you, and how it moves once it has.</p>`;
  if(ch.moonAmbiguous)body+=`<p>Yours crossed between signs on the day you were born, so it stood in either <em>${ch.moonAmbiguous[0]}</em> or <em>${ch.moonAmbiguous[1]}</em>. The birth time settles it, and the two read differently enough to be worth finding out.</p>`;
  else body+=`<p>Yours stood in <em>${mo.n}</em> — <em>${ph.n}</em>. ${MOON_EL[mel]}</p>`;
- body+=`<p>The moon was ${(mp.lit*100).toFixed(0)} per cent lit that night, and that figure is not symbolic — a phase is only ever the angle between the sun, the earth and the moon. Nothing about the moon changes; what changes is where it stands in relation to the light. ${mp.copy[0].toUpperCase()+mp.copy.slice(1)}. That is worth noticing for its own sake: it is the clearest evidence in the whole map that a chart is built from <em>relationships</em>, not from labels attached to things.</p>`;
+ body+=`<p>The moon was ${(mp.lit*100).toFixed(0)} per cent lit that night, and that figure is not symbolic — a phase is only ever the angle between the sun, the earth and the moon. Nothing about the moon changes; what changes is where it stands in relation to the light. ${mp.copy[0].toUpperCase()+mp.copy.slice(1)}. A chart is built from <em>relationships</em>, not from labels attached to things, and the phase is where that is easiest to see.</p>`;
  body+=`<p>Thought is marked separately, and yours runs ${merEl.toLowerCase()} — ${MIND_EL[merEl]}.</p>`;
  body+=`<p class="qa-ask">So there are at least two currents here, and they are rarely in step. How does experience actually move through you — what reaches you first, and what does it have to pass through before you can say it? <em>What are you?</em></p>`;
  return {head:ch.moonAmbiguous?`the moon changed sign that day`:`the moon stood at ${degIn(ch.pos.moon).toFixed(0)}° of ${mo.n}`,body};
@@ -1502,16 +1506,15 @@ function readWhere(ch){
  const asc=ch.ascSign, sat=signOf(ch.pos.saturn);
  const zoneOf=n=>SIGNS.find(x=>x.n===n).zone;
  let body=`<p>The sun and the planets describe the pattern that was in the sky. They were the same for everyone alive that day. What was not the same is where it was being seen from — and that is this layer.</p>
-  <p>The rising sign is the only part of the chart made from your time <em>and</em> your place. It marks the degree that was climbing over the eastern horizon at the minute you arrived, at the spot on the earth where you arrived. It moves through the whole circle every twenty-four hours, so a few hours or a few hundred miles gives a different one. It is not another sign describing your character; it is the standpoint the rest of the pattern was observed from.</p>`;
+  <p>The rising sign is the only part of the chart made from your time <em>and</em> your place — the degree climbing over the eastern horizon at the minute and the spot you arrived. It turns the whole circle every twenty-four hours, so a few hours or a few hundred miles gives a different one. It isn't another sign describing your character. It is the standpoint the rest was seen from.</p>`;
  if(asc){
   body+=`<p>Yours was <em>${degIn(ch.asc).toFixed(0)}° of ${asc.n}</em> — <em>${elPhase(asc.n).n}</em>. Because it is the embodied point, tradition reads it down into the body, and for ${asc.n} that points at <em>${zoneOf(asc.n)}</em>.</p>`;
-  body+=`<p>A secondary marker, used lightly: the map associates holding and tightening with <em>${zoneOf(sat.n)}</em>.</p>`;
-  body+=`<p>The map cannot tell you what your body actually feels. It can only say where it would look first.</p>`;
+  body+=`<p>Used more lightly still, the map associates holding and tightening with <em>${HOLD_ZONE[sat.n]}</em>.</p>`;
  }else{
   body+=`<p><em>Without your birth time this layer stays closed.</em> There is no way to know which degree was rising, and no honest way to guess it — so the map leaves it rather than filling it in.</p>`;
-  body+=`<p>What can still be said: the map associates holding and tightening with <em>${zoneOf(sat.n)}</em>.</p>`;
+  body+=`<p>What can still be said: the map associates holding and tightening with <em>${HOLD_ZONE[sat.n]}</em>.</p>`;
  }
- body+=`<p class="qa-ask">So: notice whether that region is anywhere you carry tension, sensation or feeling — and notice where it actually goes in you when something is not dealt with. You already know that answer. <em>Where are you?</em></p>`;
+ body+=`<p class="qa-ask">The map cannot tell you what your body actually feels — only where it would look first. So notice whether that region is anywhere you carry tension or sensation, and where it really goes in you when something is left undealt with. You already know that answer. <em>Where are you?</em></p>`;
  return {head:asc?`the horizon cut the circle at ${degIn(ch.asc).toFixed(0)}° of ${asc.n}`:`waiting on your birth time`,body};
 }
 
