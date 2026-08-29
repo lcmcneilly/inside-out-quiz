@@ -332,7 +332,12 @@ a{color:var(--gold-deep)}
 @media(max-width:640px){.ahead-row{grid-template-columns:1fr}}
 .ahead{border:1px solid var(--stone);border-left:3px solid var(--accent,var(--gold));border-radius:10px;
   background:#FFFFFF;padding:22px 24px}
+.ahead{position:relative}
+.ahead-pyr{display:block;width:66px;margin-bottom:12px}
+.ahead-pyr svg{width:66px;height:auto;display:block}
 .ahead .kicker{display:block;margin-bottom:6px}
+.pyr-intro{margin:18px 0 22px}
+.pyr-intro svg{max-width:340px}
 .ahead h3{font-size:1.28rem;margin-bottom:6px}
 .ahead p{color:var(--ivory-dim);font-size:.95rem;line-height:1.65}
 @media print{
@@ -556,12 +561,12 @@ a{color:var(--gold-deep)}
       <p>Six colours, seven nights each, worked in order. The workbook takes you through it — this is just what's coming.</p>
     </div>
     <div class="ahead-row">
-      <div class="ahead" style="--accent:var(--purple)"><span class="kicker">One · Purple</span><h3>The Clear Eye</h3><p>Clarity. Clearing the mental noise until you can hear your own read on something.</p></div>
-      <div class="ahead" style="--accent:var(--blue)"><span class="kicker">Two · Blue</span><h3>The True Voice</h3><p>Honest speech — and observing before reacting. The words you swallow harden where you keep them.</p></div>
-      <div class="ahead" style="--accent:var(--green)"><span class="kicker">Three · Green</span><h3>The Open Heart</h3><p>Softening what closed. Feeling something fully without it deciding what you do next.</p></div>
-      <div class="ahead" style="--accent:var(--orange)"><span class="kicker">Four · Orange</span><h3>The Knowing Gut</h3><p>Your own authority. The answer that arrives before the reasons do, and trusting it.</p></div>
-      <div class="ahead" style="--accent:var(--turquoise)"><span class="kicker">Five · Turquoise</span><h3>The Maker's Hands</h3><p>Making, rather than thinking about making. Creativity lives in your hands, not your analysis.</p></div>
-      <div class="ahead" style="--accent:var(--red)"><span class="kicker">Six · Red</span><h3>Standing Fully as Yourself</h3><p>Presence and boundaries. Where the four patterns above get met head-on. Last, always.</p></div>
+      <div class="ahead" style="--accent:var(--purple)"><span class="ahead-pyr" data-light="purple"></span><span class="kicker">One · Purple</span><h3>The Clear Eye</h3><p>Clarity. Clearing the mental noise until you can hear your own read on something.</p></div>
+      <div class="ahead" style="--accent:var(--blue)"><span class="ahead-pyr" data-light="blue"></span><span class="kicker">Two · Blue</span><h3>The True Voice</h3><p>Honest speech — and observing before reacting. The words you swallow harden where you keep them.</p></div>
+      <div class="ahead" style="--accent:var(--green)"><span class="ahead-pyr" data-light="green"></span><span class="kicker">Three · Green</span><h3>The Open Heart</h3><p>Softening what closed. Feeling something fully without it deciding what you do next.</p></div>
+      <div class="ahead" style="--accent:var(--orange)"><span class="ahead-pyr" data-light="orange"></span><span class="kicker">Four · Orange</span><h3>The Knowing Gut</h3><p>Your own authority. The answer that arrives before the reasons do, and trusting it.</p></div>
+      <div class="ahead" style="--accent:var(--turquoise)"><span class="ahead-pyr" data-light="turquoise"></span><span class="kicker">Five · Turquoise</span><h3>The Maker's Hands</h3><p>Making, rather than thinking about making. Creativity lives in your hands, not your analysis.</p></div>
+      <div class="ahead" style="--accent:var(--red)"><span class="ahead-pyr" data-light="red"></span><span class="kicker">Six · Red</span><h3>Standing Fully as Yourself</h3><p>Presence and boundaries. Where the four patterns above get met head-on. Last, always.</p></div>
     </div>
   </section>
 
@@ -1423,6 +1428,19 @@ const elPhase=sign=>EL_PHASE[SIGN_EL[sign][0]+'-'+SIGN_EL[sign][1]];
 function decanSign(sign,i){const el=SIGN_EL[sign][0],ring=EL_ORDER[el];
  return ring[(ring.indexOf(sign)+i)%3];}
 const ORD=['first','second','third'];
+/* the six teaching colours as two-tone pyramids — the module covers, in miniature */
+const LIGHT_TONE={purple:['#5F3F86','#9B7BC4'],blue:['#2E568C','#6B93C9'],green:['#2E6E51','#63AF8B'],
+ orange:['#B06A22','#E8A860'],turquoise:['#1F6B6C','#5AC4BE'],red:['#8A3A31','#C87A70']};
+function lightPyramid(key){
+ const c=LIGHT_TONE[key]||['#8F6B2A','#E3C57F'];
+ const W=76,H=66,apex=[38,22],bl=[6,58],br=[70,58];
+ let rays='';
+ for(let a=-84;a<=84;a+=12){const r=a*RAD, len=(Math.abs(a)>60?10:16);
+  rays+=`<line x1="${apex[0]}" y1="${apex[1]}" x2="${(apex[0]+len*Math.sin(r)).toFixed(1)}" y2="${(apex[1]-len*Math.cos(r)).toFixed(1)}" stroke="#C9A24D" stroke-width=".7" opacity=".45"/>`;}
+ return `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">${rays}
+  <path d="M${apex[0]} ${apex[1]} L${bl[0]} ${bl[1]} L${apex[0]} ${bl[1]} Z" fill="${c[0]}"/>
+  <path d="M${apex[0]} ${apex[1]} L${br[0]} ${br[1]} L${apex[0]} ${bl[1]} Z" fill="${c[1]}"/>
+  <circle cx="${apex[0]}" cy="${apex[1]}" r="2.6" fill="#E3C57F"/></svg>`;}
 /* the secondary holding note is used lightly (brief §4), so it takes a softer,
    less anatomical form of the same twelve zones */
 const HOLD_ZONE={Aries:'the head and jaw',Taurus:'the neck and throat',Gemini:'the shoulders and hands',
@@ -1644,7 +1662,7 @@ function buildAssessment(){
  h+=part('Part two · the three','The structure beneath it',
   `The Pyramid of Creation is the model underneath everything taught here. It says that anything you build in your life rests on three layers, in a fixed order, and that a thing only holds if the layer under it is sound.`,
   'The three layers',
-  `<em>Trust and belief are the ground</em> — do you trust yourself, and what do you believe about yourself? <em>Emotion is the energy</em> — the fuel that actually moves something into reality. <em>Thought and intent are the blueprint</em> — the shape you draw and the direction you hold.<br><br>These questions help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
+  `<div class="pyr-fig pyr-intro">${pyramidSvg(null)}</div><em>Trust and belief are the ground</em> — do you trust yourself, and what do you believe about yourself? <em>Emotion is the energy</em> — the fuel that actually moves something into reality. <em>Thought and intent are the blueprint</em> — the shape you draw and the direction you hold.<br><br>These questions help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
  PYRAMID.forEach(p=>{A.pyr[p.key]=A.pyr[p.key]||[];
   h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-group-head"><span class="kicker">${p.name} · ${p.sub}</span></div><div class="q-accent"></div>`;
   p.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-p="${p.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
@@ -1691,6 +1709,7 @@ function updateQCount(){const el=$('qCount');if(!el)return;const n=assessAnswere
 
 /* ---- the pyramid drawn: base Trust → apex Thought, the asking layer marked ---- */
 const cap1=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const LAYER_TONE={ground:'#8F6B2A',energy:'#C9A24D',blueprint:'#D9BC8A'};
 function pyramidSvg(asking){
  const apexX=140,apexY=16,baseY=232,halfW=124,H=baseY-apexY;
  const N=PYRAMID.length;
@@ -1699,16 +1718,17 @@ function pyramidSvg(asking){
  let bands='',labels='';
  rows.forEach((p,i)=>{
   const y0=yAt(i),y1=yAt(i+1),w0=wAt(y0),w1=wAt(y1),on=p.key===asking;
+  const tone=LAYER_TONE[p.key]||'#C9A24D';
   bands+=`<polygon points="${apexX-w0},${y0} ${apexX+w0},${y0} ${apexX+w1},${y1} ${apexX-w1},${y1}"
-    fill="${on?'rgba(201,162,77,.16)':'#FFFFFF'}" stroke="rgba(26,27,32,.20)" stroke-width="1"/>`;
+    fill="${tone}" fill-opacity="${on?.30:.11}" stroke="${on?tone:'rgba(26,27,32,.18)'}" stroke-width="${on?1.6:1}"/>`;
   const my=(y0+y1)/2;
   labels+=`<text x="292" y="${my-3}" font-family="Cormorant Garamond,Georgia,serif" font-size="17"
      fill="${on?'#8F6B2A':'#1A1B20'}">${cap1(p.name)}</text>
-   <text x="292" y="${my+15}" font-family="Inter,sans-serif" font-size="10.5" letter-spacing="1.6"
-     fill="rgba(26,27,32,.44)">${p.sub.toUpperCase()}</text>
-   <line x1="276" y1="${my-14}" x2="276" y2="${my+20}" stroke="${on?'#C9A24D':'rgba(26,27,32,.13)'}" stroke-width="${on?2:1}"/>`;
+   <text x="292" y="${my+15}" font-family="Inter,sans-serif" font-size="10"
+     fill="rgba(26,27,32,.44)" letter-spacing="1.2">${p.sub.toUpperCase()}</text>
+   <line x1="276" y1="${my-14}" x2="276" y2="${my+20}" stroke="${on?tone:'rgba(26,27,32,.13)'}" stroke-width="${on?2.4:1}"/>`;
  });
- return `<svg viewBox="0 0 420 252" role="img" aria-label="The Pyramid of Creation — the ground of trust and belief at the base, emotion as the energy above it, thought and intent as the blueprint at the apex.">
+ return `<svg viewBox="0 0 486 252" role="img" aria-label="The Pyramid of Creation — the ground of trust and belief at the base, emotion as the energy above it, thought and intent as the blueprint at the apex.">
   ${bands}${labels}</svg>`;
 }
 
@@ -1758,8 +1778,8 @@ function renderConsciousnessFrom(H,P,R,ch){
  /* --- the pyramid --- */
  const ask=PYRAMID.find(p=>p.key===P.asking), work=PYRAMID.find(p=>p.key===P.working);
  $('pyramidFig').innerHTML=pyramidSvg(P.asking);
- let pyrTxt=`The layer asking for attention right now is <em>${ask.name}</em> — ${ask.sub}. ${ask.what}`;
- if(work.key!==ask.key)pyrTxt+=`<br><br>The layer you're most at home in is <em>${work.name}</em>. That's a real strength and it isn't the thing to work. Where results won't come, the block is almost never the layer you're already good at.`;
+ let pyrTxt=`The layer asking for attention right now is <em style="color:${LAYER_TONE[ask.key]};font-style:normal;font-weight:500">${ask.name}</em> — ${ask.sub}. ${ask.what}`;
+ if(work.key!==ask.key)pyrTxt+=`<br><br>The layer you're most at home in is <em style="color:${LAYER_TONE[work.key]};font-style:normal;font-weight:500">${work.name}</em>. That's a real strength and it isn't the thing to work. Where results won't come, the block is almost never the layer you're already good at.`;
  $('pyramidCopy').innerHTML=pyrTxt;
  $('pyramidAsk').innerHTML=`<span class="kicker">The question this layer asks</span><p style="margin-top:8px;font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--ink)">${ask.asks}</p>`;
 
@@ -1808,6 +1828,7 @@ function renderReading(ch){
  window._assess=renderConsciousness(ch);
  // the room
  renderNav(ch);
+ document.querySelectorAll('.ahead-pyr[data-light]').forEach(e=>{e.innerHTML=lightPyramid(e.dataset.light);});
  // links + exports
  const payload=workbookPayload(ch);
  lsSet('solmap.payload.v1',JSON.stringify(payload));
