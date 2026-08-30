@@ -340,7 +340,14 @@ a{color:var(--gold-deep)}
 .ahead-pyr{display:block;width:66px;margin-bottom:12px}
 .ahead-pyr svg{width:66px;height:auto;display:block}
 .ahead .kicker{display:block;margin-bottom:6px}
-.pyr-intro{margin:18px 0 22px}
+.pyr-intro{margin:18px 0 22px;flex-direction:column;align-items:center}
+.pyr-title{display:block;font-family:var(--sans);font-size:10px;font-weight:600;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:14px;text-align:center}
+.pyr-fig{flex-direction:column;align-items:center}
+.layer-list{list-style:none;max-width:38ch;margin:0 auto 18px;padding:0;text-align:left}
+.layer-list li{padding:7px 0 7px 18px;position:relative;color:var(--ivory-dim);font-size:.97rem}
+.layer-list li::before{content:'';position:absolute;left:0;top:16px;width:7px;height:7px;
+  background:var(--gold);transform:rotate(45deg);opacity:.75}
 .pyr-intro svg{max-width:340px}
 .ahead h3{font-size:1.28rem;margin-bottom:6px}
 .ahead p{color:var(--ivory-dim);font-size:.95rem;line-height:1.65}
@@ -365,8 +372,7 @@ a{color:var(--gold-deep)}
   </div>
   <span class="kicker" style="display:block;margin-bottom:18px">Welcome in</span>
   <h1>Who are you?</h1>
-  <p style="margin-top:22px">Welcome to the Sol Map — a personalised map of you, seen through the lens of astrology, your birth details, and how you're made up. This isn't a full astrology reading. It's a starting point: a way to help you see yourself more clearly, and understand how you might move within this community.</p>
-  <p>It takes about fifteen minutes. <em>This is a baseline, not a ranking.</em> Nothing here is scored, graded, or compared to anyone else — there's no good or bad result.</p>
+  <p style="margin-top:22px">Welcome to the Sol Map — a personalised map based on your birth details and how you answer the questions below. This isn't a full astrology reading. It's a starting point: a way to help you see yourself more clearly, and understand how you might move within this community. It takes about fifteen minutes. <em>This is a baseline, not a ranking.</em> Nothing is scored, graded, or compared to anyone else and there is no good or bad result.</p>
   <p>Some questions may feel uncomfortable to answer honestly. Answer with whatever comes to mind first.</p>
   <p class="anchor-line">You already have everything inside you. We are all Source.</p>
 </section>
@@ -452,8 +458,8 @@ a{color:var(--gold-deep)}
     <div class="part-header" style="margin:44px 0 4px">
       <span class="kicker">The assessment starts here</span>
       <h2 class="h2-lead">Where are you right now?</h2>
-      <p class="q-lead">Let's find your baseline.</p>
-      <p>Let's answer a few honest questions.</p>
+
+
     </div>
     <div id="assessQuestions"></div>
     <p class="q-count" id="qCount"></p>
@@ -514,7 +520,7 @@ a{color:var(--gold-deep)}
     <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
     <div class="part-header">
       <span class="kicker">What your answers show</span>
-      <h2>The four patterns</h2>
+      <h2>The four horsemen</h2>
       <p>Judgement, jealousy, neediness and fear. Left unobserved they take a life apart slowly, and none of them announce themselves — each one arrives dressed as something reasonable. Their counters are what build it back.</p>
       <p style="margin-top:12px"><em>Nothing below is a score or a type.</em> It is a reading of what is loudest in you this month, which is a different thing entirely — and it is meant to be argued with.</p>
     </div>
@@ -533,7 +539,7 @@ a{color:var(--gold-deep)}
       <h2>What is holding it up</h2>
       <p>Everything you make stands on three layers, and they stack in one order only. <em>Trust and belief are the ground. Emotion is the energy. Thought and intent are the blueprint.</em></p>
     </div>
-    <div class="pyr-fig" id="pyramidFig"></div>
+    <div class="pyr-fig"><span class="pyr-title">The Pyramid of Creation</span><span id="pyramidFig"></span></div>
     <div class="card"><p id="pyramidCopy"></p></div>
     <div class="card insight-card" id="pyramidAsk" style="text-align:left"></div>
     <p class="bridge">Where results won't come, one of these three is the real block — and it is almost never the one you've been working on.</p>
@@ -543,7 +549,7 @@ a{color:var(--gold-deep)}
     <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
     <div class="part-header">
       <span class="kicker">The line</span>
-      <h2>Self-responsibility</h2>
+      <h2>Self-awareness, then self-responsibility</h2>
     </div>
     <div class="card"><p id="respCopy"></p></div>
     <div class="card" id="respCarry" style="text-align:left;border-left:3px solid var(--orange)"></div>
@@ -1242,21 +1248,21 @@ const HARDEST_CHOICE={
    ground layer so the pyramid reads on the Soul · Mind · Body spine. If that
    change is kept, Week 3's principle line needs the same edit. */
 const PYRAMID=[
- {key:'ground',name:'the ground',sub:'trust and belief',
+ {key:'ground',name:'Belief',sub:'the ground you hold',
   what:`Everything above this rests on it. Trust isn't confidence — it's whether your own word means anything to you. Belief is what you have quietly agreed is true about yourself. Where the ground is thin, nothing built higher stands for long.`,
   asks:`What promise to myself do I keep breaking — and whose belief have I been living as though it were mine?`,
   items:[
    {t:`I keep the promises I make to myself.`,r:false},
    {t:`I trust my own read on something rather than second-guessing it.`,r:false},
    {t:`I catch myself living by a belief I never actually chose.`,r:true}]},
- {key:'energy',name:'the energy',sub:'emotion',
+ {key:'energy',name:'Emotion',sub:'the energy',
   what:`Emotion is the fuel, not the noise. It is what actually moves a thing out of your head and into the world, and every one of them sits somewhere between fear and love. Suppressed, it doesn't disappear — it just stops being available.`,
   asks:`What am I carrying that I've never let move all the way through?`,
   items:[
    {t:`I can tell, in the moment, whether I'm moving from fear or from love.`,r:false},
    {t:`I let a feeling move through me rather than storing it somewhere.`,r:false},
    {t:`I carry a feeling for weeks without knowing what started it.`,r:true}]},
- {key:'blueprint',name:'the blueprint',sub:'thought and intent',
+ {key:'blueprint',name:'Thought',sub:'the blueprint',
   what:`The most visible layer, and the one nearly everyone works first. Thought draws the shape; intent is direction without a demand attached. It is also the least load-bearing — a beautiful blueprint laid over unattended ground.`,
   asks:`Am I holding a direction, or a demand about how it has to arrive?`,
   items:[
@@ -1269,18 +1275,18 @@ const PYR_KEYS=PYRAMID.map(p=>p.key);
 /* ---- PART THREE · THE TWO (Week 16 · Orange, and Week 7 · Purple) ----
    Self-responsibility is the line. Self-awareness is what makes it possible. */
 const DISCIPLINES=[
- {key:'responsibility',name:'Self-responsibility',
-  blurb:`Not guilt, and not blame turned inward. Simply where authorship sits — the difference between a life that happens to you and one you are the author of.`,
-  carry:`Find the place where your account of what happened stops being about you. Don't argue with it — just notice exactly where the line falls. That edge is the work.`,
-  items:[
-   {t:`When something goes wrong, my first move is to look at my own part in it.`,r:false},
-   {t:`I hold a person or a circumstance responsible for how I feel.`,r:true}]},
  {key:'awareness',name:'Self-awareness',
-  blurb:`The gap between what happens and how you respond. You are not your reactions — you are the one who can watch them arrive.`,
+  blurb:`Self-awareness illuminates your inner world.`,
   carry:`For one day, try to catch a reaction on the way up rather than on the way out. You will miss most of them. Catching one is the whole exercise.`,
   items:[
    {t:`I notice a reaction rising before it gets out of my mouth.`,r:false},
-   {t:`I can name what I'm feeling while I'm still feeling it.`,r:false}]}
+   {t:`I can name what I'm feeling while I'm still feeling it.`,r:false}]},
+ {key:'responsibility',name:'Self-responsibility',
+  blurb:`Self-responsibility is the power to consciously shape what you bring into the outer world.`,
+  carry:`Find the place where your account of what happened stops being about you. Don't argue with it — just notice exactly where the line falls. That edge is the work.`,
+  items:[
+   {t:`When something goes wrong, my first move is to look at my own part in it.`,r:false},
+   {t:`I hold a person or a circumstance responsible for how I feel.`,r:true}]}
 ];
 const DISC_KEYS=DISCIPLINES.map(d=>d.key);
 
@@ -1624,7 +1630,8 @@ function lightFacts(ch){
 }
 /* ================= ASSESSMENT · UI + THE CONSCIOUSNESS MIRROR ================= */
 const A={horse:{},hardest:null,pyr:{},disc:{},source:{},why:'',want:''};
-const part=(kick,h3,p,sub,framing)=>`<div class="q-part"><span class="kicker">${kick}</span><h3 class="q-part-h">${h3}</h3>`
+const part=(kick,h3,p,sub,framing)=>`<div class="q-part"><span class="kicker">${kick}</span>`
+ +(h3?`<h3 class="q-part-h">${h3}</h3>`:'')
  +`<p class="q-part-p">${p}</p>`
  +(sub?`<h4 class="q-sub">${sub}</h4>`:'')
  +(framing?`<p class="q-part-p">${framing}</p>`:'')
@@ -1643,10 +1650,8 @@ function buildAssessment(){
  let h='',n=0;
 
  /* ---- FOUR ---- */
- h+=part('Part one · the four patterns','What is moving through you?',
-  `This section explores the emotional patterns inside you, and where they currently sit. There are no right or wrong answers — only radical honesty.<br><br>Four patterns do the most damage when left unwatched: judgement, jealousy, neediness and fear.`,
-  'Why these four',
-  `They rarely introduce themselves plainly. Each shows up dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Unwatched, they don't dismantle a life in one blow. They make a thousand small decisions on your behalf, until you can no longer tell which choices were truly yours.<br><br>Each has a counter: compassion, joy, love and empathy. The questions below simply ask how often each pattern shows up, and where you're experiencing it right now.`);
+ h+=part('Part one · the four horsemen','',
+  `This section explores the four horsemen inside you, and where they currently sit. There are no right or wrong answers — only radical honesty.<br><br>Four do the most damage when left unwatched: judgement, jealousy, neediness and fear.<br><br>They rarely introduce themselves plainly. Each shows up dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Unwatched, they don't dismantle a life in one blow. They make a thousand small decisions on your behalf, until you can no longer tell which choices were truly yours.<br><br>Each has a counter: compassion, joy, love and empathy. The questions below simply ask how often each horseman shows up, and where you're experiencing it right now.`);
  HORSEMEN.forEach((hm,hi)=>{A.horse[hm.key]=A.horse[hm.key]||[];
   h+=`<div class="q-group" style="--accent:var(${hm.colour})"><div class="q-group-head"><span class="kicker">${hi+1} of four · ${hm.name}</span></div><div class="q-accent"></div>`;
   hm.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-h="${hm.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
@@ -1655,18 +1660,24 @@ function buildAssessment(){
   <div class="q-item"><p class="q-text">${n+1}. ${HARDEST_CHOICE.t}</p><p class="q-note">${HARDEST_CHOICE.note}</p>${optsRow('data-hardest',HARDEST_CHOICE.options.map(o=>o[1]))}</div></div>`;n++;
 
  /* ---- THREE ---- */
- h+=part('Part two · the three','The structure beneath it',
-  `Everything you build in your life rests on three layers, and they stack in one order. A thing only holds if the layer underneath it is sound.`,
-  'The three layers',
-  `<div class="pyr-fig pyr-intro">${pyramidSvg(null)}</div><em>Trust and belief are the ground</em> — do you trust yourself, and what do you believe about yourself? <em>Emotion is the energy</em> — the fuel that actually moves something into reality. <em>Thought and intent are the blueprint</em> — the shape you draw and the direction you hold.<br><br>These questions help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
+ h+=part('Part two · the three layers','',
+  `Everything you create in your life rests on three layers: thought, emotion, and belief.`,
+  '',
+  `<div class="pyr-fig pyr-intro"><span class="pyr-title">The Pyramid of Creation</span>${pyramidSvg(null)}</div>
+   <ul class="layer-list">
+     <li><em>Thought and intent</em> — the blueprint</li>
+     <li><em>Emotion</em> — the energy</li>
+     <li><em>Belief</em> — the ground you hold</li>
+   </ul>
+   These questions help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
  PYRAMID.forEach(p=>{A.pyr[p.key]=A.pyr[p.key]||[];
   h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-group-head"><span class="kicker">${p.name} · ${p.sub}</span></div><div class="q-accent"></div>`;
   p.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-p="${p.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
   h+=`</div>`;});
 
  /* ---- TWO ---- */
- h+=part('Part three · the two choices','What choices are you making?',
-  `This section is about two pivotal decisions that shape your life — the choices you make every day to be more, or less, self-aware and self-responsible. Everything boils down to those two.`);
+ h+=part('Part three · the two choices','',
+  `This section is about two choices that shape your life. Self-awareness is seeing yourself clearly. Self-responsibility is choosing what you do with what you see.`);
  DISCIPLINES.forEach(d=>{A.disc[d.key]=A.disc[d.key]||[];
   h+=`<div class="q-group" style="--accent:var(--orange)"><div class="q-group-head"><span class="kicker">${d.name}</span></div><div class="q-accent"></div>
    <p class="q-note" style="margin:2px 0 8px">${d.blurb}</p>`;
@@ -1782,7 +1793,7 @@ function renderConsciousnessFrom(H,P,R,ch){
  /* --- the line --- */
  const thin=DISCIPLINES.find(d=>d.key===R.lower);
  if(R.answered&&thin){
-  $('respCopy').innerHTML=`<em>Self-responsibility is not a burden. It is the line between the old world and the new one.</em> And self-awareness is what makes crossing it possible — you cannot take ownership of something you never saw yourself do.<br><br>Neither of them is about fault. Both are about where authorship sits. Nothing in your answers is a verdict on which side of the line you're standing — but of the two, <em>${thin.name.toLowerCase()}</em> is the one with less under it at the moment, so that is the one worth carrying into your first week.`;
+  $('respCopy').innerHTML=`<em>Self-awareness illuminates your inner world. Self-responsibility is the power to consciously shape what you bring into the outer world.</em><br><br>They run in that order, because you cannot take ownership of something you never saw yourself do. Neither is about fault; both are about where authorship sits. Nothing in your answers is a verdict on which side of that line you're standing — but of the two, <em>${thin.name.toLowerCase()}</em> is the one with less under it at the moment, so that is the one worth carrying into your first week.`;
   $('respCarry').innerHTML=`<span class="kicker">To carry</span><p style="margin-top:8px">${thin.carry}</p>`;
   $('respSection').style.display='block';
  }else $('respSection').style.display='none';
