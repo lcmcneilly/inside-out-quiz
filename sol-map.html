@@ -529,7 +529,7 @@ a{color:var(--gold-deep)}
   <section id="pyramidSection">
     <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
     <div class="part-header">
-      <span class="kicker">The Pyramid of Creation</span>
+      <span class="kicker">The three layers</span>
       <h2>What is holding it up</h2>
       <p>Everything you make stands on three layers, and they stack in one order only. <em>Trust and belief are the ground. Emotion is the energy. Thought and intent are the blueprint.</em></p>
     </div>
@@ -620,7 +620,7 @@ const FORM_ENDPOINT = ""; // optional: paste a form endpoint (Kit / Formspree / 
 
 /* ================= WHERE THE ASSESSMENT GOES =================
    Paste a Formspree / Google Form / Zapier-catch endpoint here and every
-   completed assessment is POSTed to it as one flat record, so facilitators get
+   completed assessment is POSTed to it as one flat record, so the team gets
    a spreadsheet instead of waiting for someone to paste something across.
 
    Leave it blank and nothing is transmitted — the map still works exactly the
@@ -629,7 +629,7 @@ const FORM_ENDPOINT = ""; // optional: paste a form endpoint (Kit / Formspree / 
    Two rules this code keeps and should keep:
      · the reading is rendered BEFORE the send is attempted, and a failed send
        is swallowed, so a network problem can never cost anyone their map;
-     · the person is told plainly, above the button, that it goes to a facilitator.
+     · the person is told plainly, above the button, where their answers go.
    This is personal information about someone's emotional state. Under the NZ
    Privacy Act you need a stated purpose, a retention period, and a way to
    delete on request before this is switched on. */
@@ -1656,7 +1656,7 @@ function buildAssessment(){
 
  /* ---- THREE ---- */
  h+=part('Part two · the three','The structure beneath it',
-  `The Pyramid of Creation is the model underneath everything taught here. It says that anything you build in your life rests on three layers, in a fixed order, and that a thing only holds if the layer under it is sound.`,
+  `Everything you build in your life rests on three layers, and they stack in one order. A thing only holds if the layer underneath it is sound.`,
   'The three layers',
   `<div class="pyr-fig pyr-intro">${pyramidSvg(null)}</div><em>Trust and belief are the ground</em> — do you trust yourself, and what do you believe about yourself? <em>Emotion is the energy</em> — the fuel that actually moves something into reality. <em>Thought and intent are the blueprint</em> — the shape you draw and the direction you hold.<br><br>These questions help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
  PYRAMID.forEach(p=>{A.pyr[p.key]=A.pyr[p.key]||[];
@@ -1724,7 +1724,7 @@ function pyramidSvg(asking){
      fill="rgba(26,27,32,.44)" letter-spacing="1.2">${p.sub.toUpperCase()}</text>
    <line x1="276" y1="${my-14}" x2="276" y2="${my+20}" stroke="${on?tone:'rgba(26,27,32,.13)'}" stroke-width="${on?2.4:1}"/>`;
  });
- return `<svg viewBox="0 0 486 252" role="img" aria-label="The Pyramid of Creation — the ground of trust and belief at the base, emotion as the energy above it, thought and intent as the blueprint at the apex.">
+ return `<svg viewBox="0 0 486 252" role="img" aria-label="Three layers: the ground of trust and belief at the base, emotion as the energy above it, thought and intent as the blueprint at the top.">
   ${bands}${labels}</svg>`;
 }
 
@@ -2216,7 +2216,7 @@ document.addEventListener('DOMContentLoaded',()=>{
  buildAssessment();
  // the privacy line has to tell the truth about wherever the answers actually go
  if($('privacyLine'))$('privacyLine').innerHTML=FACILITATOR_ENDPOINT
-  ? `Your map is yours and stays on this device. Your answers are also sent to the SHE IS SOL facilitators, so the person who meets you has already read them — nobody else sees them. This is a mirror for self-knowing, not a substitute for medical or professional care.`
+  ? `Your map is yours and stays on this device. Your answers are also sent to the SHE IS SOL team, so that whoever works with you has already read them — nobody else sees them. This is a mirror for self-knowing, not a substitute for medical or professional care.`
   : `Your details and answers stay on this device — nothing is sent anywhere. This is a mirror for self-knowing, not a substitute for medical or professional care.`;
  // the brand-level mark stays gold
  if($('heroMark'))$('heroMark').innerHTML=solMark();
