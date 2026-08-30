@@ -227,6 +227,10 @@ a{color:var(--gold-deep)}
 .q-part .kicker{display:block;margin-bottom:10px;color:var(--gold-deep)}
 .q-part-h{font-family:var(--serif);font-size:clamp(1.5rem,4vw,2rem);color:var(--ink);margin-bottom:10px}
 .q-part-p{color:var(--ivory-dim);max-width:56ch;margin:0 auto;font-size:.98rem}
+/* the assessment's own heading carries more weight than the section heads around it */
+.h2-lead{font-size:clamp(2.2rem,5.6vw,3.2rem)!important;line-height:1.06;margin-bottom:14px}
+.q-lead{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--gold-deep);
+  max-width:56ch;margin:0 auto 6px}
 .q-sub{font-family:var(--serif);font-weight:400;font-size:1.28rem;color:var(--ink);
   margin:26px 0 10px;text-align:center}
 .opts{display:flex;flex-direction:column;gap:8px}
@@ -361,8 +365,9 @@ a{color:var(--gold-deep)}
   </div>
   <span class="kicker" style="display:block;margin-bottom:18px">Welcome in</span>
   <h1>Who are you?</h1>
-  <p style="margin-top:22px">Welcome to the Sol Map. It takes about fifteen minutes, and will give you a personalised map to begin with, based on your answers and your birth details.</p>
-  <p><em>It is a baseline, not a rank.</em> Nothing in it is scored, graded, or compared to anybody else, and there is no good or bad result. Some of the questions are uncomfortable to answer honestly. Answer them with the first thing that comes to your mind.</p>
+  <p style="margin-top:22px">Welcome to the Sol Map — a personalised map of you, seen through the lens of astrology, your birth details, and how you're made up. This isn't a full astrology reading. It's a starting point: a way to help you see yourself more clearly, and understand how you might move within this community.</p>
+  <p>It takes about fifteen minutes. <em>This is a baseline, not a ranking.</em> Nothing here is scored, graded, or compared to anyone else — there's no good or bad result.</p>
+  <p>Some questions may feel uncomfortable to answer honestly. Answer with whatever comes to mind first.</p>
   <p class="anchor-line">You already have everything inside you. We are all Source.</p>
 </section>
 
@@ -371,20 +376,12 @@ a{color:var(--gold-deep)}
     <span class="kicker">Before you start</span>
     <h3>What SHE IS SOL is</h3>
     <p>A self-led system for people ready to meet themselves honestly. It has a shape and a rhythm, and you run it yourself. The whole wellness industry runs on <em>you are not enough yet.</em> This runs on the opposite: you are not deficient, you have forgotten. The work was never about becoming, it was always about returning.</p>
-    <p>Underneath it is one practice. Six colours of light, seven nights each, three times round — a hundred and twenty-six nights, three to five minutes before sleep. That is the engine, and it is deliberately small enough to actually keep.</p>
   </div>
   <div class="card">
     <span class="kicker">The room</span>
     <h3>Lumina</h3>
     <p>Lumina is where SHE IS SOL and SHE IS AI meet — two doors into one community. SOL is about knowing yourself. SHE IS AI will help you use AI as a tool. The space is here for you to recognise how much power you have, and to build something with it.</p>
     <p>They sit in one room on purpose. When you build from the foundation of knowing yourself first, then the tools are worth having.</p>
-    <ul class="offer">
-      <li><span>The conversation</span><p>Open channels, and people to think out loud with.</p></li>
-      <li><span>The videos</span><p>A welcome from Laura, and one alongside each of the six modules.</p></li>
-      <li><span>Foundations</span><p>The six modules and the Foundation Workbook, personalised from this assessment.</p></li>
-      <li><span>The tools</span><p>The AI and Ivorey tools held in the community, to use on your own work.</p></li>
-    </ul>
-    <p class="offer-note">When you want to go further there is an eighteen-week guided cohort with weekly calls. Nobody will pitch it to you. It is there when the map starts asking a bigger question.</p>
   </div>
 </section>
 
@@ -453,11 +450,10 @@ a{color:var(--gold-deep)}
 
   <section id="assessSection" class="assess">
     <div class="part-header" style="margin:44px 0 4px">
-      <span class="kicker">A few honest questions</span>
-      <h2>Where are you right now?</h2>
-      <p>There are four sections to complete.</p>
-      <p style="margin-top:12px">The <em>four</em> are emotional patterns that move through you without asking permission. The <em>three</em> are the layers underneath it all. The <em>two</em> is the choice. The <em>one</em> is you.</p>
-      <p style="margin-top:12px">Every part of it works back to the same place: you are the source of it.</p>
+      <span class="kicker">The assessment starts here</span>
+      <h2 class="h2-lead">Where are you right now?</h2>
+      <p class="q-lead">Let's find your baseline.</p>
+      <p>Let's answer a few honest questions.</p>
     </div>
     <div id="assessQuestions"></div>
     <p class="q-count" id="qCount"></p>
@@ -518,7 +514,7 @@ a{color:var(--gold-deep)}
     <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
     <div class="part-header">
       <span class="kicker">What your answers show</span>
-      <h2>The four horsemen</h2>
+      <h2>The four patterns</h2>
       <p>Judgement, jealousy, neediness and fear. Left unobserved they take a life apart slowly, and none of them announce themselves — each one arrives dressed as something reasonable. Their counters are what build it back.</p>
       <p style="margin-top:12px"><em>Nothing below is a score or a type.</em> It is a reading of what is loudest in you this month, which is a different thing entirely — and it is meant to be argued with.</p>
     </div>
@@ -1647,10 +1643,10 @@ function buildAssessment(){
  let h='',n=0;
 
  /* ---- FOUR ---- */
- h+=part('Part one · the four','What is moving through you?',
-  `This section is based on emotional elements — four of them, and they are the four that do the most damage when nobody is watching them: judgement, jealousy, neediness and fear.`,
+ h+=part('Part one · the four patterns','What is moving through you?',
+  `This section explores the emotional patterns inside you, and where they currently sit. There are no right or wrong answers — only radical honesty.<br><br>Four patterns do the most damage when left unwatched: judgement, jealousy, neediness and fear.`,
   'Why these four',
-  `They rarely announce themselves. Each one arrives dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Left unwatched they don't take a life apart in one blow; they make a thousand small decisions on your behalf until you can't tell which of them were yours.<br><br>Each has a counter: compassion, joy, love, empathy. Not nicer feelings to have instead — the specific things that take each one apart. The questions below simply ask how often each shows up.`);
+  `They rarely introduce themselves plainly. Each shows up dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Unwatched, they don't dismantle a life in one blow. They make a thousand small decisions on your behalf, until you can no longer tell which choices were truly yours.<br><br>Each has a counter: compassion, joy, love and empathy. The questions below simply ask how often each pattern shows up, and where you're experiencing it right now.`);
  HORSEMEN.forEach((hm,hi)=>{A.horse[hm.key]=A.horse[hm.key]||[];
   h+=`<div class="q-group" style="--accent:var(${hm.colour})"><div class="q-group-head"><span class="kicker">${hi+1} of four · ${hm.name}</span></div><div class="q-accent"></div>`;
   hm.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-h="${hm.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
@@ -1669,8 +1665,8 @@ function buildAssessment(){
   h+=`</div>`;});
 
  /* ---- TWO ---- */
- h+=part('Part three · the two','What choices are you making?',
-  `Both of these are choices, made again every day rather than once. One is choosing to be responsible for your own state instead of handing it to whatever happened. The other is choosing to look — because you cannot take responsibility for something you never noticed yourself doing. Everything else in this work rests on those two decisions.`);
+ h+=part('Part three · the two choices','What choices are you making?',
+  `This section is about two pivotal decisions that shape your life — the choices you make every day to be more, or less, self-aware and self-responsible. Everything boils down to those two.`);
  DISCIPLINES.forEach(d=>{A.disc[d.key]=A.disc[d.key]||[];
   h+=`<div class="q-group" style="--accent:var(--orange)"><div class="q-group-head"><span class="kicker">${d.name}</span></div><div class="q-accent"></div>
    <p class="q-note" style="margin:2px 0 8px">${d.blurb}</p>`;
