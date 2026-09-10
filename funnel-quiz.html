@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which one is running you? · SHE IS SOL</title>
+<meta name="description" content="Four patterns take a life apart quietly, and none of them announce themselves. Nine questions, three minutes — find out which one is loudest in you right now.">
+<meta property="og:title" content="Which one is running you?">
+<meta property="og:description" content="Judgement, jealousy, neediness, fear. Nine questions, three minutes, no email required to see your result.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FAF8F4; --card:#F2EEE5; --stone:#E6E1D8; --ink:#1A1B20;
+  --gold:#C9A24D; --gold-deep:#8F6B2A; --gold-bright:#E3C57F;
+  --ivory-dim:rgba(26,27,32,.70); --ivory-faint:rgba(26,27,32,.45);
+  --line:rgba(26,27,32,.13); --line-soft:rgba(26,27,32,.07);
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+  --purple:#7E5AA8; --turquoise:#2B8B8C; --green:#3F8E6B; --red:#A85148;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+html{background:var(--paper)}
+body{background:var(--paper);
+  background-image:radial-gradient(1100px 760px at 50% -10%,#FFFFFF 0%,var(--paper) 52%,#F3EFE8 100%);
+  color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;min-height:100vh}
+main{max-width:660px;margin:0 auto;padding:0 24px 80px}
+em,i{font-style:italic}
+p{max-width:60ch}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,7.5vw,4.4rem);line-height:1.04;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,5.4vw,3rem);line-height:1.08;text-wrap:balance}
+h3{font-family:var(--serif);font-weight:400;font-size:1.5rem}
+.kicker{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.32em;
+  text-transform:uppercase;color:var(--gold-deep)}
+/* lockup */
+.wordmark{display:inline-flex;flex-direction:column;align-items:center;line-height:1}
+.wordmark .she-is{font-family:var(--sans);font-weight:500;letter-spacing:.44em;font-size:.68rem;text-indent:.44em}
+.wordmark .sol{font-family:var(--serif);font-weight:600;font-size:2rem;color:var(--gold);letter-spacing:.02em}
+.lockup{display:flex;align-items:center;gap:14px;justify-content:center}
+.lockup .mark,.lockup .mark svg{width:44px;height:44px;display:block}
+/* hero */
+.hero{text-align:center;padding:76px 0 44px}
+.hero .kicker{display:block;margin:30px 0 20px}
+.hero p{margin:20px auto 0;color:var(--ivory-dim)}
+.hero .anchor{font-family:var(--serif);font-style:italic;color:var(--gold-deep);
+  font-size:1.2rem;margin-top:30px}
+.btn{display:inline-block;font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--ink);background:transparent;
+  border:1px solid var(--ink);border-radius:999px;padding:17px 42px;cursor:pointer;
+  transition:background .25s,color .25s;text-decoration:none}
+.btn:hover,.btn:focus-visible{background:var(--ink);color:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:#000}
+.btn-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:32px}
+.hint{font-size:.86rem;color:var(--ivory-faint);line-height:1.6}
+/* the quiz — one question at a time */
+#quiz{display:none;padding:60px 0 40px;min-height:76vh}
+.prog{display:flex;gap:6px;justify-content:center;margin-bottom:52px}
+.prog span{width:26px;height:2px;background:var(--line);border-radius:2px;transition:background .3s}
+.prog span.done{background:var(--gold)}
+.prog span.now{background:var(--ink)}
+.q-no{display:block;text-align:center;margin-bottom:20px}
+.q-text{font-family:var(--serif);font-size:clamp(1.7rem,4.6vw,2.4rem);line-height:1.22;
+  text-align:center;max-width:20ch;margin:0 auto 44px;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:10px;max-width:420px;margin:0 auto}
+.opts button{border:1px solid var(--stone);background:#fff;border-radius:11px;
+  padding:17px 22px;text-align:left;font-family:var(--sans);font-size:1rem;color:var(--ink);
+  cursor:pointer;transition:border-color .15s,background .15s,transform .08s}
+.opts button:hover,.opts button:focus-visible{border-color:var(--ink)}
+.opts button:active{transform:scale(.99)}
+.back{display:block;margin:34px auto 0;background:none;border:0;cursor:pointer;
+  font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ivory-faint)}
+.back:hover{color:var(--ink)}
+/* result */
+#result{display:none;padding:56px 0 0}
+.res-head{text-align:center;margin-bottom:40px}
+.res-head .kicker{display:block;margin-bottom:16px}
+.res-name{font-family:var(--serif);font-size:clamp(3rem,10vw,5rem);line-height:1;
+  color:var(--accent,var(--ink));margin-bottom:14px}
+.res-sub{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--ivory-dim)}
+.card{border:1px solid var(--stone);border-radius:12px;background:#fff;
+  box-shadow:0 1px 2px rgba(26,27,32,.03);padding:30px 32px;margin:18px 0}
+.card.accent{border-left:3px solid var(--accent,var(--gold))}
+.card .kicker{display:block;margin-bottom:11px}
+.card p{color:var(--ivory-dim)}
+.card p+p{margin-top:12px}
+.counter{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--ink)}
+.others{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:14px}
+@media(max-width:600px){.others{grid-template-columns:1fr}}
+.mini{border:1px solid var(--stone);border-top:2px solid var(--c);border-radius:9px;
+  background:#fff;padding:15px 17px}
+.mini b{display:block;font-family:var(--sans);font-size:9.5px;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px}
+.mini span{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--ivory-dim);line-height:1.45}
+.rule{display:flex;align-items:center;gap:14px;margin:52px 0;justify-content:center}
+.rule::before,.rule::after{content:'';height:1px;flex:1;max-width:190px;
+  background:linear-gradient(90deg,transparent,var(--line))}
+.rule::after{background:linear-gradient(90deg,var(--line),transparent)}
+.rule i{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);opacity:.8}
+.door{text-align:center}
+.door h2{margin-bottom:16px}
+.door p{margin:0 auto 12px;color:var(--ivory-dim)}
+.share{text-align:center;margin-top:44px;padding-top:30px;border-top:1px solid var(--line-soft)}
+.share p{margin:0 auto 16px;color:var(--ivory-faint);font-style:italic;font-size:.96rem}
+footer{text-align:center;margin-top:70px;color:var(--ivory-faint);font-size:.84rem;line-height:1.9}
+footer .anchor{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--gold-deep);margin-bottom:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+</head>
+<body>
+<main>
+
+<section class="hero" id="hero">
+  <div class="lockup">
+    <span class="mark" id="mark" aria-hidden="true"></span>
+    <span class="wordmark"><span class="she-is">SHE IS</span><span class="sol">SOL</span></span>
+  </div>
+  <span class="kicker">Nine questions · three minutes</span>
+  <h1>Which one is running you?</h1>
+  <p>Four patterns take a life apart quietly — judgement, jealousy, neediness and fear. None of them announce themselves. Each one arrives dressed as something reasonable: judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense.</p>
+  <p>Unwatched, they don't dismantle anything in one blow. They make a thousand small decisions on your behalf, until you can't tell which choices were truly yours.</p>
+  <p>This tells you which one is loudest in you right now — and the specific thing that takes it apart.</p>
+  <div class="btn-row"><button class="btn solid" id="start" type="button">Begin</button></div>
+  <p class="hint" style="margin-top:20px">No email needed. Your result shows straight away.</p>
+  <p class="anchor">You already have everything inside you. We are all Source.</p>
+</section>
+
+<section id="quiz" aria-live="polite">
+  <div class="prog" id="prog" aria-hidden="true"></div>
+  <span class="kicker q-no" id="qNo"></span>
+  <p class="q-text" id="qText"></p>
+  <div class="opts" id="qOpts"></div>
+  <button class="back" id="back" type="button">Back</button>
+</section>
+
+<section id="result">
+  <div class="res-head">
+    <span class="kicker" id="resKicker">Loudest right now</span>
+    <div class="res-name" id="resName"></div>
+    <p class="res-sub" id="resSub"></p>
+  </div>
+  <div class="card accent" id="resWhat"></div>
+  <div class="card accent" id="resCounter"></div>
+  <div class="card accent" id="resDo"></div>
+  <p class="hint" style="text-align:center;max-width:52ch;margin:26px auto 0" id="resCaveat"></p>
+
+  <div class="rule" aria-hidden="true"><i></i></div>
+  <p class="hint" style="text-align:center;max-width:50ch;margin:0 auto 4px">The other three are in the room too. This is the question each one asks.</p>
+  <div class="others" id="resOthers"></div>
+
+  <div class="rule" aria-hidden="true"><i></i></div>
+  <section class="door" id="door"></section>
+
+  <div class="share">
+    <p>Send this to someone who'd get a different answer than you did.</p>
+    <div class="btn-row" style="margin-top:0">
+      <button class="btn" id="copyLink" type="button">Copy the link</button>
+      <button class="btn" id="again" type="button">Take it again</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="anchor">As within, so without.</p>
+  <p>SHE IS SOL · This is a mirror for self-knowing — a pattern you can watch, never a verdict.<br>It is not a substitute for medical or professional care.</p>
+</footer>
+
+</main>
+
+<script>
+'use strict';
+/* ================= CONFIG — set before launch ================= */
+const LINKS = {
+  community: "",              // the Lumina invite link
+  solMap:    "sol-map.html"   // where the full Sol Map lives once someone is in
+};
+
+/* ================= THE FOUR =================
+   Two items each, taken from the Sol Map's own instrument — the sharpest and
+   most recognisable of the four. Same 0–3 scale, same reverse-scoring, so a
+   result here and a result there agree with each other. */
+const SCALE = ['Almost never','Sometimes','Often','Almost always'];
+const FOUR = [
+ {key:'judgement',name:'Judgement',counter:'Compassion',colour:'--purple',
+  sub:'A verdict reached before the evidence is in.',
+  what:`Judgement arrives fast and feels like clarity. It isn't — it's a verdict reached before the evidence is in. And the verdict you reach fastest is usually the one about yourself.`,
+  counterWhat:`Not agreeing, not excusing, not going soft. Understanding what someone is carrying before you decide what they are — and extending yourself the same courtesy.`,
+  asks:`What would I have to understand for this to make sense?`,
+  practice:`This week, when the verdict arrives, hold it. Ask what you'd need to know for that person to be entirely reasonable. Then notice whether you offer yourself the same enquiry.`,
+  items:[
+   {t:`I reach a verdict on someone before I know what they're carrying.`,r:false},
+   {t:`What I can't tolerate in someone else turns out to be something I don't allow in myself.`,r:false}]},
+ {key:'jealousy',name:'Jealousy',counter:'Joy',colour:'--turquoise',
+  sub:'A measurement taken on somebody else’s timeline.',
+  what:`Jealousy is a measurement. It only functions if you agree to stand on someone else's timeline and read your own position from it.`,
+  counterWhat:`Being genuinely glad at someone else's good — which is a skill rather than a temperament, and it becomes available the moment you stop comparing starting points.`,
+  asks:`What am I actually wanting, underneath wanting theirs?`,
+  practice:`Say the glad thing out loud, to the person, once this week. Notice what it costs you to say, and what it returns.`,
+  items:[
+   {t:`When someone gets the thing I want, something in me goes quiet rather than glad.`,r:false},
+   {t:`I avoid looking at what someone else is doing because of how it makes me feel.`,r:false}]},
+ {key:'neediness',name:'Neediness',counter:'Love',colour:'--green',
+  sub:'Your steadiness, handed to somebody else to hold.',
+  what:`Neediness isn't wanting people. It's handing your steadiness to someone else to hold — and then quietly resenting them for holding it.`,
+  counterWhat:`The kind that doesn't require an answer back in order to keep standing. It gives from fullness rather than from the hope of being refilled.`,
+  asks:`What am I asking someone else to confirm that I could confirm myself?`,
+  practice:`Notice the next time you reach for reassurance. Wait ten minutes before you ask. See whether it's still needed, or whether it has already passed.`,
+  items:[
+   {t:`How settled I feel depends on how somebody responded to me that day.`,r:false},
+   {t:`I give in ways that quietly expect something back.`,r:false}]},
+ {key:'fear',name:'Fear',counter:'Empathy',colour:'--red',
+  sub:'The most reasonable-sounding of the four.',
+  what:`Fear is the most reasonable-sounding of the four. It borrows the language of caution, calls itself realism, and gets waved through without ever being questioned.`,
+  counterWhat:`Fear is a story about what will happen to you; empathy is attention that leaves your own head. There is very little room for both at once.`,
+  asks:`Is this actually risk, or is this only unfamiliar?`,
+  practice:`Name one thing you called realistic this week. Say the fear version of the sentence out loud instead. Notice which of the two is the true one.`,
+  items:[
+   {t:`I call something "being realistic" when I know underneath that it's fear.`,r:false},
+   {t:`Fear talks me out of things I actually want.`,r:false}]}
+];
+
+/* the ninth question routes rather than scores — two doors, one room */
+const DOOR_Q = {
+  t:`If you could only take one this year, which would you take?`,
+  options:[
+   ['sol',`The one that works on <em>who I am</em>`],
+   ['ai',`The one that works on <em>what I can do</em>`],
+   ['unsure',`I genuinely can't tell — and that's why I'm here`]]
+};
+
+/* ---- build the running order: interleaved, so it doesn't read as four blocks ---- */
+const QUEUE = [];
+[0,1].forEach(i => FOUR.forEach(f => QUEUE.push({four:f.key, idx:i, t:f.items[i].t, r:f.items[i].r})));
+QUEUE.push({door:true, t:DOOR_Q.t});
+
+const A = {four:{}, door:null};
+FOUR.forEach(f => A.four[f.key] = []);
+let at = 0;
+
+const $ = id => document.getElementById(id);
+
+/* ================= THE MARK ================= */
+const GOLD='#C9A24D', GOLD_BRIGHT='#E3C57F', GOLD_DEEP='#8F6B2A', RAD=Math.PI/180;
+function solMark(){
+ const S=200,cx=100,cy=92,R=94,uid='m'+Math.random().toString(36).slice(2,7);
+ const ray=(d,r0,r1,w,o)=>{const a=d*RAD;
+  return `<line x1="${(cx+r0*Math.cos(a)).toFixed(1)}" y1="${(cy+r0*Math.sin(a)).toFixed(1)}" x2="${(cx+r1*Math.cos(a)).toFixed(1)}" y2="${(cy+r1*Math.sin(a)).toFixed(1)}" stroke="${GOLD}" stroke-width="${w}" stroke-linecap="round" opacity="${o}"/>`;};
+ let rays='';
+ for(let a=0;a<360;a+=6)rays+=ray(a,.30*R,.60*R,.6,.5);
+ for(let a=0;a<360;a+=18)rays+=ray(a,.30*R,.84*R,1,.8);
+ for(let a=0;a<360;a+=36)rays+=ray(a,.30*R,1*R,1.5,1);
+ const bY=cy+.92*R, hW=.92*R;
+ return `<svg viewBox="0 0 ${S} ${S}" aria-hidden="true">
+  <defs><radialGradient id="${uid}" cx="50%" cy="50%" r="50%">
+   <stop offset="0%" stop-color="#fff" stop-opacity="1"/><stop offset="60%" stop-color="#fff" stop-opacity=".95"/>
+   <stop offset="86%" stop-color="#fff" stop-opacity=".55"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+  </radialGradient><mask id="${uid}m"><rect width="${S}" height="${S}" fill="url(#${uid})"/></mask>
+  <clipPath id="${uid}c"><rect x="0" y="0" width="${S}" height="${bY}"/></clipPath></defs>
+  <g mask="url(#${uid}m)" clip-path="url(#${uid}c)">${rays}</g>
+  <circle cx="${cx}" cy="${cy}" r="${.42*R}" fill="${GOLD}" opacity=".07"/>
+  <circle cx="${cx}" cy="${cy}" r="${.20*R}" fill="${GOLD}" opacity=".16"/>
+  <path d="M${cx} ${cy} L${cx-hW} ${bY} L${cx} ${bY} Z" fill="${GOLD_DEEP}"/>
+  <path d="M${cx} ${cy} L${cx+hW} ${bY} L${cx} ${bY} Z" fill="${GOLD_BRIGHT}"/>
+  <circle cx="${cx}" cy="${cy}" r="4.5" fill="${GOLD_BRIGHT}"/></svg>`;}
+
+/* ================= THE QUIZ ================= */
+function renderProgress(){
+ $('prog').innerHTML = QUEUE.map((_,i)=>
+   `<span class="${i<at?'done':i===at?'now':''}"></span>`).join('');
+}
+function renderQuestion(){
+ const q = QUEUE[at];
+ renderProgress();
+ $('qNo').textContent = `Question ${at+1} of ${QUEUE.length}`;
+ $('qText').innerHTML = q.t;
+ const opts = q.door ? DOOR_Q.options.map(o=>o[1]) : SCALE;
+ $('qOpts').innerHTML = opts.map((lab,v)=>
+   `<button type="button" data-v="${v}">${lab}</button>`).join('');
+ $('back').style.visibility = at===0 ? 'hidden' : 'visible';
+ window.scrollTo({top:0,behavior:'instant'});
+}
+function answer(v){
+ const q = QUEUE[at];
+ if(q.door) A.door = DOOR_Q.options[v][0];
+ else A.four[q.four][q.idx] = v;
+ at++;
+ if(at >= QUEUE.length) showResult(); else renderQuestion();
+}
+
+/* ---- scoring: internal only, never shown as a number ---- */
+function readFour(){
+ const raw = {};
+ FOUR.forEach(f=>{
+   let s=0;
+   f.items.forEach((it,i)=>{const v=A.four[f.key][i]||0; s += it.r ? (3-v) : v;});
+   raw[f.key]=s;                       // 0–6
+ });
+ const keys = FOUR.map(f=>f.key);
+ const max = Math.max(...keys.map(k=>raw[k]));
+ const tied = keys.filter(k=>raw[k]===max);
+ const spread = max - Math.min(...keys.map(k=>raw[k]));
+ return {raw, active:tied[0], tiedCount:tied.length, flat:spread<=1};
+}
+
+const DOOR_COPY = {
+ sol:{h:`Then you're already at the right door.`,
+   p:`You said you'd take the one that works on <em>who you are</em>. That's the door you're standing at. Everything above came from the same body of work — the four, and what takes each of them apart, are the first thing you meet inside.`},
+ ai:{h:`You'd take capability first — and that's worth saying plainly.`,
+   p:`There are two doors into the same room. One works on who you are, one on what you can do, and they sit together on purpose. Capability handed to someone who doesn't yet know themselves only moves faster in the wrong direction. Come in through whichever you like; both open into the same place.`},
+ unsure:{h:`Not being able to tell <em>is</em> the answer.`,
+   p:`If you genuinely couldn't choose, that's not indecision — it's the specific thing this work is for. Start with who you are. What you can do gets easier from there, and never the other way round.`}
+};
+
+function showResult(){
+ const R = readFour();
+ const f = FOUR.find(x=>x.key===R.active);
+ document.documentElement.style.setProperty('--accent', `var(${f.colour})`);
+ $('result').style.setProperty('--accent', `var(${f.colour})`);
+
+ $('resName').textContent = f.name;
+ $('resSub').textContent = f.sub;
+ $('resWhat').innerHTML = `<span class="kicker">What it actually is</span><p>${f.what}</p>`;
+ $('resCounter').innerHTML = `<span class="kicker">The counter</span>
+   <p class="counter">${f.counter}.</p><p>${f.counterWhat}</p>
+   <p style="margin-top:14px"><em>${f.name} asks:</em> ${f.asks}</p>`;
+ $('resDo').innerHTML = `<span class="kicker">One thing to do this week</span><p>${f.practice}</p>`;
+
+ let caveat = `This is weather, not character. It will be a different one in six months — the point is only that you can now see which one you're arguing with.`;
+ if(R.flat) caveat += ` Yours ran close together, which usually means all four are within reach rather than none of them are.`;
+ else if(R.tiedCount > 1) caveat += ` Two of them tied, so read the others below as well.`;
+ $('resCaveat').innerHTML = caveat;
+
+ $('resOthers').innerHTML = FOUR.filter(x=>x.key!==f.key).map(x=>
+   `<div class="mini" style="--c:var(${x.colour})"><b>${x.name} · ${x.counter}</b><span>${x.asks}</span></div>`).join('');
+
+ const d = DOOR_COPY[A.door] || DOOR_COPY.unsure;
+ $('door').innerHTML = `<span class="kicker" style="display:block;margin-bottom:14px">Two doors, one room</span>
+   <h2>${d.h}</h2><p>${d.p}</p>
+   <div class="btn-row">${LINKS.community
+     ? `<a class="btn solid" href="${LINKS.community}">Come into the room</a>`
+     : `<button class="btn solid" type="button" disabled title="Set LINKS.community before launch">Come into the room</button>`}</div>
+   <p class="hint" style="margin-top:18px">Inside, the full Sol Map reads this against your birth chart, and the six modules are where all four get met properly.</p>`;
+
+ $('quiz').style.display='none';
+ $('result').style.display='block';
+ window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* ================= BOOT ================= */
+document.addEventListener('DOMContentLoaded',()=>{
+ $('mark').innerHTML = solMark();
+ $('start').addEventListener('click',()=>{
+   $('hero').style.display='none';
+   $('quiz').style.display='block';
+   renderQuestion();
+ });
+ $('qOpts').addEventListener('click',e=>{
+   const b = e.target.closest('button[data-v]');
+   if(b) answer(+b.dataset.v);
+ });
+ $('back').addEventListener('click',()=>{ if(at>0){ at--; renderQuestion(); } });
+ $('again').addEventListener('click',()=>{ location.reload(); });
+ $('copyLink').addEventListener('click',()=>{
+   const url = location.href.split('#')[0];
+   const done = ()=>{ $('copyLink').textContent='Copied'; setTimeout(()=>$('copyLink').textContent='Copy the link',2000); };
+   if(navigator.clipboard&&navigator.clipboard.writeText)
+     navigator.clipboard.writeText(url).then(done).catch(done);
+   else done();
+ });
+});
+</script>
+</body>
+</html>
