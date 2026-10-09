@@ -143,12 +143,12 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
 /* ===========================================================================
    WHAT HAVE YOU NOT LOOKED AT?  ·  Inside Out funnel quiz
 
-   Seven questions: four reflections and three on how she works with AI.
+   Seven questions: four reflections and three on how someone works with AI.
    Nothing is named. No pattern, no archetype, no score — the Sol Map names
-   it properly and reads it against the day she was born, and spending that
+   it properly and reads it against the day you were born, and spending that
    headline here would leave the real instrument with nothing to say.
 
-   The result is four short beats: one line, her own answer back, one
+   The result is four short beats: one line, their own answer back, one
    question, and a door.
    =========================================================================== */
 
@@ -163,7 +163,7 @@ const CONFIG = {
    THE FOUR REFLECTIONS
    t = territory, internal only, never shown.
    w = how present that territory is, 0–2.
-   said = how the answer gets read back. Her words, not a diagnosis.
+   said = how the answer gets read back. Their words, not a diagnosis.
    --------------------------------------------------------------------------- */
 const REFLECT = [
  {id:'r1', t:'verdict',
@@ -183,29 +183,29 @@ const REFLECT = [
      [`Barely`,0,null]]},
  {id:'r4', t:'verdict',
   q:`You hear how someone else handled something difficult. What turns up first?`,
-  a:[[`What I would have done instead`,2,`what turns up first is what you would have done instead`],
+  a:[[`What I would have done instead`,2,`the first thing that turns up is what you would have done instead`],
      [`A question about why`,1,null],
      [`Nothing much. It was theirs to handle`,0,null]]}
 ];
 
 /* The one line each territory earns. Declarative, no reassurance at the end. */
 const LEDE = {
- verdict:   `You are the harshest room you walk into.`,
- measuring: `You are keeping score in a game you did not agree to play.`,
- steadiness:`Your steadiness is somewhere outside the building.`,
- none:      `Nothing stood out. That is its own answer.`
+ verdict:   `You reach a verdict fast, including on yourself.`,
+ measuring: `You measure yourself against other people.`,
+ steadiness:`Other people have more say in how you feel than you do.`,
+ none:      `Nothing stood out, and that is worth knowing too.`
 };
 const SIT = {
- verdict:   `What would you need to know for them to be entirely reasonable — and do you give yourself the same?`,
- measuring: `What do you actually want, underneath wanting theirs?`,
- steadiness:`What are you asking somebody else to confirm that you could confirm yourself?`,
+ verdict:   `Would you say to a friend what you say to yourself?`,
+ measuring: `What do you actually want — not what they have?`,
+ steadiness:`What are you waiting for somebody else to confirm?`,
  none:      `Which of the seven did you sit with longest?`
 };
 
 /* ---------------------------------------------------------------------------
    THE THREE ON AI
-   Not fear and not skill level. Authorship: what she hands it, what she lets
-   it decide, and what happens when she disagrees with it.
+   Not fear and not skill level. Authorship: what gets handed to it, what it is
+   allowed to decide, and what happens on disagreeing with it.
    --------------------------------------------------------------------------- */
 const AI = [
  {id:'a1',
@@ -222,14 +222,15 @@ const AI = [
      [`Depends how much time I have`,1],
      [`I trust the no, and go and check`,2]]}
 ];
-const AUTHORSHIP_GATE = 4;        /* of 6 */
-const DISCERNMENT = 'a3';         /* a gate, not a score — see readAI */
+/* The AI door asks for all three: clear before asking, own thinking in the
+   output, and trusting the no. Anything less and clarity comes first, which
+   is the rule the whole thing runs on. SOL is the default on purpose. */
 
 const DOORS = {
- sol:{head:`Clarity first. Then capability.`,
-   copy:`AI gives back a version of whatever you hand it. On your answers, the thing worth working on is what you are handing it.`},
- ai:{head:`You are already the author of your own work.`,
-   copy:`Your own thinking sits at the centre of what you make with it, and you check what comes back. That is the part most people skip.`}
+ sol:{head:`Start at SHE IS SOL.`,
+   copy:`Clarity first, then capability. AI gives back whatever you hand it, so what you hand it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.`},
+ ai:{head:`Start at SHE IS AI.`,
+   copy:`Your own thinking already sits at the centre of what you make, and you check what comes back. Most people skip both. SHE IS SOL is in the same place for whenever you want it.`}
 };
 
 /* -------------------------------------------------------------------- MARK */
@@ -297,16 +298,14 @@ function readReflections(){
  return {lead, strong, got, max};
 }
 function readAI(){
- let total = 0, discerns = false;
+ let total = 0, allStrong = true;
  for(const q of AI){
-   const i = picked[q.id]; if(i === undefined) continue;
-   const w = q.a[i][1];
+   const i = picked[q.id];
+   const w = (i === undefined) ? 0 : q.a[i][1];
    total += w;
-   if(q.id === DISCERNMENT) discerns = (w === 2);
+   if(w !== 2) allStrong = false;
  }
- /* Discernment is a gate. Going with an answer you felt was wrong is the
-    clearest sign the clarity is not there yet, however fluent the rest looks. */
- return {total, discerns, door:(discerns && total >= AUTHORSHIP_GATE) ? 'ai' : 'sol'};
+ return {total, allStrong, door: allStrong ? 'ai' : 'sol'};
 }
 
 function finish(){
@@ -314,7 +313,7 @@ function finish(){
 
  $('lede').textContent = LEDE[R.lead];
 
- /* one answer back, in her words — the one from the leading territory */
+ /* one answer back, in their words — the one from the leading territory */
  const pick = R.lead === 'none' ? null : (R.strong.find(s => s.t === R.lead) || R.strong[0]);
  $('said').innerHTML = pick ? '<p>You said '+pick.said+'.</p>' : '';
  $('said').style.display = pick ? 'block' : 'none';
@@ -322,8 +321,8 @@ function finish(){
  $('sitWith').textContent = SIT[R.lead];
 
  $('next').textContent = R.lead === 'none'
-   ? `There are four patterns that take a life apart quietly, and these seven questions only walk around the edge of them. The Sol Map names them properly and reads them against the day you were born. It is the first thing you are given when you join.`
-   : `There is a name for that, and a specific thing that takes it apart. The Sol Map names both and reads them against the day you were born. It is the first thing you are given when you join.`;
+   ? `The work inside is built around four patterns like this one. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.`
+   : `This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.`;
 
  const d = DOORS[T.door];
  $('doorHead').textContent = d.head;
