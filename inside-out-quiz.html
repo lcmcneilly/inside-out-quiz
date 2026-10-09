@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What have you not looked at? · Inside Out</title>
+<meta name="description" content="Ten questions, about four minutes. Nothing is scored and nothing is compared. Answer as things actually are.">
+<meta property="og:title" content="What have you not looked at?">
+<meta property="og:description" content="Ten questions, about four minutes. Inside Out opens 31 October.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================================
+   INSIDE OUT — brand direction v2, October 2026
+   Gold #EFBD40 · Ink #1A1B20, the only dark ground · Ivory #E8DCC4
+   Cormorant display (never below 20px) · Inter labels and UI · Montserrat
+   body at 1.7 minimum. Never bold. Italics for emphasis. Ragged right,
+   never justified, never centred.
+   =========================================================================== */
+:root{
+  --gold:#EFBD40; --ink:#1A1B20; --ivory:#E8DCC4; --paper:#FAF8F4;
+  --card:#FFFCF2; --surface:#E2DCD0; --taupe:#CBB9A0;
+  --body:#55524B; --mute:#A9A398; --line:#D8D2C6; --line-soft:#E2DCD0;
+  --gold-ink:#8A6A14;                 /* gold darkened so it passes on paper */
+  --display:'Cormorant Garamond',Georgia,serif;
+  --ui:'Inter',system-ui,sans-serif;
+  --text:'Montserrat',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--body);font-family:var(--text);
+  font-weight:400;font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+main{max-width:720px;margin:0 auto;padding:0 28px 96px}
+em,i{font-style:italic}
+strong,b{font-weight:400}                        /* never bold */
+p{max-width:62ch}
+h1,h2,h3{font-family:var(--display);font-weight:400;color:var(--ink);line-height:1.05}
+h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
+h2{font-size:clamp(2rem,5.4vw,3rem)}
+h3{font-size:clamp(1.45rem,3.2vw,1.8rem)}
+.eyebrow{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold-ink)}
+.mark{display:block;width:60px;height:60px}
+.mark svg{width:60px;height:60px;display:block}
+.btn{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:transparent;
+  border:1px solid var(--ink);border-radius:0;padding:16px 38px;cursor:pointer;
+  transition:background .2s,color .2s;text-decoration:none}
+.btn:hover,.btn:focus-visible{background:var(--ink);color:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:#000}
+.rule-gold{width:84px;height:2px;background:var(--gold);margin:40px 0}
+/* opening */
+.open{padding:84px 0 40px}
+.open .mark{margin-bottom:46px}
+.open .eyebrow{display:block;margin-bottom:18px}
+.open h1{margin-bottom:30px;max-width:16ch}
+.open p{font-size:1.06rem;margin-bottom:18px}
+/* the ten */
+#quiz{display:none;padding:52px 0 40px;min-height:78vh}
+.bar{height:2px;background:var(--line);margin-bottom:12px;position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--gold);transition:width .35s ease}
+.count{font-family:var(--ui);font-size:11px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:50px}
+.q{font-family:var(--display);font-size:clamp(1.8rem,4.6vw,2.7rem);line-height:1.16;
+  color:var(--ink);max-width:21ch;margin-bottom:44px}
+.answers{display:flex;flex-direction:column;gap:12px;max-width:560px}
+.answers button{font-family:var(--text);font-size:1.02rem;line-height:1.5;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:0;padding:19px 24px;
+  text-align:left;cursor:pointer;transition:border-color .16s,background .16s}
+.answers button:hover,.answers button:focus-visible{border-color:var(--ink);background:#fff}
+.back{margin-top:40px;background:none;border:0;cursor:pointer;font-family:var(--ui);
+  font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);padding:0}
+.back:hover{color:var(--ink)}
+/* the reflection */
+#result{display:none;padding:76px 0 0}
+.res-eyebrow{display:block;margin-bottom:22px}
+.lede{font-family:var(--display);font-size:clamp(1.9rem,4.8vw,2.8rem);line-height:1.16;
+  color:var(--ink);max-width:24ch;margin-bottom:44px}
+.block{margin:0 0 42px}
+.block .eyebrow{display:block;margin-bottom:14px}
+.block p+p{margin-top:14px}
+.said{border-left:2px solid var(--gold);padding:4px 0 4px 26px;margin:0 0 20px}
+.said p{font-family:var(--display);font-size:1.25rem;line-height:1.45;color:var(--ink);max-width:46ch}
+.sit{background:var(--surface);padding:34px 36px;margin:0 0 42px}
+.sit .eyebrow{display:block;margin-bottom:14px;color:var(--gold-ink)}
+.sit p{font-family:var(--display);font-style:italic;font-size:1.3rem;line-height:1.45;
+  color:var(--ink);max-width:44ch}
+@media(max-width:560px){.sit{padding:26px 24px}}
+.hr{height:1px;background:var(--line-soft);margin:52px 0}
+.door .eyebrow{display:block;margin-bottom:16px}
+.door h3{margin-bottom:16px;max-width:22ch}
+.doors{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+@media(max-width:600px){.doors{grid-template-columns:1fr}}
+.d{border:1px solid var(--line);background:var(--card);padding:22px 24px}
+.d.on{border-color:var(--ink);background:#fff;border-left:2px solid var(--gold)}
+.d span{font-family:var(--ui);font-size:10.5px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold-ink);display:block;margin-bottom:8px}
+.d p{font-family:var(--display);font-size:1.18rem;line-height:1.4;color:var(--ink)}
+.d em{display:block;font-family:var(--text);font-style:normal;font-size:.88rem;
+  line-height:1.6;color:var(--mute);margin-top:10px}
+/* waitlist */
+.wait{margin-top:8px}
+.wait h3{margin-bottom:12px}
+.wait p{margin-bottom:22px}
+.form{display:flex;gap:12px;flex-wrap:wrap;max-width:540px}
+.form input{flex:1 1 260px;font-family:var(--text);font-size:1rem;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:0;padding:16px 18px;outline:none}
+.form input:focus{border-color:var(--ink)}
+.form input::placeholder{color:var(--mute)}
+.note{font-family:var(--ui);font-size:12.5px;line-height:1.6;color:var(--mute);margin-top:16px;max-width:52ch}
+.done{font-family:var(--display);font-style:italic;font-size:1.3rem;color:var(--ink);max-width:44ch}
+.opens{font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold-ink);margin-top:24px}
+footer{margin-top:86px;padding-top:30px;border-top:1px solid var(--line-soft)}
+footer p{font-family:var(--ui);font-size:12px;color:var(--mute);line-height:1.9}
+footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--gold-ink);margin-bottom:10px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+</style>
+</head>
+<body>
+<main>
+
+<section class="open" id="open">
+  <span class="mark" id="mark" aria-label="Inside Out"></span>
+  <span class="eyebrow">Inside Out</span>
+  <h1>What have you not looked at?</h1>
+  <p>Ten questions, about four minutes. Nothing here is scored, graded or compared to anyone else, and there is no result to get right.</p>
+  <p>Most of them are about you. Three are about how you work with AI. Answer as things actually are, not as you would like them to be.</p>
+  <div class="rule-gold" aria-hidden="true"></div>
+  <button class="btn solid" id="begin" type="button">Begin</button>
+</section>
+
+<section id="quiz" aria-live="polite">
+  <div class="bar" aria-hidden="true"><i id="barFill"></i></div>
+  <span class="count" id="count"></span>
+  <p class="q" id="qText"></p>
+  <div class="answers" id="answers"></div>
+  <button class="back" id="back" type="button">Back</button>
+</section>
+
+<section id="result">
+  <span class="eyebrow res-eyebrow">What you said</span>
+  <p class="lede" id="lede"></p>
+
+  <div class="block">
+    <span class="eyebrow">In your own answers</span>
+    <div id="said"></div>
+    <p id="shape"></p>
+  </div>
+
+  <div class="sit">
+    <span class="eyebrow">To sit with</span>
+    <p id="sitWith"></p>
+  </div>
+
+  <div class="block">
+    <p id="named"></p>
+  </div>
+
+  <div class="hr" aria-hidden="true"></div>
+
+  <div class="door">
+    <span class="eyebrow">Two doors, one room</span>
+    <h3 id="doorHead"></h3>
+    <p id="doorCopy"></p>
+    <div class="doors">
+      <div class="d" id="dSol">
+        <span>SHE IS SOL</span>
+        <p>Clears the who.</p>
+        <em>Self-awareness, clarity, stability. SOL changes her.</em>
+      </div>
+      <div class="d" id="dAi">
+        <span>SHE IS AI</span>
+        <p>Teaches the how.</p>
+        <em>Ethics-first, credentialed AI capability. AI changes her work.</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="hr" aria-hidden="true"></div>
+
+  <div class="wait">
+    <h3>Get the written version</h3>
+    <p>The fuller write-up of what you answered, and the invitation when Inside Out opens.</p>
+    <form class="form" id="waitForm" novalidate>
+      <label class="sr-only" for="email">Email address</label>
+      <input type="email" id="email" name="email" placeholder="Email address" autocomplete="email" required>
+      <button class="btn solid" type="submit">Join the waitlist</button>
+    </form>
+    <p class="note" id="waitNote"></p>
+    <p class="opens" id="opensLine">Doors open 31 October</p>
+  </div>
+</section>
+
+<footer>
+  <p class="aw">As within, so without.</p>
+  <p>Inside Out · SHE IS SOL and SHE IS AI.<br>This is where you are standing right now, not who you are.</p>
+</footer>
+
+</main>
+
+<script>
+'use strict';
+/* ===========================================================================
+   WHAT HAVE YOU NOT LOOKED AT?
+   The Inside Out funnel quiz. Ten questions: seven reflections and three on
+   how she works with AI.
+
+   DELIBERATELY NAMES NOTHING. The seven sit in the four territories the Sol
+   Map reads properly — the verdict, the measuring, where steadiness is kept,
+   and the reasons she would defend out loud — but no pattern is labelled and
+   no archetype is given. The Sol Map is where that gets named; spending the
+   headline here would leave the real instrument with nothing to say.
+
+   What she gets instead is her own strongest answers read back to her, the
+   shape they make described in plain words, and one question to sit with.
+
+   The three AI questions route her to a door. The brand's own rule decides
+   it: clarity first, then capability. Ties go to SOL.
+   =========================================================================== */
+
+const CONFIG = {
+  /* Flodesk / Zapier / Formspree endpoint. Blank = nothing is transmitted and
+     the form says so rather than pretending. */
+  waitlistEndpoint: "",
+  /* 31 October, then switch to the live link. */
+  doorsOpen: true,
+  communityUrl: ""
+};
+
+/* ---------------------------------------------------------------------------
+   THE SEVEN
+   t = territory. Never shown. Only used to decide which two answers get read
+   back, and which shape line is true of them.
+   Each answer carries a weight 0–2: how present that territory is.
+   `said` is how the answer gets mirrored back — her words, not a diagnosis.
+   --------------------------------------------------------------------------- */
+const SEVEN = [
+ {id:'q1', t:'verdict',
+  q:`Someone tells you what they have decided to do with their life. How long before you know what you think of it?`,
+  a:[[`I know before they have finished the sentence`,2,`you know what you think of someone's choices before they have finished telling you`],
+     [`I usually need a minute`,1,null],
+     [`I am often still deciding days later`,0,null]]},
+ {id:'q2', t:'verdict',
+  q:`At the end of an ordinary day, which is closer?`,
+  a:[[`I run back through how I did`,2,`an ordinary day ends with you running back through how you did`],
+     [`It depends on the day`,1,null],
+     [`The day just ends`,0,null]]},
+ {id:'q3', t:'measuring',
+  q:`Someone doing what you do gets the thing you wanted. What happens in the first second, before you have chosen how to feel?`,
+  a:[[`Something tightens`,2,`something tightens in the first second, before you have chosen how to feel`],
+     [`Not much either way`,1,null],
+     [`I am glad, and it is not complicated`,0,null]]},
+ {id:'q4', t:'measuring',
+  q:`Is there anyone whose updates you have quietly stopped looking at?`,
+  a:[[`Yes, and I know exactly why`,2,`there is someone whose updates you have stopped looking at, and you know why`],
+     [`Maybe one or two`,1,null],
+     [`No`,0,null]]},
+ {id:'q5', t:'steadiness',
+  q:`How much can one conversation change how you feel about an entire day?`,
+  a:[[`Completely. It sets the tone`,2,`one conversation can change how you feel about an entire day`],
+     [`Somewhat`,1,null],
+     [`Barely`,0,null]]},
+ {id:'q6', t:'steadiness',
+  q:`You do something generous and nobody acknowledges it. What happens next?`,
+  a:[[`It sits with me longer than I would like`,2,`an unacknowledged kindness sits with you longer than you would like`],
+     [`A flicker, then it is gone`,1,null],
+     [`Nothing. I had already forgotten`,0,null]]},
+ {id:'q7', t:'reasons',
+  q:`Think of something you have wanted and not started. The reason you give yourself — how honest is it?`,
+  a:[[`It is a reason I would defend out loud. I am not sure I believe it`,2,`the reason you give for not starting is one you would defend out loud and do not quite believe`],
+     [`Partly true`,1,null],
+     [`It is the actual reason`,0,null]]}
+];
+
+/* The shape each territory makes, said plainly. No label, no archetype —
+   a description of the ground, not a name for it. */
+const SHAPE = {
+ verdict:   `Several of your answers point at the same place: how fast the verdict arrives, and that the quickest one is usually about you.`,
+ measuring: `Several of your answers point at the same place: the measuring, and where you are standing when you do it.`,
+ steadiness:`Several of your answers point at the same place: where you keep your steadiness, and how much of it somebody else is currently holding.`,
+ reasons:   `Several of your answers point at the same place: the reasons you would defend out loud, and whether you believe them.`
+};
+const SIT = {
+ verdict:   `What would you have to understand for that person to be entirely reasonable — and do you extend yourself the same enquiry?`,
+ measuring: `What are you actually wanting, underneath wanting theirs?`,
+ steadiness:`What are you asking someone else to confirm that you could confirm yourself?`,
+ reasons:   `Is it actually risk, or is it only unfamiliar?`
+};
+/* The lede — one line, declarative, no reassurance at the end. */
+const LEDE = {
+ verdict:   `You are the harshest room you walk into.`,
+ measuring: `You are keeping score in a game you did not agree to play.`,
+ steadiness:`Your steadiness is somewhere outside the building.`,
+ reasons:   `You have a very good reason, and you do not believe it.`,
+ even:      `Nothing in your answers stood out, which is its own answer.`
+};
+
+/* ---------------------------------------------------------------------------
+   THE THREE · how she works with AI
+   Not fear, not skill level. Authorship: what she hands it, what she lets it
+   decide, and whether she can still tell her own thinking from its output.
+   Scored for authorship, which decides the door.
+   --------------------------------------------------------------------------- */
+const THREE = [
+ {id:'a1',
+  q:`When you use AI on something that matters, whose thinking ends up in the finished thing?`,
+  a:[[`Mostly mine. It speeds up work I had already decided on`,2],
+     [`A mix, and I could not always tell you where the line is`,0],
+     [`I do not use it for anything that matters`,0]]},
+ {id:'a2',
+  q:`What comes back from it is vague. Where do you look first?`,
+  a:[[`At what I asked for`,2],
+     [`At the tool`,0],
+     [`I have not thought about it that way`,0]]},
+ {id:'a3',
+  q:`Have you ever taken an answer from it that you had a quiet feeling was wrong?`,
+  a:[[`Yes, and I went with it anyway`,0],
+     [`Yes, and I went and checked`,2],
+     [`Not that I have noticed`,0]]}
+];
+const AUTHORSHIP_GATE = 4;   /* of 6. Below this, clarity comes first. */
+/* Discernment is a gate, not a score. Taking an answer you felt was wrong is
+   the clearest sign the clarity is not there yet, however fluent the rest
+   looks — so it sends her to SOL regardless of the total. */
+const DISCERNMENT_Q = 'a3';
+
+const DOORS = {
+ sol:{head:`Clarity first. Then capability.`,
+   copy:`AI gives back a version of whatever you hand it. On your answers, the thing worth working on is what you are handing it — so you would start at SOL, and the capability is worth more once you get there. Both doors open onto the same place; this is only which one to walk through first.`},
+ ai:{head:`You are already the author of your own work.`,
+   copy:`Your answers put your own thinking at the centre of what you make with it, and you check what comes back. That is the part most people skip. You would start at AI, and SOL is there in the same place for the parts of this that are not about tools at all.`}
+};
+
+/* -------------------------------------------------------------------- MARK */
+/* One square split down the middle. The ivory side is the inside, where IN
+   reads upright. The ink side is the world outside, where OUT is turned over.
+   A single gold spark sits on the seam. */
+function insideOutMark(){
+ return `<svg viewBox="0 0 100 100" role="img" aria-label="Inside Out">
+  <rect x="0" y="0" width="50" height="100" fill="#E8DCC4"/>
+  <rect x="50" y="0" width="50" height="100" fill="#1A1B20"/>
+  <text x="25" y="54" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
+    font-weight="600" letter-spacing="1.1" fill="#1A1B20">IN</text>
+  <text x="75" y="54" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
+    font-weight="600" letter-spacing="1.1" fill="#E8DCC4" transform="rotate(180 75 50)">OUT</text>
+  <circle cx="50" cy="50" r="3.4" fill="#EFBD40"/>
+  <circle cx="50" cy="50" r="8" fill="none" stroke="#EFBD40" stroke-width=".8" opacity=".5"/>
+ </svg>`;
+}
+
+/* ------------------------------------------------------------------- STATE */
+const $ = id => document.getElementById(id);
+/* Interleaved so the three AI questions do not arrive as a block at the end,
+   and so the seven do not read as two-per-theme. */
+const QUEUE = [SEVEN[0],SEVEN[2],THREE[0],SEVEN[4],SEVEN[1],THREE[1],SEVEN[3],SEVEN[6],THREE[2],SEVEN[5]];
+const picked = {};
+let at = 0;
+const started = new Date();
+
+/* -------------------------------------------------------------------- QUIZ */
+function render(){
+ const q = QUEUE[at];
+ $('barFill').style.width = ((at/QUEUE.length)*100).toFixed(1)+'%';
+ $('count').textContent = 'Question '+(at+1)+' of '+QUEUE.length;
+ $('qText').textContent = q.q;
+ $('answers').innerHTML = q.a.map((opt,i)=>
+   '<button type="button" data-i="'+i+'">'+opt[0]+'</button>').join('');
+ $('back').style.visibility = at===0 ? 'hidden' : 'visible';
+ window.scrollTo(0,0);
+}
+function choose(i){
+ picked[QUEUE[at].id] = i;
+ at++;
+ if(at >= QUEUE.length) finish(); else render();
+}
+
+/* ----------------------------------------------------------------- READING */
+function readSeven(){
+ const score = {verdict:0,measuring:0,steadiness:0,reasons:0};
+ const strong = [];                       // answers worth reading back
+ for(const q of SEVEN){
+   const i = picked[q.id]; if(i === undefined) continue;
+   const [,w,said] = q.a[i];
+   score[q.t] += w;
+   if(w === 2 && said) strong.push({t:q.t, said:said});
+ }
+ const order = ['verdict','measuring','steadiness','reasons'];
+ const top = Math.max(...order.map(k=>score[k]));
+ const lead = top === 0 ? 'even' : order.find(k => score[k] === top);
+ return {score, strong, lead, flat: top <= 1};
+}
+function readThree(){
+ let a = 0, discerns = false;
+ for(const q of THREE){
+   const i = picked[q.id]; if(i === undefined) continue;
+   const w = q.a[i][1];
+   a += w;
+   if(q.id === DISCERNMENT_Q) discerns = (w === 2);
+ }
+ return {authorship:a, discerns:discerns,
+   door: (discerns && a >= AUTHORSHIP_GATE) ? 'ai' : 'sol'};
+}
+
+function finish(){
+ const S = readSeven(), T = readThree();
+
+ $('lede').textContent = LEDE[S.lead];
+
+ /* her two strongest answers, read back as her own words */
+ if(S.strong.length){
+   const two = S.strong.filter(s=>s.t===S.lead).concat(S.strong.filter(s=>s.t!==S.lead)).slice(0,2);
+   $('said').innerHTML = two.map(s=>'<div class="said"><p>You said '+s.said+'.</p></div>').join('');
+   $('shape').textContent = S.lead === 'even' ? '' : SHAPE[S.lead];
+ } else {
+   $('said').innerHTML = '';
+   $('shape').textContent = `Nothing you answered sat at the far end of the scale. That can mean things are genuinely steady, and it can mean the questions did not reach far enough yet. Both are worth knowing.`;
+ }
+
+ $('sitWith').textContent = S.lead === 'even'
+   ? `Which of those ten did you have to sit with longest before answering?`
+   : SIT[S.lead];
+
+ $('named').innerHTML = S.lead === 'even'
+   ? `There are four patterns that take a life apart quietly, and these ten questions walk around the edge of all four without naming any of them. The Sol Map names them, and reads them against the day you were born. It is the first thing inside.`
+   : `There is a name for that, and a specific thing that takes it apart. Neither is in this quiz — ten questions is not enough to earn either. The Sol Map names it properly and reads it against the day you were born. It is the first thing inside.`;
+
+ const d = DOORS[T.door];
+ $('doorHead').textContent = d.head;
+ $('doorCopy').textContent = d.copy;
+ $(T.door === 'ai' ? 'dAi' : 'dSol').classList.add('on');
+
+ if(!CONFIG.doorsOpen && CONFIG.communityUrl) $('opensLine').textContent = '';
+
+ window.__reading = {lead:S.lead, score:S.score, door:T.door, authorship:T.authorship, discerns:T.discerns};
+ $('quiz').style.display='none';
+ $('result').style.display='block';
+ window.scrollTo(0,0);
+}
+
+/* ---------------------------------------------------------------- WAITLIST */
+function record(email){
+ const S = readSeven(), T = readThree();
+ const r = {
+   email: email,
+   /* territory totals and the door, for segmenting. She never sees these. */
+   lead_territory: S.lead,
+   score_verdict: S.score.verdict, score_measuring: S.score.measuring,
+   score_steadiness: S.score.steadiness, score_reasons: S.score.reasons,
+   door: T.door, authorship: T.authorship, discerns: T.discerns ? 'yes' : 'no',
+   started_at: started.toISOString(),
+   completed_at: new Date().toISOString(),
+   source: document.referrer || 'direct'
+ };
+ QUEUE.forEach(q=>{ const i = picked[q.id]; r[q.id] = (i===undefined) ? '' : 'ABC'[i]; });
+ const p = new URLSearchParams(location.search);
+ ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(k=>{
+   if(p.get(k)) r[k] = p.get(k);
+ });
+ return r;
+}
+function submitWaitlist(e){
+ e.preventDefault();
+ const email = $('email').value.trim();
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+   $('waitNote').textContent = 'That email address does not look right. Check it and try again.';
+   $('email').focus(); return;
+ }
+ const r = record(email);
+ if(!CONFIG.waitlistEndpoint){
+   $('waitForm').innerHTML = '<p class="done">Noted — though the waitlist is not switched on yet, so nothing was sent.</p>';
+   $('waitNote').textContent = 'Set CONFIG.waitlistEndpoint before this goes live.';
+   console.info('[inside-out] would have sent:', r);
+   return;
+ }
+ const body = new FormData();
+ Object.keys(r).forEach(k => body.append(k, r[k]));
+ fetch(CONFIG.waitlistEndpoint, {method:'POST', body, mode:'no-cors'}).catch(()=>{});
+ $('waitForm').innerHTML = '<p class="done">You are on the list. The written version is on its way.</p>';
+ $('waitNote').textContent = '';
+}
+
+/* -------------------------------------------------------------------- BOOT */
+document.addEventListener('DOMContentLoaded', function(){
+ $('mark').innerHTML = insideOutMark();
+ $('begin').addEventListener('click', function(){
+   $('open').style.display='none'; $('quiz').style.display='block'; render();
+ });
+ $('answers').addEventListener('click', function(e){
+   const b = e.target.closest('button[data-i]'); if(b) choose(+b.dataset.i);
+ });
+ $('back').addEventListener('click', function(){ if(at>0){ at--; render(); } });
+ $('waitForm').addEventListener('submit', submitWaitlist);
+});
+</script>
+</body>
+</html>
