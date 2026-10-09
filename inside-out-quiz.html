@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What have you not looked at? · Inside Out</title>
-<meta name="description" content="Seven questions. Nothing is scored and nothing is compared.">
+<meta name="description" content="Eight questions. Nothing is scored and nothing is compared.">
 <meta property="og:title" content="What have you not looked at?">
-<meta property="og:description" content="Seven questions, about three minutes. Inside Out opens 31 October.">
+<meta property="og:description" content="Eight questions, about three minutes. Inside Out opens 31 October.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
@@ -75,8 +75,11 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
 /* the result — four short beats and a door */
 #result{display:none;padding:80px 0 0}
 #result .eyebrow{display:block;margin-bottom:20px}
-.lede{font-family:var(--display);font-size:clamp(2rem,5.2vw,3rem);line-height:1.12;
-  color:var(--ink);max-width:21ch;margin-bottom:40px}
+.pattern{font-family:var(--display);font-size:clamp(3.4rem,11vw,5.6rem);line-height:.98;
+  color:var(--ink);margin-bottom:18px}
+.lede{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3.4vw,1.85rem);
+  line-height:1.3;color:var(--gold-ink);max-width:26ch;margin-bottom:26px}
+.what{margin-bottom:36px}
 .said{border-left:2px solid var(--gold);padding:2px 0 2px 24px;margin-bottom:40px}
 .said p{font-family:var(--display);font-size:1.25rem;line-height:1.45;color:var(--ink);max-width:44ch}
 .sit{background:var(--surface);padding:30px 32px;margin-bottom:40px}
@@ -101,7 +104,7 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
   <span class="mark" id="mark" aria-label="Inside Out"></span>
   <span class="eyebrow">Inside Out</span>
   <h1>What have you not looked at?</h1>
-  <p>Seven questions. Nothing is scored and nothing is compared.</p>
+  <p>Eight questions. Nothing is scored and nothing is compared.</p>
   <div class="rule-gold" aria-hidden="true"></div>
   <button class="btn solid" id="begin" type="button">Begin</button>
 </section>
@@ -115,8 +118,10 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
 </section>
 
 <section id="result">
-  <span class="eyebrow">What you said</span>
+  <span class="eyebrow">The pattern to watch</span>
+  <h2 class="pattern" id="patternName"></h2>
   <p class="lede" id="lede"></p>
+  <p class="what" id="what"></p>
   <div class="said" id="said"></div>
   <div class="sit"><p id="sitWith"></p></div>
   <p class="next" id="next"></p>
@@ -143,7 +148,7 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
 /* ===========================================================================
    WHAT HAVE YOU NOT LOOKED AT?  ·  Inside Out funnel quiz
 
-   Seven questions: four reflections and three on how someone works with AI.
+   Eight questions: five reflections and three on how someone works with AI.
    Nothing is named. No pattern, no archetype, no score — the Sol Map names
    it properly and reads it against the day you were born, and spending that
    headline here would leave the real instrument with nothing to say.
@@ -185,22 +190,39 @@ const REFLECT = [
   q:`You hear how someone else handled something difficult. What turns up first?`,
   a:[[`What I would have done instead`,2,`the first thing that turns up is what you would have done instead`],
      [`A question about why`,1,null],
-     [`Nothing much. It was theirs to handle`,0,null]]}
+     [`Nothing much. It was theirs to handle`,0,null]]},
+ {id:'r5', t:'fear',
+  q:`Somebody asks why you have not done the thing yet. What comes out of your mouth?`,
+  a:[[`The reason I always give`,2,`there is a reason you always give for not having done it`],
+     [`Something roughly honest`,1,null],
+     [`A date`,0,null]]}
 ];
 
-/* The one line each territory earns. Declarative, no reassurance at the end. */
-const LEDE = {
- verdict:   `You reach a verdict fast, including on yourself.`,
- measuring: `You measure yourself against other people.`,
- steadiness:`Other people have more say in how you feel than you do.`,
- none:      `Nothing stood out, and that is worth knowing too.`
+/* Four patterns, one per territory. Named, because a pattern you can name is
+   a pattern you can watch. What undoes each one, and how it sits in a chart,
+   is the Sol Map's job inside. */
+const PATTERN = {
+ verdict:{name:`Judgement`,
+   line:`You reach a verdict fast, including on yourself.`,
+   what:`Judgement arrives quickly and feels like clarity. It is a verdict reached before the evidence is in, and the quickest one is usually about you.`,
+   ask:`Would you say to a friend what you say to yourself?`},
+ measuring:{name:`Jealousy`,
+   line:`You measure yourself against other people.`,
+   what:`Jealousy is a measurement. It only works if you agree to stand on somebody else's timeline and read your own position from it.`,
+   ask:`What do you actually want — not what they have?`},
+ steadiness:{name:`Neediness`,
+   line:`Other people have more say in how you feel than you do.`,
+   what:`Neediness is not wanting people. It is handing your steadiness to somebody else to hold, and then resenting them for holding it.`,
+   ask:`What are you waiting for somebody else to confirm?`},
+ fear:{name:`Fear`,
+   line:`You have a good reason, and you do not quite believe it.`,
+   what:`Fear is the most reasonable-sounding of the four. It borrows the language of caution, calls itself realism, and gets waved through without being questioned.`,
+   ask:`Is it actually risk, or is it only unfamiliar?`}
 };
-const SIT = {
- verdict:   `Would you say to a friend what you say to yourself?`,
- measuring: `What do you actually want — not what they have?`,
- steadiness:`What are you waiting for somebody else to confirm?`,
- none:      `Which of the seven did you sit with longest?`
-};
+/* Shown instead of a quote when no answer sat at the far end. Two versions:
+   one where something still separated the four, one where nothing did. */
+const LIGHT = `None of the four ran loud in your answers. This is the one that showed at all, which is a different thing from it being a problem.`;
+const LIGHTEST = `Nothing ran loud, and nothing separated the four. Take the pattern above as the lightest possible read rather than a finding.`;
 
 /* ---------------------------------------------------------------------------
    THE THREE ON AI
@@ -222,15 +244,20 @@ const AI = [
      [`Depends how much time I have`,1],
      [`I trust the no, and go and check`,2]]}
 ];
-/* The AI door asks for all three: clear before asking, own thinking in the
-   output, and trusting the no. Anything less and clarity comes first, which
-   is the rule the whole thing runs on. SOL is the default on purpose. */
+/* THE DOOR
+   Two conditions, both required, in this order:
+     1. Steady. No reflection answer at the far end, and the total load low.
+     2. Authored. All three AI answers at the strong end.
+   Capability handed to somebody who is not steady only moves faster in the
+   wrong direction, so SOL is the default and the AI door has to be earned.
+   STEADY_MAX is out of 10 (five reflections, two points each). */
+const STEADY_MAX = 3;
 
 const DOORS = {
  sol:{head:`Start at SHE IS SOL.`,
-   copy:`Clarity first, then capability. AI gives back whatever you hand it, so what you hand it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.`},
+   copy:`Clarity first, then capability. AI gives back whatever you hand it, so what you are handing it is the thing worth working on. Both doors open onto the same place. This is only which to walk through first.`},
  ai:{head:`Start at SHE IS AI.`,
-   copy:`Your own thinking already sits at the centre of what you make, and you check what comes back. Most people skip both. SHE IS SOL is in the same place for whenever you want it.`}
+   copy:`Your answers came back steady, and your own thinking already sits at the centre of what you make with it. That combination is rare, and it is what the capability side is for. SHE IS SOL is in the same place whenever you want it.`}
 };
 
 /* -------------------------------------------------------------------- MARK */
@@ -253,7 +280,7 @@ function insideOutMark(){
 /* ------------------------------------------------------------------- STATE */
 const $ = id => document.getElementById(id);
 /* Interleaved so the three on AI do not arrive as a block. */
-const QUEUE = [REFLECT[0], AI[0], REFLECT[1], AI[1], REFLECT[2], REFLECT[3], AI[2]];
+const QUEUE = [REFLECT[0], AI[0], REFLECT[1], AI[1], REFLECT[2], REFLECT[4], REFLECT[3], AI[2]];
 const picked = {};
 let at = 0;
 
@@ -294,37 +321,51 @@ function readReflections(){
    const share = got[t]/max[t];
    if(share > best || (share === best && share > 0 && max[t] > max[lead])){ best = share; lead = t; }
  }
- if(best === 0) lead = 'none';
+ /* Never 'none'. If nothing ran loud, the highest raw score still names the
+    pattern, and LIGHT says plainly that none of them were loud. */
+ if(lead === 'none'){
+   let top = -1;
+   for(const t of terrs){ if(got[t] > top){ top = got[t]; lead = t; } }
+ }
  return {lead, strong, got, max};
 }
 function readAI(){
- let total = 0, allStrong = true;
+ let total = 0, authored = true;
  for(const q of AI){
    const i = picked[q.id];
    const w = (i === undefined) ? 0 : q.a[i][1];
    total += w;
-   if(w !== 2) allStrong = false;
+   if(w !== 2) authored = false;
  }
- return {total, allStrong, door: allStrong ? 'ai' : 'sol'};
+ return {total, authored};
+}
+function readDoor(R, T){
+ const load = Object.keys(R.got).reduce((n,t)=>n+R.got[t],0);   /* 0–10 */
+ /* A low total is not steadiness on its own: one pattern at full intensity
+    is not centred, however quiet the rest is. Both have to hold. */
+ const steady = R.strong.length === 0 && load <= STEADY_MAX;
+ return {door:(steady && T.authored) ? 'ai' : 'sol', load, steady};
 }
 
 function finish(){
- const R = readReflections(), T = readAI();
+ const R = readReflections(), T = readAI(), D = readDoor(R, T);
+ const P = PATTERN[R.lead];
 
- $('lede').textContent = LEDE[R.lead];
+ $('patternName').textContent = P.name;
+ $('lede').textContent = P.line;
+ $('what').textContent = P.what;
 
- /* one answer back, in their words — the one from the leading territory */
- const pick = R.lead === 'none' ? null : (R.strong.find(s => s.t === R.lead) || R.strong[0]);
- $('said').innerHTML = pick ? '<p>You said '+pick.said+'.</p>' : '';
- $('said').style.display = pick ? 'block' : 'none';
+ const pick = R.strong.find(s => s.t === R.lead) || null;
+ const nothingSeparated = Object.keys(R.got).every(t => R.got[t] === 0);
+ $('said').innerHTML = pick ? '<p>You said '+pick.said+'.</p>'
+   : '<p>'+(nothingSeparated ? LIGHTEST : LIGHT)+'</p>';
+ $('said').style.display = 'block';
 
- $('sitWith').textContent = SIT[R.lead];
+ $('sitWith').textContent = P.ask;
 
- $('next').textContent = R.lead === 'none'
-   ? `The work inside is built around four patterns like this one. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.`
-   : `This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.`;
+ $('next').textContent = `This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.`;
 
- const d = DOORS[T.door];
+ const d = DOORS[D.door];
  $('doorHead').textContent = d.head;
  $('doorCopy').textContent = d.copy;
 
