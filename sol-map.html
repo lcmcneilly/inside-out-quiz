@@ -229,6 +229,9 @@ a{color:var(--gold-deep)}
 .q-part-p{color:var(--ivory-dim);max-width:56ch;margin:0 auto;font-size:.98rem}
 /* the assessment's own heading carries more weight than the section heads around it */
 .h2-lead{font-size:clamp(2.2rem,5.6vw,3.2rem)!important;line-height:1.06;margin-bottom:14px}
+/* each part opens at the same weight as the assessment's own heading */
+.q-part-title{font-family:var(--serif);font-weight:400;font-size:clamp(2.2rem,5.6vw,3.2rem);
+  line-height:1.06;color:var(--ink);margin-bottom:18px;text-wrap:balance}
 .q-lead{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--gold-deep);
   max-width:56ch;margin:0 auto 6px}
 .q-sub{font-family:var(--serif);font-weight:400;font-size:1.28rem;color:var(--ink);
@@ -1262,7 +1265,7 @@ const PYRAMID=[
    {t:`I can tell, in the moment, whether I'm moving from fear or from love.`,r:false},
    {t:`I let a feeling move through me rather than storing it somewhere.`,r:false},
    {t:`I carry a feeling for weeks without knowing what started it.`,r:true}]},
- {key:'blueprint',name:'Thought',sub:'the blueprint',
+ {key:'blueprint',name:'Thought and intent',sub:'the blueprint',
   what:`The most visible layer, and the one nearly everyone works first. Thought draws the shape; intent is direction without a demand attached. It is also the least load-bearing — a beautiful blueprint laid over unattended ground.`,
   asks:`Am I holding a direction, or a demand about how it has to arrive?`,
   items:[
@@ -1630,7 +1633,7 @@ function lightFacts(ch){
 }
 /* ================= ASSESSMENT · UI + THE CONSCIOUSNESS MIRROR ================= */
 const A={horse:{},hardest:null,pyr:{},disc:{},source:{},why:'',want:''};
-const part=(kick,h3,p,sub,framing)=>`<div class="q-part"><span class="kicker">${kick}</span>`
+const part=(kick,h3,p,sub,framing)=>`<div class="q-part"><h3 class="q-part-title">${kick}</h3>`
  +(h3?`<h3 class="q-part-h">${h3}</h3>`:'')
  +`<p class="q-part-p">${p}</p>`
  +(sub?`<h4 class="q-sub">${sub}</h4>`:'')
@@ -1651,7 +1654,7 @@ function buildAssessment(){
 
  /* ---- FOUR ---- */
  h+=part('Part one · the four horsemen','',
-  `This section explores the four horsemen inside you, and where they currently sit. There are no right or wrong answers — only radical honesty.<br><br>Four do the most damage when left unwatched: judgement, jealousy, neediness and fear.<br><br>They rarely introduce themselves plainly. Each shows up dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Unwatched, they don't dismantle a life in one blow. They make a thousand small decisions on your behalf, until you can no longer tell which choices were truly yours.<br><br>Each has a counter: compassion, joy, love and empathy. The questions below simply ask how often each horseman shows up, and where you're experiencing it right now.`);
+  `This section explores the emotional patterns inside you, and where they currently sit. There are no right or wrong answers — only radical honesty.<br><br>Four patterns do the most damage when left unwatched: judgement, jealousy, neediness and fear.<br><br>They rarely introduce themselves plainly. Each shows up dressed as something reasonable — judgement as discernment, jealousy as ambition, neediness as closeness, fear as good sense. Unwatched, they don't dismantle a life in one blow. They make a thousand small decisions on your behalf, until you can no longer tell which choices were truly yours.<br><br>Each has a counter: compassion, joy, love and empathy. The questions below simply ask how often each horseman shows up, and where you're experiencing it right now.`);
  HORSEMEN.forEach((hm,hi)=>{A.horse[hm.key]=A.horse[hm.key]||[];
   h+=`<div class="q-group" style="--accent:var(${hm.colour})"><div class="q-group-head"><span class="kicker">${hi+1} of four · ${hm.name}</span></div><div class="q-accent"></div>`;
   hm.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-h="${hm.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
@@ -1664,12 +1667,7 @@ function buildAssessment(){
   `Everything you create in your life rests on three layers: thought, emotion, and belief.`,
   '',
   `<div class="pyr-fig pyr-intro"><span class="pyr-title">The Pyramid of Creation</span>${pyramidSvg(null)}</div>
-   <ul class="layer-list">
-     <li><em>Thought and intent</em> — the blueprint</li>
-     <li><em>Emotion</em> — the energy</li>
-     <li><em>Trust and belief</em> — the ground you hold</li>
-   </ul>
-   These questions help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
+   The questions below help point to which of the three is carrying the most weight for you at the moment, and which one is quietly doing the least.`);
  PYRAMID.forEach(p=>{A.pyr[p.key]=A.pyr[p.key]||[];
   h+=`<div class="q-group" style="--accent:var(--gold-deep)"><div class="q-group-head"><span class="kicker">${p.name} · ${p.sub}</span></div><div class="q-accent"></div>`;
   p.items.forEach((it,i)=>{h+=`<div class="q-item"><p class="q-text">${n+1}. ${it.t}</p>${scaleRow(`data-p="${p.key}" data-i="${i}" role="group" aria-label="${it.t.replace(/"/g,'')}"`)}</div>`;n++;});
