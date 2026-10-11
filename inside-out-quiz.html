@@ -271,10 +271,14 @@ const REFLECT = [
      [`It depends on the day`,1,null],
      [`The day just ends`,0,null]]},
  {id:'r2', t:'measuring',
-  q:`You open your phone and the first thing you see is somebody else's good news. What do you do?`,
-  a:[[`Keep moving past it`,2,`you keep moving past somebody else's good news`],
-     [`Look, then carry on`,1,null],
-     [`Stop and read it properly`,0,null]]},
+  q:`You open your phone and the first thing you see is somebody else's good news. What do you feel?`,
+  /* Weights are per answer, not per position. Clean gladness is the settled
+     end, so it scores nothing. "Nothing much" sits in the middle: not
+     measuring, but not glad either, which is a different thing from being
+     free of the comparison. */
+  a:[[`Happy for them, and a bit behind`,2,`you felt happy for them, and a bit behind`],
+     [`Happy for them, and nothing else`,0,null],
+     [`Nothing much`,1,null]]},
  {id:'r3', t:'steadiness',
   q:`How much can one conversation change how you feel about an entire day?`,
   a:[[`Completely. It sets the tone`,2,`one conversation can change how you feel about an entire day`],

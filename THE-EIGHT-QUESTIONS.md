@@ -35,14 +35,16 @@ question — AI gives back what you hand it, so get clear first.*
 
 ## 3.
 
-**You open your phone and the first thing you see is somebody else's good news. What do you do?**
+**You open your phone and the first thing you see is somebody else's good news. What do you feel?**
 
-- Keep moving past it
-- Look, then carry on
-- Stop and read it properly
+- Happy for them, and a bit behind
+- Happy for them, and nothing else
+- Nothing much
 
-*Territory: the measuring. First answer is the loud one. Scrolling past is the
-tell, not the polite response.*
+*Territory: the measuring. The first answer is the loud one and the only one
+that can produce Jealousy. The second is the settled end and scores nothing.
+"Nothing much" sits in the middle, because indifference is not the same as
+being free of the comparison.*
 
 ---
 
