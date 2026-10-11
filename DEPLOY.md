@@ -100,7 +100,6 @@ change.
 
 ## One note on the repo
 
-`index.html` is excluded from the deployment — see `.vercelignore`. It redirects to the
-Sol Map, which would beat the rewrite that puts the quiz at `/`. The Sol Map is still
-reachable at `/sol-map.html`. When it gets its own subdomain it wants a second Vercel
-project, not this one.
+This repo is the quiz and nothing else. The deployed site is `inside-out-quiz.html`
+served at `/` by the rewrite in `vercel.json`, `privacy.html`, and the one function.
+Everything else is excluded by `.vercelignore`.

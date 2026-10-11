@@ -100,5 +100,8 @@ says today. Change it here and both move together.
 | `vercel.json` | Rewrites `/` to the quiz, security headers |
 | `.vercelignore` | Keeps working documents off the public domain |
 
-Everything else in this repo is the Sol Map and its working notes, and is excluded
-from the deployment.
+The rest are working notes — the questions, the four results, the twenty that were
+written to choose from — and they are excluded from the deployment.
+
+The Sol Map and the Foundation Workbook are a separate project and are not in this
+repo.
