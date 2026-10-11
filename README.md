@@ -1,13 +1,12 @@
 # Inside Out quiz
 
 Built to Amanda's brief of 11 October 2026. Eight questions at `quiz.sheisai.ai`,
-details taken once before the result, saved to Airtable and then Ivorey, then on to
-the landing page already signed up.
+details taken once before the result, sent straight to Ivorey, then on to the
+landing page already signed up.
 
 ```
 quiz.sheisai.ai  →  intro  →  8 questions  →  your details  →  POST /api/lead
-                 →  Airtable row (pending)  →  Ivorey inbound webhook
-                 →  Airtable row (sent)     →  result on screen
+                 →  Ivorey inbound webhook  →  result on screen
                  →  join.sheisai.ai/welcome?result=…&utm_…
 ```
 
@@ -20,27 +19,25 @@ parameters so a refresh mid-quiz does not lose attribution.
 
 ## Environment variables
 
-Set all five in Vercel → Settings → Environment Variables, for Production, Preview
+Set these in Vercel → Settings → Environment Variables, for Production, Preview
 and Development, then redeploy.
 
 | Variable | Who provides it | Required |
 |---|---|---|
 | `IVOREY_WEBHOOK_URL` | Amanda, from the Ivorey workflow's Inbound Webhook trigger | yes |
-| `AIRTABLE_TOKEN` | Amanda, a personal access token limited to the leads base | yes |
-| `AIRTABLE_BASE_ID` | Amanda, looks like `appXXXXXXXXXXXXXX` | yes |
-| `AIRTABLE_TABLE_NAME` | `Leads` | no, defaults to `Leads` |
+| `BACKUP_WEBHOOK_URL` | Anything that accepts a POST, if one is ever added | no |
 
-## Airtable columns
+There is no Airtable, so Ivorey is the only destination and the safety net is
+three things instead. The function retries a temporary failure up to three
+times over about a second and a half. The page then offers one more attempt.
+If every attempt fails, the whole lead is printed to the Vercel log, which is
+the last copy of it.
 
-Base "Inside Out leads". One column per field, all plain text unless noted.
+A 4xx is never retried, because a request Ivorey has already rejected will be
+rejected again. Only a timeout, a network fault, a 5xx or a rate limit repeats.
 
-`first_name` · `email` · `consent` (checkbox) · `consent_text` · `result_type` ·
-`result_name` · `door` · `answers` (long text) · `source` · `utm_source` ·
-`utm_medium` · `utm_campaign` · `utm_content` · `submitted_at` ·
-`ivorey_status` · `ivorey_error` (long text)
-
-The write uses `typecast`, so Airtable coerces values into single-selects or
-checkboxes rather than rejecting the whole row.
+`BACKUP_WEBHOOK_URL` is optional and unset. If a Google Sheet or a Pabbly hook
+is added later, putting its URL here is the only change needed.
 
 ## Result codes
 
@@ -89,15 +86,15 @@ pressed. Set it to `12` for the optional auto-redirect with a countdown somebody
 cancel. Amanda's call.
 
 **`CONFIG.consentText`**. The exact wording, written once and sent with every lead,
-so the Airtable row records what was actually on screen rather than what it says
-today. Change it here and both move together.
+so the Ivorey contact records what was actually on screen rather than what it
+says today. Change it here and both move together.
 
 ## Files
 
 | | |
 |---|---|
 | `inside-out-quiz.html` | The quiz. Questions, scoring, details step, result |
-| `api/lead.js` | The only endpoint. Airtable, then Ivorey, then the status |
+| `api/lead.js` | The only endpoint. Validates, then sends to Ivorey with retries |
 | `privacy.html` | Collection notice the consent box links to |
 | `DEPLOY.md` | The browser steps, the Ivorey setup, the launch tests |
 | `vercel.json` | Rewrites `/` to the quiz, security headers |

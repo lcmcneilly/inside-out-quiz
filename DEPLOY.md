@@ -1,7 +1,7 @@
 # Shipping the quiz
 
 Built to Amanda's brief. The code is done. What is left needs a password, which is
-why it is yours and not mine. Environment variables and Airtable columns are in
+why it is yours and not mine. The environment variable and the result codes are in
 [README.md](README.md).
 
 ---
@@ -24,12 +24,12 @@ password. GitHub → Settings → Developer settings → Personal access tokens.
 
 `api/lead.js` is picked up as a serverless function on its own.
 
-## 3 · Environment variables
+## 3 · Environment variable
 
-The four in the README. Production, Preview and Development, then redeploy.
+The one in the README. Production, Preview and Development, then redeploy.
 
-Amanda provides all of them: the Ivorey Inbound Webhook URL, and the three Airtable
-values. Until they are set, `/api/lead` returns an error and the quiz shows its retry
+Just one is required: `IVOREY_WEBHOOK_URL`, the Inbound Webhook URL from Amanda's
+workflow. Until it is set, `/api/lead` returns an error and the quiz shows its retry
 message, so do not send traffic before this step.
 
 ## 4 · Domain
@@ -50,7 +50,9 @@ message, so do not send traffic before this step.
 From the brief, with two additions at the end.
 
 - [ ] Workflow with the **Inbound Webhook** trigger. Its URL goes into Vercel as `IVOREY_WEBHOOK_URL`
-- [ ] Send one test lead from the quiz, then map the fields: `first_name`, `email`, `result_type`, `door`, `consent`, and the four `utm_` fields
+- [ ] Map the incoming fields. **Two test payloads have already been sent to the webhook**, both returning `Success`, so the sample data is waiting in the workflow: `first_name`, `email`, `consent`, `consent_text`, `result_type`, `result_name`, `door`, `answers`, `source`, `submitted_at`, and the four `utm_` fields
+- [ ] Delete the two test contacts: `claude-test-delete-me@sheisai.ai` and `claude-test-delete-me-2@sheisai.ai`
+- [ ] **Publish the workflow.** The webhook replies "test request received", which is what a workflow still in Draft says. A live quiz pointed at a draft workflow captures nothing
 - [ ] **Create/Update Contact** action, matched on email
 - [ ] **Add Contact Tag**: `io-waitlist`, `io-quiz-complete`, `src-quiz`, plus `io-result-<result_type>`
 - [ ] **Also add `io-door-<door>`** — the welcome comes from Laura on the SOL door and from Amanda on the AI door, which the brief's four tags cannot express. See the README
@@ -58,7 +60,6 @@ From the brief, with two additions at the end.
 - [ ] Welcome email workflow triggers on `io-waitlist` added, **send once per contact**
 - [ ] **Double opt-in off.** You asked for this and it is not something the code controls. If it is on, the email carrying somebody's result waits on a confirmation click most people never make. This is the likeliest way the whole thing ships quietly broken
 - [ ] Landing page form also adds `io-waitlist` and `src-landing`
-- [ ] Airtable base "Inside Out leads" with the columns in the README, and a token limited to it
 
 ---
 
@@ -66,21 +67,20 @@ From the brief, with two additions at the end.
 
 Phone and desktop, a fresh email each time.
 
-- [ ] **Quiz route.** Finish the quiz. Airtable row says `sent`, the Ivorey contact exists with all five tags, the welcome arrives with the right result, the button lands on `/welcome`
+- [ ] **Quiz route.** Finish the quiz. The Ivorey contact exists with all five tags, the welcome arrives with the right result, the button lands on `/welcome`
 - [ ] **Direct route.** Sign up on `join.sheisai.ai` with a different email. Contact gets `io-waitlist` and `src-landing`, welcome arrives
 - [ ] **Both routes, same email.** One contact, both tags, one welcome
-- [ ] **Ivorey down.** Break `IVOREY_WEBHOOK_URL` on purpose. The result still shows, Airtable records `failed` with the error in `ivorey_error`
+- [ ] **Ivorey down.** Break `IVOREY_WEBHOOK_URL` on purpose. The quiz asks to try once more, then shows the result anyway, and the Vercel log holds the lead
 - [ ] **Bad input.** Invalid email and unticked consent are both blocked
-- [ ] **Campaign link.** Open `quiz.sheisai.ai/?utm_source=instagram&utm_content=a05`. Both reach Airtable, Ivorey and the `/welcome` link
+- [ ] **Campaign link.** Open `quiz.sheisai.ai/?utm_source=instagram&utm_content=a05`. Both reach Ivorey and the `/welcome` link
 - [ ] **Every result.** All four redirect correctly and get their own tag
 
-Everything above except the two live-service checks is already verified against stubs.
-What cannot be tested without real credentials is whether Airtable accepts the column
-names and whether Ivorey's webhook maps the fields — which is what the first test lead
-is for.
+Everything above is already verified against stubs, and the live webhook has taken two
+real test payloads. What is left to prove is only what happens inside Ivorey: whether
+the workflow maps the fields and fires the right welcome.
 
-If something does not arrive: Vercel → project → Logs. An Airtable failure prints the
-whole lead, so nothing is unrecoverable even on the worst day.
+If something does not arrive: Vercel → project → Logs. A failed delivery prints the
+whole lead.
 
 ---
 
@@ -88,12 +88,15 @@ whole lead, so nothing is unrecoverable even on the worst day.
 
 | What fails | What somebody sees | Where the lead is |
 |---|---|---|
-| Nothing | Result, straight away | Airtable `sent`, contact in Ivorey |
-| Ivorey | Result, straight away | Airtable `failed` with the error. Re-send from Airtable |
-| Airtable, once | "Press it once more" | Nowhere yet. Their answers are kept |
-| Airtable, twice | Result anyway | Vercel log only. This is the brief's rule: her result is hers |
+| Nothing | Result, straight away | In Ivorey |
+| Ivorey, briefly | Result, after about a second | In Ivorey. The function retried and got through |
+| Ivorey, once properly | "Press it once more" | Nowhere yet. Their answers are kept |
+| Ivorey, twice | Result anyway | Vercel log only. This is the brief's rule: her result is hers |
 
----
+Without Airtable there is no second copy, so the Vercel log is the last line of
+defence and it does not keep things for long. If this starts mattering, a free
+Pabbly or Google Sheets hook in `BACKUP_WEBHOOK_URL` closes the gap with no code
+change.
 
 ## One note on the repo
 

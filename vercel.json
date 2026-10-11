@@ -3,6 +3,9 @@
   "rewrites": [
     { "source": "/", "destination": "/inside-out-quiz.html" }
   ],
+  "functions": {
+    "api/lead.js": { "maxDuration": 15 }
+  },
   "headers": [
     {
       "source": "/(.*)",
