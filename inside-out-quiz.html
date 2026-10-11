@@ -222,10 +222,12 @@ const CONFIG = {
      server and never reach this page. */
   leadEndpoint: "/api/lead",
 
-  /* The no-form version of the landing page. By the time somebody arrives they
-     are already on the waitlist, so asking again would be asking twice.
-     Amanda to confirm the exact address once the page is live. */
-  welcomeUrl:   "https://join.sheisai.ai/welcome",
+  /* Should be the no-form version, join.sheisai.ai/welcome — by the time
+     somebody arrives they are already on the waitlist, so a second form is
+     asking twice. That page does not exist yet and returns 404, so this points
+     at the main landing page, which works. Put /welcome back the day Amanda
+     builds it; this one line is the only change needed. */
+  welcomeUrl:   "https://join.sheisai.ai",
 
   /* The SHE IS AI privacy policy. Pointing at the page in this repo until
      Amanda gives the real address, so the link is never broken. */
