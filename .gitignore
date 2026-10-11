@@ -7,3 +7,17 @@ node_modules/
 .env
 .env.*
 !.env.example
+
+# The Sol Map and the Foundation Workbook are a separate project. They live in
+# this folder on disk but are deliberately not part of the quiz repo.
+sol-map.html
+sol-map-artifact.html
+foundation-workbook.html
+find-your-starting-point.html
+funnel-quiz.html
+index.html
+serve.py
+PRIVACY.md
+SOL-MAP-BRIEF-FOR-GPT.md
+TRANSCRIPT.md
+THE-TEN-QUESTIONS.md
