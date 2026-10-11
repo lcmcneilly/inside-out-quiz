@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The four results · Inside Out</title>
+<meta name="description" content="Every result the quiz can produce, laid out exactly as it appears on screen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================================
+   Review sheet. The result block below is the quiz's own markup and the
+   quiz's own CSS, copied unchanged, so what is on this page is what is on
+   screen. Everything in grey is scaffolding for reviewing and never ships.
+   =========================================================================== */
+:root{
+  --gold:#EFBD40; --ink:#1A1B20; --ivory:#E8DCC4; --paper:#FAF8F4;
+  --card:#FFFCF2; --surface:#E2DCD0;
+  --body:#55524B; --mute:#A9A398; --line:#D8D2C6; --line-soft:#E2DCD0;
+  --gold-ink:#8A6A14;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --ui:'Inter',system-ui,sans-serif;
+  --text:'Montserrat',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--body);font-family:var(--text);
+  font-weight:400;font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+main{max-width:700px;margin:0 auto;padding:0 28px 88px}
+em,i{font-style:italic}
+strong,b{font-weight:400}
+p{max-width:58ch}
+h1,h2{font-family:var(--display);font-weight:400;color:var(--ink);line-height:1.05}
+h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
+.eyebrow{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold-ink)}
+.btn{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:transparent;
+  border:1px solid var(--ink);border-radius:0;padding:16px 38px;cursor:pointer;
+  text-decoration:none}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.rule-gold{width:84px;height:2px;background:var(--gold);margin:38px 0}
+
+/* ---- the result, exactly as the quiz renders it ---- */
+.result{padding:0}
+.result .eyebrow{display:block;margin-bottom:20px}
+.pattern{font-family:var(--display);font-size:clamp(3.4rem,11vw,5.6rem);line-height:.98;
+  color:var(--ink);margin-bottom:18px}
+.lede{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3.4vw,1.85rem);
+  line-height:1.3;color:var(--gold-ink);max-width:26ch;margin-bottom:26px}
+.what{margin-bottom:36px}
+.said{border-left:2px solid var(--gold);padding:2px 0 2px 24px;margin-bottom:40px}
+.said p{font-family:var(--display);font-size:1.25rem;line-height:1.45;color:var(--ink);max-width:44ch}
+.sit{background:var(--surface);padding:30px 32px;margin-bottom:40px}
+.sit p{font-family:var(--display);font-style:italic;font-size:1.28rem;line-height:1.45;
+  color:var(--ink);max-width:42ch}
+@media(max-width:560px){.sit{padding:24px 22px}}
+.next{margin-bottom:44px}
+.hr{height:1px;background:var(--line-soft);margin:48px 0}
+.door h2{font-size:clamp(1.7rem,4.2vw,2.3rem);margin-bottom:14px;max-width:20ch}
+.door p{margin-bottom:28px}
+.opens{font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold-ink);margin-top:22px}
+
+/* ---- review scaffolding, never ships ---- */
+.sheet{padding:70px 0 20px}
+.slug{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:34px}
+.screen{border:1px solid var(--line);background:var(--paper);padding:56px 44px 60px;margin-bottom:18px}
+@media(max-width:560px){.screen{padding:40px 22px 44px}}
+.note{font-family:var(--ui);font-size:12.5px;line-height:1.8;color:var(--mute);
+  max-width:58ch;margin-bottom:76px}
+.note span{color:var(--gold-ink)}
+.top{padding:80px 0 10px}
+.top p{font-size:1.06rem}
+footer{margin-top:40px;padding-top:28px;border-top:1px solid var(--line-soft)}
+footer p{font-family:var(--ui);font-size:12px;color:var(--mute);line-height:1.9;max-width:62ch}
+footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--gold-ink);margin-bottom:8px}
+</style>
+</head>
+<body>
+<main>
+
+<section class="top">
+  <span class="eyebrow">Inside Out · funnel quiz</span>
+  <h1>The four results</h1>
+  <p>Every result the quiz can produce, in the type and colour it appears in.
+  One per pattern. The grey lines underneath each are for you, not for the reader.</p>
+  <div class="rule-gold" aria-hidden="true"></div>
+</section>
+
+<!-- ======================================================= ONE · JUDGEMENT -->
+<section class="sheet">
+<span class="slug">Result one of four</span>
+<div class="screen">
+<div class="result">
+  <span class="eyebrow">The pattern to watch</span>
+  <h2 class="pattern">Judgement</h2>
+  <p class="lede">You reach a verdict fast, including on yourself.</p>
+  <p class="what">Judgement arrives quickly and feels like clarity. It is a verdict reached before the evidence is in, and the quickest one is usually about you.</p>
+  <div class="said"><p>You said an ordinary day ends with you running back through how you did.</p></div>
+  <div class="sit"><p>Would you say to a friend what you say to yourself?</p></div>
+  <p class="next">This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.</p>
+
+  <div class="hr" aria-hidden="true"></div>
+
+  <div class="door">
+    <h2>Start at SHE IS SOL.</h2>
+    <p>Clarity first, then capability. AI gives back whatever you hand it, so what you are handing it is the thing worth working on. Both doors open onto the same place. This is only which to walk through first.</p>
+    <a class="btn solid" href="https://claude.ai/artifact/1d1kNKJiGLrhgbXVsQ1FAL">Join the waitlist</a>
+    <p class="opens">Doors open 31 October</p>
+  </div>
+</div>
+</div>
+<p class="note"><span>Shown when</span> the two questions about verdicts score highest —
+running back through the day, and knowing what you would have done instead.
+The quoted line comes from whichever of the two they answered at the far end.</p>
+</section>
+
+<!-- ======================================================== TWO · JEALOUSY -->
+<section class="sheet">
+<span class="slug">Result two of four</span>
+<div class="screen">
+<div class="result">
+  <span class="eyebrow">The pattern to watch</span>
+  <h2 class="pattern">Jealousy</h2>
+  <p class="lede">You measure yourself against other people.</p>
+  <p class="what">Jealousy is a measurement. It only works if you agree to stand on somebody else's timeline and read your own position from it.</p>
+  <div class="said"><p>You said you keep moving past somebody else's good news.</p></div>
+  <div class="sit"><p>What do you actually want — not what they have?</p></div>
+  <p class="next">This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.</p>
+
+  <div class="hr" aria-hidden="true"></div>
+
+  <div class="door">
+    <h2>Start at SHE IS SOL.</h2>
+    <p>Clarity first, then capability. AI gives back whatever you hand it, so what you are handing it is the thing worth working on. Both doors open onto the same place. This is only which to walk through first.</p>
+    <a class="btn solid" href="https://claude.ai/artifact/1d1kNKJiGLrhgbXVsQ1FAL">Join the waitlist</a>
+    <p class="opens">Doors open 31 October</p>
+  </div>
+</div>
+</div>
+<p class="note"><span>Shown when</span> the phone question scores highest.
+Scrolling past somebody else's good news is counted as the loud answer, not the polite one —
+stopping to read it properly is the settled response.</p>
+</section>
+
+<!-- ===================================================== THREE · NEEDINESS -->
+<section class="sheet">
+<span class="slug">Result three of four</span>
+<div class="screen">
+<div class="result">
+  <span class="eyebrow">The pattern to watch</span>
+  <h2 class="pattern">Neediness</h2>
+  <p class="lede">Other people have more say in how you feel than you do.</p>
+  <p class="what">Neediness is not wanting people. It is handing your steadiness to somebody else to hold, and then resenting them for holding it.</p>
+  <div class="said"><p>You said one conversation can change how you feel about an entire day.</p></div>
+  <div class="sit"><p>What are you waiting for somebody else to confirm?</p></div>
+  <p class="next">This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.</p>
+
+  <div class="hr" aria-hidden="true"></div>
+
+  <div class="door">
+    <h2>Start at SHE IS SOL.</h2>
+    <p>Clarity first, then capability. AI gives back whatever you hand it, so what you are handing it is the thing worth working on. Both doors open onto the same place. This is only which to walk through first.</p>
+    <a class="btn solid" href="https://claude.ai/artifact/1d1kNKJiGLrhgbXVsQ1FAL">Join the waitlist</a>
+    <p class="opens">Doors open 31 October</p>
+  </div>
+</div>
+</div>
+<p class="note"><span>Shown when</span> the question about one conversation setting the tone of a whole day
+scores highest. This is the one word of the four most likely to land hard on cold traffic —
+flag it if you want it softened.</p>
+</section>
+
+<!-- ============================================================ FOUR · FEAR -->
+<section class="sheet">
+<span class="slug">Result four of four</span>
+<div class="screen">
+<div class="result">
+  <span class="eyebrow">The pattern to watch</span>
+  <h2 class="pattern">Fear</h2>
+  <p class="lede">You have a good reason, and you do not quite believe it.</p>
+  <p class="what">Fear is the most reasonable-sounding of the four. It borrows the language of caution, calls itself realism, and gets waved through without being questioned.</p>
+  <div class="said"><p>You said there is a reason you always give for not having done it.</p></div>
+  <div class="sit"><p>Is it actually risk, or is it only unfamiliar?</p></div>
+  <p class="next">This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.</p>
+
+  <div class="hr" aria-hidden="true"></div>
+
+  <div class="door">
+    <h2>Start at SHE IS SOL.</h2>
+    <p>Clarity first, then capability. AI gives back whatever you hand it, so what you are handing it is the thing worth working on. Both doors open onto the same place. This is only which to walk through first.</p>
+    <a class="btn solid" href="https://claude.ai/artifact/1d1kNKJiGLrhgbXVsQ1FAL">Join the waitlist</a>
+    <p class="opens">Doors open 31 October</p>
+  </div>
+</div>
+</div>
+<p class="note"><span>Shown when</span> the question about why it is not done yet scores highest.
+Giving the reason you always give is the loud answer; giving a date is the settled one.</p>
+</section>
+
+<!-- =================================================== THE TWO VARIATIONS -->
+<section class="sheet">
+<span class="slug">Two lines that can swap in</span>
+<div class="screen">
+<div class="result">
+  <span class="eyebrow">In place of the quote</span>
+  <h2 class="pattern" style="font-size:clamp(2.2rem,6vw,3.2rem);margin-bottom:26px">When nothing ran loud</h2>
+  <div class="said"><p>None of the four ran loud in your answers. This is the one that showed at all, which is a different thing from it being a problem.</p></div>
+  <div class="said"><p>Nothing ran loud, and nothing separated the four. Take the pattern above as the lightest possible read rather than a finding.</p></div>
+
+  <div class="hr" aria-hidden="true"></div>
+
+  <div class="door">
+    <h2>Start at SHE IS AI.</h2>
+    <p>Your answers came back steady, and your own thinking already sits at the centre of what you make with it. That combination is rare, and it is what the capability side is for. SHE IS SOL is in the same place whenever you want it.</p>
+    <a class="btn solid" href="https://claude.ai/artifact/1d1kNKJiGLrhgbXVsQ1FAL">Join the waitlist</a>
+    <p class="opens">Doors open 31 October</p>
+  </div>
+</div>
+</div>
+<p class="note"><span>The quote block</span> reads somebody's own answer back to them.
+If no answer sat at the far end there is nothing to quote, so one of these two lines takes its place
+and the result above it stays exactly the same.
+<br><br>
+<span>The second door</span> only ever appears beside one of those two lines. It needs both conditions:
+no answer at the far end on any of the five reflections, and all three AI answers at the strong end.
+Anyone with a loud pattern gets SHE IS SOL, so a result can never name Jealousy and then send them to
+the capability side.</p>
+</section>
+
+<footer>
+  <p class="aw">As within, so without.</p>
+  <p>Inside Out · SHE IS SOL and SHE IS AI. Review sheet, not a live page.
+  The styling above is the quiz's own, so edits you mark here transfer straight across.</p>
+</footer>
+
+</main>
+</body>
+</html>

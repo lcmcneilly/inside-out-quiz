@@ -46,7 +46,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Clarity first, then capability. AI gives back whatever you hand it, so what you hand it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -74,7 +74,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Your own thinking already sits at the centre of what you make, and you check what comes back. Most people skip both. SHE IS SOL is in the same place for whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -102,7 +102,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Clarity first, then capability. AI gives back whatever you hand it, so what you hand it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -130,7 +130,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Your own thinking already sits at the centre of what you make, and you check what comes back. Most people skip both. SHE IS SOL is in the same place for whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -158,7 +158,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Clarity first, then capability. AI gives back whatever you hand it, so what you hand it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -186,7 +186,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Your own thinking already sits at the centre of what you make, and you check what comes back. Most people skip both. SHE IS SOL is in the same place for whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -214,7 +214,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Clarity first, then capability. AI gives back whatever you hand it, so what you hand it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -242,7 +242,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Your own thinking already sits at the centre of what you make, and you check what comes back. Most people skip both. SHE IS SOL is in the same place for whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -270,7 +270,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Clarity first, then capability. AI gives back whatever you hand it, so what you hand it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -298,7 +298,7 @@ The AI door needs all three AI answers at the strong end; anything less points t
 > 
 > Your own thinking already sits at the centre of what you make, and you check what comes back. Most people skip both. SHE IS SOL is in the same place for whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 

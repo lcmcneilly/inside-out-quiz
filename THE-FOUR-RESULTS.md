@@ -65,7 +65,7 @@ Because the AI door needs nothing running loud, it only ever appears alongside *
 > 
 > Your answers came back steady, and your own thinking already sits at the centre of what you make with it. That combination is rare, and it is what the capability side is for. SHE IS SOL is in the same place whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -109,7 +109,7 @@ Because the AI door needs nothing running loud, it only ever appears alongside *
 > 
 > Your answers came back steady, and your own thinking already sits at the centre of what you make with it. That combination is rare, and it is what the capability side is for. SHE IS SOL is in the same place whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -153,7 +153,7 @@ Because the AI door needs nothing running loud, it only ever appears alongside *
 > 
 > Your answers came back steady, and your own thinking already sits at the centre of what you make with it. That combination is rare, and it is what the capability side is for. SHE IS SOL is in the same place whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 
@@ -197,7 +197,7 @@ Because the AI door needs nothing running loud, it only ever appears alongside *
 > 
 > Your answers came back steady, and your own thinking already sits at the centre of what you make with it. That combination is rare, and it is what the capability side is for. SHE IS SOL is in the same place whenever you want it.
 
-`Join the waitlist` → sheisai.ai/inside   ·   Doors open 31 October
+`Join the waitlist` → the Inside Out landing page   ·   Doors open 31 October
 
 ---
 

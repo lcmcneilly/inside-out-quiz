@@ -1,4 +1,26 @@
+# This repo deploys as the quiz at quiz.sheisai.ai, so "/" has to be the quiz.
+# index.html bounces to the Sol Map, which would win over the rewrite in
+# vercel.json if it shipped. Keeping it out of the deployment lets the rewrite
+# serve inside-out-quiz.html at the root. The file is untouched locally and the
+# Sol Map is still reachable at /sol-map.html.
+index.html
+
+# Working documents. Nothing here should be reachable on a public funnel domain.
 serve.py
 README.md
+PRIVACY.md
+TRANSCRIPT.md
+EVERY-RESULT.md
+THE-FOUR-RESULTS.md
+THE-EIGHT-QUESTIONS.md
+THE-TEN-QUESTIONS.md
+TWENTY-TO-CHOOSE-FROM.md
+SOL-MAP-BRIEF-FOR-GPT.md
+FOUR-RESULTS-PREVIEW.html
+funnel-quiz.html
+find-your-starting-point.html
+sol-map-artifact.html
+
 .gitignore
 .vercelignore
+DEPLOY.md

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What have you not looked at? · Inside Out</title>
+<title>Insideout Funnel Quiz</title>
 <meta name="description" content="Eight questions. Nothing is scored and nothing is compared.">
 <meta property="og:title" content="What have you not looked at?">
 <meta property="og:description" content="Eight questions, about three minutes. Inside Out opens 31 October.">
@@ -40,8 +40,8 @@ h1,h2{font-family:var(--display);font-weight:400;color:var(--ink);line-height:1.
 h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
 .eyebrow{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.28em;
   text-transform:uppercase;color:var(--gold-ink)}
-.mark{display:block;width:60px;height:60px}
-.mark svg{width:60px;height:60px;display:block}
+.mark{display:block;width:150px;height:78px}      /* the arched doors, 192:100 */
+.mark svg{width:150px;height:78px;display:block}
 .btn{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;
   letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:transparent;
   border:1px solid var(--ink);border-radius:0;padding:16px 38px;cursor:pointer;
@@ -92,6 +92,26 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
 .door p{margin-bottom:28px}
 .opens{font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.24em;
   text-transform:uppercase;color:var(--gold-ink);margin-top:22px}
+/* joining — the result is already given, so this asks after rather than before */
+.join{max-width:460px;margin-top:4px}
+.join-lead{margin-bottom:26px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.field label{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute)}
+.field input{font-family:var(--text);font-size:1.02rem;line-height:1.5;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:0;padding:15px 16px;
+  outline:none;transition:border-color .16s}
+.field input:focus{border-color:var(--ink)}
+.field input[aria-invalid="true"]{border-color:#9A3B2E}
+.consent{display:flex;gap:12px;align-items:flex-start;margin:22px 0 26px;
+  font-size:.94rem;line-height:1.6;color:var(--body);cursor:pointer}
+.consent input{width:17px;height:17px;margin-top:4px;flex:none;accent-color:var(--ink);cursor:pointer}
+.consent a{color:var(--gold-ink)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.join button[disabled]{opacity:.45;cursor:default}
+.join-err{font-family:var(--ui);font-size:13px;line-height:1.65;color:#9A3B2E;margin-top:18px;max-width:46ch}
+.joined{border-left:2px solid var(--gold);padding:2px 0 2px 24px;margin-top:4px}
+.joined p{font-family:var(--display);font-size:1.25rem;line-height:1.45;color:var(--ink);max-width:44ch}
 footer{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-soft)}
 footer p{font-family:var(--ui);font-size:12px;color:var(--mute);line-height:1.9}
 footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--gold-ink);margin-bottom:8px}
@@ -131,7 +151,38 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
   <div class="door">
     <h2 id="doorHead"></h2>
     <p id="doorCopy"></p>
-    <a class="btn solid" id="cta" href="#">Inside Out</a>
+
+    <form class="join" id="join" novalidate>
+      <p class="join-lead">Everyone on the waitlist comes in as a founding member. Join and the
+        rest of your result is in your inbox.</p>
+
+      <div class="field">
+        <label for="fname">First name</label>
+        <input id="fname" name="fname" type="text" autocomplete="given-name" maxlength="60" required>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+               maxlength="160" spellcheck="false" required>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label>Leave this empty<input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <label class="consent" for="consent">
+        <input id="consent" type="checkbox" required>
+        <span>Send me my result and the Inside Out emails. I can unsubscribe at any time.
+          <a href="/privacy.html" target="_blank" rel="noopener">What happens to my details</a>.</span>
+      </label>
+
+      <button class="btn solid" id="joinBtn" type="submit">Join the waitlist</button>
+      <p class="join-err" id="joinErr" role="alert" hidden></p>
+    </form>
+
+    <div class="joined" id="joined" hidden><p></p></div>
+
     <p class="opens" id="opensLine">Doors open 31 October</p>
   </div>
 </section>
@@ -158,10 +209,13 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
    =========================================================================== */
 
 const CONFIG = {
-  /* The Inside Out landing page, per the brand direction. */
-  landingUrl: "https://sheisai.ai/inside",
-  ctaLabel:   "Join the waitlist",
-  opensLine:  "Doors open 31 October"
+  /* Where the name and email go. Same origin, so the Ivorey token stays on the
+     server and never reaches this page. */
+  joinEndpoint: "/api/join",
+  /* Where somebody lands once they are on the list. They have already joined
+     by this point, so this is the sales page, not a second form. */
+  successUrl:   "https://join.sheisai.ai",
+  opensLine:    "Doors open 31 October"
 };
 
 /* ---------------------------------------------------------------------------
@@ -261,19 +315,18 @@ const DOORS = {
 };
 
 /* -------------------------------------------------------------------- MARK */
-/* One square split down the middle. The ivory side is the inside, where IN
-   reads upright. The ink side is the world outside, where OUT is turned over.
-   A single gold spark on the seam. */
+/* The arched doors, from the graphic library in the brand direction: SOL in
+   gold and AI in ink, standing side by side on one line. Two doors, one room.
+   The quiz ends on a door, so it opens with the pair.
+   Proportions are the brand's own — 300 wide, 350 high, 72 apart — scaled to
+   a 192 x 100 box, which puts each arch at 85.7 wide and the gap at 20.6. */
 function insideOutMark(){
- return `<svg viewBox="0 0 100 100" role="img" aria-label="Inside Out">
-  <rect x="0" y="0" width="50" height="100" fill="#E8DCC4"/>
-  <rect x="50" y="0" width="50" height="100" fill="#1A1B20"/>
-  <text x="25" y="54" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
-    font-weight="600" letter-spacing="1.1" fill="#1A1B20">IN</text>
-  <text x="75" y="54" text-anchor="middle" font-family="Inter,sans-serif" font-size="11"
-    font-weight="600" letter-spacing="1.1" fill="#E8DCC4" transform="rotate(180 75 50)">OUT</text>
-  <circle cx="50" cy="50" r="3.4" fill="#EFBD40"/>
-  <circle cx="50" cy="50" r="8" fill="none" stroke="#EFBD40" stroke-width=".8" opacity=".5"/>
+ return `<svg viewBox="0 0 192 100" role="img" aria-label="Inside Out">
+  <g fill="none" stroke-width="1.8">
+   <path d="M0.9 99 V42.85 A41.95 41.95 0 0 1 84.8 42.85 V99" stroke="#EFBD40"/>
+   <path d="M107.2 99 V42.85 A41.95 41.95 0 0 1 191.1 42.85 V99" stroke="#1A1B20"/>
+  </g>
+  <rect x="0" y="98.1" width="192" height="1.9" fill="#1A1B20"/>
  </svg>`;
 }
 
@@ -369,18 +422,76 @@ function finish(){
  $('doorHead').textContent = d.head;
  $('doorCopy').textContent = d.copy;
 
+ /* The only two things that leave this page, and only once somebody joins. */
+ outcome.pattern = P.name.toLowerCase();
+ outcome.door    = D.door;
+
  $('quiz').style.display = 'none';
  $('result').style.display = 'block';
  window.scrollTo(0,0);
 }
 
+/* ------------------------------------------------------------------ JOINING */
+/* The eight answers never leave the browser. What goes to the server is a
+   first name, an email, and the two words above. */
+const outcome = {pattern:null, door:null};
+
+function joinError(msg){
+ const e = $('joinErr');
+ e.textContent = msg;
+ e.hidden = false;
+}
+
+async function submitJoin(ev){
+ ev.preventDefault();
+
+ const btn   = $('joinBtn');
+ const name  = $('fname').value.trim();
+ const email = $('email').value.trim();
+ const ok    = $('consent').checked;
+
+ $('joinErr').hidden = true;
+ $('fname').setAttribute('aria-invalid', name ? 'false' : 'true');
+ $('email').setAttribute('aria-invalid', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? 'false' : 'true');
+
+ if(!name){ $('fname').focus(); return joinError('Your first name, so the email knows who it is writing to.'); }
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ $('email').focus(); return joinError('That email address does not look right. Have another look at it.'); }
+ if(!ok){ $('consent').focus(); return joinError('Tick the box and we can send it.'); }
+
+ btn.disabled = true;
+ btn.textContent = 'Joining';
+
+ try{
+   const r = await fetch(CONFIG.joinEndpoint, {
+     method: 'POST',
+     headers: {'Content-Type':'application/json'},
+     body: JSON.stringify({
+       name, email, consent: true,
+       company: $('company').value,          /* honeypot, always empty for a person */
+       pattern: outcome.pattern,
+       door: outcome.door
+     })
+   });
+   if(!r.ok) throw new Error('status '+r.status);
+
+   /* Say so before leaving, in case the redirect is slow or blocked. */
+   $('join').hidden = true;
+   const j = $('joined');
+   j.hidden = false;
+   j.querySelector('p').textContent = 'You are on the list. Taking you through.';
+   window.location.href = CONFIG.successUrl;
+ }catch(err){
+   btn.disabled = false;
+   btn.textContent = 'Join the waitlist';
+   joinError('That did not go through. Try once more, and if it still will not, email hello@sheisai.ai and we will add you by hand.');
+ }
+}
+
 /* -------------------------------------------------------------------- BOOT */
 document.addEventListener('DOMContentLoaded', function(){
  $('mark').innerHTML = insideOutMark();
- const cta = $('cta');
- if(CONFIG.landingUrl){ cta.href = CONFIG.landingUrl; cta.textContent = CONFIG.ctaLabel; }
- else { cta.removeAttribute('href'); cta.textContent = CONFIG.ctaLabel; cta.style.opacity = '.4'; }
  $('opensLine').textContent = CONFIG.opensLine || '';
+ $('join').addEventListener('submit', submitJoin);
  $('begin').addEventListener('click', function(){
    $('open').style.display='none'; $('quiz').style.display='block'; render();
  });
