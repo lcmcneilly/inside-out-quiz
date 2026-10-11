@@ -2,3 +2,8 @@
 .vercel
 *.log
 node_modules/
+
+# Secrets. The Ivorey webhook URL and the Airtable token must never be committed.
+.env
+.env.*
+!.env.example
