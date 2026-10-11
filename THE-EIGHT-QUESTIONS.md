@@ -98,7 +98,7 @@ because it is the only one that is not a reason.*
 
 ## 8.
 
-**When it gives you an answer and something in you says no, what usually happens?**
+**When AI gives you an answer and something in you says no, what usually happens?**
 
 - I go with it anyway. It is easier than arguing with it
 - Depends how much time I have
