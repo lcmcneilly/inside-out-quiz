@@ -22,7 +22,7 @@ territory names and the scoring are internal and never appear.
 
 ## 2.
 
-**Before you ask it something, how clear are you on what you actually want?**
+**Before you ask AI something, how clear are you on what you actually want?**
 
 - I work that out by asking
 - Roughly clear
