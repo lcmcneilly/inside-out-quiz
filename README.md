@@ -1,169 +1,107 @@
-# Onboarding Assessment · Sol Map · Foundation Workbook
+# Inside Out quiz
 
-The package every new member completes when they join. Two static HTML files, no
-backend, no build step. Double-click to run, or drop the folder on any static host.
+Built to Amanda's brief of 11 October 2026. Eight questions at `quiz.sheisai.ai`,
+details taken once before the result, saved to Airtable and then Ivorey, then on to
+the landing page already signed up.
 
-| File | What it is |
-|---|---|
-| `sol-map.html` | Birth details → the assessment → the Sol Map → the consciousness mirror → how to use the room → the coach's overview. One continuous page. |
-| `foundation-workbook.html` | The Foundations workbook. Wording exactly as the printed edition, personalised from the map. |
-| `serve.py` | `python3 serve.py` → a local preview on port 8788. |
+```
+quiz.sheisai.ai  →  intro  →  8 questions  →  your details  →  POST /api/lead
+                 →  Airtable row (pending)  →  Ivorey inbound webhook
+                 →  Airtable row (sent)     →  result on screen
+                 →  join.sheisai.ai/welcome?result=…&utm_…
+```
 
-The birth-chart engine is carried over unchanged from `../sol-map.html` (kept as
-the archive) and still matches astrotheme — validated against 11 Aug 1996, 08:43,
-Tauranga.
+Plain static HTML and one serverless function. No build step, no `package.json`,
+nothing to install. Nothing claude.ai-only: no `window.storage`, no `window.claude`,
+no Claude API. The only browser storage is `sessionStorage`, holding the campaign
+parameters so a refresh mid-quiz does not lose attribution.
 
 ---
 
-## 1 · The assessment
+## Environment variables
 
-Built from Wayne's *Two Doors, One Room* and *Diagnostic Extension* (Aug 2026),
-pulled forward onto the course spine. **33 inputs, about twelve minutes.**
+Set all five in Vercel → Settings → Environment Variables, for Production, Preview
+and Development, then redeploy.
 
-| Part | What it asks | Course home |
+| Variable | Who provides it | Required |
 |---|---|---|
-| One · the four | Judgement · Jealousy · Neediness · Fear — 4 items each, plus *which was hardest to answer honestly* | Week 6 (Red), again Week 17 |
-| Two · the pyramid | Trust · Belief · Emotion · Thought — 2 items each | Week 3 (Green) |
-| Three · the line | Self-responsibility — 4 items | Week 16 (Orange) |
-| Four · in your words | Capacity, care, the free text | — |
+| `IVOREY_WEBHOOK_URL` | Amanda, from the Ivorey workflow's Inbound Webhook trigger | yes |
+| `AIRTABLE_TOKEN` | Amanda, a personal access token limited to the leads base | yes |
+| `AIRTABLE_BASE_ID` | Amanda, looks like `appXXXXXXXXXXXXXX` | yes |
+| `AIRTABLE_TABLE_NAME` | `Leads` | no, defaults to `Leads` |
 
-**No score, total, band, type or grade is ever shown.** Intensity is computed
-internally for exactly two decisions — which pattern is loudest, which pyramid
-layer is asking — and both are named as *weather*, never as character.
+## Airtable columns
 
-The load-bearing move: she names which Horseman was hardest to answer honestly,
-and her answers point at one independently. Where they differ the page says so —
-*"Judgement is the one you can already see. Fear is the one doing the work while
-you watch the other."*
+Base "Inside Out leads". One column per field, all plain text unless noted.
 
-Wayne's Settled/Equipped quadrant and the four positions are **not** here. That
-instrument is Stage 1, before someone joins, and it decides which door.
+`first_name` · `email` · `consent` (checkbox) · `consent_text` · `result_type` ·
+`result_name` · `door` · `answers` (long text) · `source` · `utm_source` ·
+`utm_medium` · `utm_campaign` · `utm_content` · `submitted_at` ·
+`ivorey_status` · `ivorey_error` (long text)
 
----
+The write uses `typecast`, so Airtable coerces values into single-selects or
+checkboxes rather than rejecting the whole row.
 
-## 2 · The Sol Map — two pages, and not a chart reading
+## Result codes
 
-Structured as three questions on the Soul → Mind → Body spine:
+The four results. Amanda needs one Ivorey tag per code.
 
-- **Who are you? · Soul** — the sun's exact degree as a *position on a circle*,
-  the sign given as a principle of nature (*the centre*, *the vessel*, *the
-  dissolving*), then the ten degrees it sits in.
-- **What are you? · Mind** — the element as a **state of matter** (fire holds no
-  shape and converts; water becomes its container and wears stone down by
-  returning), and the mode as a **phase of a season** (the four turning points
-  are literally the solstices and equinoxes).
-- **Where are you? · Body** — the moon's phase as the actual angle between the
-  two lights, whether the sun was above or below the horizon, and the Ascendant
-  named for what it is: *an angle*, the slope at which light was entering the
-  world at that place.
+| `result_type` | `result_name` | Ivorey tag |
+|---|---|---|
+| `judgement` | Judgement | `io-result-judgement` |
+| `jealousy` | Jealousy | `io-result-jealousy` |
+| `neediness` | Neediness | `io-result-neediness` |
+| `fear` | Fear | `io-result-fear` |
 
-Then **the map of your light** — one SVG: the 360° circle divided into 36, the
-horizon line, and the two lights where they stood, the moon drawn at the fraction
-actually lit that night. Followed by a short factual table.
+**There is a second axis the brief does not have.** Every result also carries a
+door — `sol` or `ai` — and it is sent as `door`. It decides who the welcome email
+comes from: the SOL door is Laura's, the AI door is Amanda's, which is how the copy
+in `05-Funnel/Waitlist emails` is already written. Two more tags are needed:
 
-### The rules this section holds
+| `door` | Ivorey tag | Welcome from |
+|---|---|---|
+| `sol` | `io-door-sol` | Laura |
+| `ai` | `io-door-ai` | Amanda |
 
-No astrology vocabulary on screen. No houses, nodes, aspects, rulers,
-modalities-by-name, temperaments, tissue salts or medical language. Nothing a
-skeptic has to accept on faith. Sun and rising are named because they have to be;
-everything else is expressed as geometry, matter, season and light.
+The AI door is rare by design — it needs no loud answer anywhere plus all three AI
+answers at the strong end — so most contacts will be `io-door-sol`.
 
-### Lineage, and the one call I made
+## Tags Ivorey should add
 
-The degree layer uses the **traditional decans** — the circle divided by
-thirty-six rather than twelve, in the Chaldean planetary order (Aries I Mars,
-Aries II Sun, Aries III Venus, and round). It is named on the page as *tradition*,
-never as fact: "the older maps use both."
+`io-waitlist` · `io-quiz-complete` · `src-quiz` · `io-result-<result_type>` ·
+`io-door-<door>`
 
-I chose decans over Sabian symbols or single-degree monomeries because they are
-genuinely lineage-bearing (the Bonacci line uses them), they subdivide without
-inventing anything, and they can be explained fundamentally — *the sign is the
-season, the decan is the ten days inside it.* The 36 lines are original writing,
-not reproduced from any source. **If Wayne's intent was a different degree
-system, this is the layer to swap** — it is one data table (`DECAN_LINE`) and one
-paragraph.
+The function sends the fields; the tags are added by the Ivorey workflow, not here.
 
 ---
 
-## 3 · Navigating the room
+## Things Laura decides
 
-Mapped onto the real Ivorey structure (community operating spec, 27 Jul 2026):
-five open channels, one post a day, a monthly open call, Foundations open to
-every member, the mastermind unpitched.
+**`CONFIG.privacyUrl`**, top of `inside-out-quiz.html`. Currently `/privacy.html`,
+the page in this repo, so the consent link is never broken. Swap it for the SHE IS AI
+privacy policy when that address exists.
 
-Five steps, personalised: where to post first · **which channel to use next and
-why**, chosen from her pattern (Judgement → *Ask anything*; Jealousy → *Wins and
-shares*; Neediness → *Clarity conversation*; Fear → *Welcome and start here*) ·
-the workbook, paced to the minutes and time of day she said she had · the weekly
-rhythm · and the mastermind as the honest answer to *"so what do I do with this?"*
+**`CONFIG.welcomeUrl`**. Currently `https://join.sheisai.ai/welcome`. Amanda to
+confirm once the no-form page is live.
 
----
+**`CONFIG.autoRedirectSeconds`**. `0`, so the result sits there until the button is
+pressed. Set it to `12` for the optional auto-redirect with a countdown somebody can
+cancel. Amanda's call.
 
-## 4 · The workbook
+**`CONFIG.consentText`**. The exact wording, written once and sent with every lead,
+so the Airtable row records what was actually on screen rather than what it says
+today. Change it here and both move together.
 
-Rebuilt from **`~/Desktop/NewModules/Sol Modules Workbook Brand Redesign.pdf`**.
-Every word of the welcome and the six modules is the printed wording, unchanged —
-dark module covers, light interiors, gold serif numerals, *Sit with this* on ruled
-write-on lines that save to the device.
+## Files
 
-The only addition is one **In your map** block per module: two or three lines
-drawn from her chart and her answers, closing on a question. Prompting, never
-diagnosing — nothing in it tells anyone what they are.
-
-| Module | Draws on |
+| | |
 |---|---|
-| Purple | Sun sign as principle · how her pattern shows up in the head |
-| Blue | Mercury |
-| Green | Venus + Moon · the pyramid layer her answers named |
-| Orange | Element as state of matter · body zone · the self-responsibility carry |
-| Turquoise | Element + Mars |
-| Red | Ascendant + Saturn · the Horseman and its counter |
+| `inside-out-quiz.html` | The quiz. Questions, scoring, details step, result |
+| `api/lead.js` | The only endpoint. Airtable, then Ivorey, then the status |
+| `privacy.html` | Collection notice the consent box links to |
+| `DEPLOY.md` | The browser steps, the Ivorey setup, the launch tests |
+| `vercel.json` | Rewrites `/` to the quiz, security headers |
+| `.vercelignore` | Keeps working documents off the public domain |
 
-Opened without a map it offers a star-sign picker and fills what it honestly can
-(Purple, Orange, Turquoise), leaving the rest blank rather than guessing.
-
----
-
-## 5 · What the coach gets
-
-A generated **consciousness overview**, written *about* her. No numbers —
-intensity appears as rank order only. Nothing is transmitted: the page ends with a
-*For your coach* card (copy / download / read it first) that tells her plainly it
-reads blunter than the page above. Items 33 and 34 pass through **verbatim**.
-
-The care rule is intact: "I am in something hard at the moment" surfaces **Need to
-Talk 1737** on her own page and flags it for the coach. NZ support only.
-
----
-
-## Before launch — set the links
-
-`LINKS.skool` and `LINKS.cohort` (a CONFIG block near the top of each file), plus
-optional `FORM_ENDPOINT` in `sol-map.html`. Blank-link buttons hide themselves.
-Access is never gated on email.
-
-## Testing
-
-The preview panel inside Claude sandboxes cross-page navigation and the clipboard
-— check the real thing in Safari or Chrome. The sandboxed preview process also
-cannot `getcwd()` inside `~/Desktop`, so `serve.py` may need to be run from a
-normal terminal.
-
-## Still open — Laura's and Wayne's, not mine
-
-1. **The decan layer** — see §2. Confirm decans are the right degree system, or
-   name the one that is.
-2. **Fear → Empathy.** Wayne's counters are positional and the other three are
-   self-evident. This one is written here as *attention that leaves your own
-   head*, which holds, but it is my sentence rather than the course's.
-3. **The chart × answer mapping** — the coach's `WHERE TO WATCH` line is
-   provisional until the six-point mapping is confirmed.
-4. **Retake cadence.** Recommendation: once per cycle (18 weeks). The workbook
-   already invites a re-look at the end of round one.
-5. **Privacy line**, and **the care flag** — confirm Laura is willing to receive
-   and hold item 33. If not, cut both rather than collect-and-ignore.
-
----
-
-*Soul → Mind → Body. The order never reverses.*
-*The work was never about becoming, it was always about returning.*
+Everything else in this repo is the Sol Map and its working notes, and is excluded
+from the deployment.

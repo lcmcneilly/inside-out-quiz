@@ -93,8 +93,11 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
 .opens{font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.24em;
   text-transform:uppercase;color:var(--gold-ink);margin-top:22px}
 /* joining — the result is already given, so this asks after rather than before */
+/* the details step — its own screen, between the last question and the result */
+#details{display:none;padding:52px 0 40px;min-height:78vh}
+#details h2{font-size:clamp(1.9rem,4.8vw,2.7rem);line-height:1.14;margin-bottom:18px;max-width:18ch}
 .join{max-width:460px;margin-top:4px}
-.join-lead{margin-bottom:26px}
+.join-lead{margin-bottom:30px}
 .field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
 .field label{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
   text-transform:uppercase;color:var(--mute)}
@@ -110,8 +113,11 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .join button[disabled]{opacity:.45;cursor:default}
 .join-err{font-family:var(--ui);font-size:13px;line-height:1.65;color:#9A3B2E;margin-top:18px;max-width:46ch}
-.joined{border-left:2px solid var(--gold);padding:2px 0 2px 24px;margin-top:4px}
-.joined p{font-family:var(--display);font-size:1.25rem;line-height:1.45;color:var(--ink);max-width:44ch}
+.join-note{font-family:var(--ui);font-size:12px;line-height:1.7;color:var(--mute);margin-top:20px;max-width:46ch}
+.countdown{font-family:var(--ui);font-size:11.5px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);margin-top:18px}
+.countdown button{background:none;border:0;padding:0;cursor:pointer;font:inherit;
+  color:var(--gold-ink);text-decoration:underline;text-underline-offset:3px}
 footer{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-soft)}
 footer p{font-family:var(--ui);font-size:12px;color:var(--mute);line-height:1.9}
 footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--gold-ink);margin-bottom:8px}
@@ -137,6 +143,40 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
   <button class="back" id="back" type="button">Back</button>
 </section>
 
+<section id="details" aria-live="polite">
+  <div class="bar" aria-hidden="true"><i style="width:100%"></i></div>
+  <span class="count">Last step</span>
+
+  <h2>Your result is ready. Where should we send it?</h2>
+
+  <form class="join" id="join" novalidate>
+    <p class="join-lead">Everyone who joins now comes in as a founding member.</p>
+
+    <div class="field">
+      <label for="fname">First name</label>
+      <input id="fname" name="first_name" type="text" autocomplete="given-name" maxlength="60" required>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+             maxlength="160" spellcheck="false" required>
+    </div>
+
+    <div class="hp" aria-hidden="true">
+      <label>Leave this empty<input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></label>
+    </div>
+
+    <label class="consent" for="consent">
+      <input id="consent" type="checkbox" required>
+      <span id="consentText"></span>
+    </label>
+
+    <button class="btn solid" id="joinBtn" type="submit">Show my result</button>
+    <p class="join-err" id="joinErr" role="alert" hidden></p>
+  </form>
+</section>
+
 <section id="result">
   <span class="eyebrow">The pattern to watch</span>
   <h2 class="pattern" id="patternName"></h2>
@@ -152,37 +192,8 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
     <h2 id="doorHead"></h2>
     <p id="doorCopy"></p>
 
-    <form class="join" id="join" novalidate>
-      <p class="join-lead">Everyone on the waitlist comes in as a founding member. Join and the
-        rest of your result is in your inbox.</p>
-
-      <div class="field">
-        <label for="fname">First name</label>
-        <input id="fname" name="fname" type="text" autocomplete="given-name" maxlength="60" required>
-      </div>
-
-      <div class="field">
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
-               maxlength="160" spellcheck="false" required>
-      </div>
-
-      <div class="hp" aria-hidden="true">
-        <label>Leave this empty<input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></label>
-      </div>
-
-      <label class="consent" for="consent">
-        <input id="consent" type="checkbox" required>
-        <span>Send me my result and the Inside Out emails. I can unsubscribe at any time.
-          <a href="/privacy.html" target="_blank" rel="noopener">What happens to my details</a>.</span>
-      </label>
-
-      <button class="btn solid" id="joinBtn" type="submit">Join the waitlist</button>
-      <p class="join-err" id="joinErr" role="alert" hidden></p>
-    </form>
-
-    <div class="joined" id="joined" hidden><p></p></div>
-
+    <a class="btn solid" id="cta" href="#">See what&rsquo;s waiting for you</a>
+    <p class="countdown" id="countdown" hidden></p>
     <p class="opens" id="opensLine">Doors open 31 October</p>
   </div>
 </section>
@@ -209,14 +220,43 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
    =========================================================================== */
 
 const CONFIG = {
-  /* Where the name and email go. Same origin, so the Ivorey token stays on the
-     server and never reaches this page. */
-  joinEndpoint: "/api/join",
-  /* Where somebody lands once they are on the list. They have already joined
-     by this point, so this is the sales page, not a second form. */
-  successUrl:   "https://join.sheisai.ai",
+  /* Same origin, so the Airtable token and the Ivorey webhook stay on the
+     server and never reach this page. */
+  leadEndpoint: "/api/lead",
+
+  /* The no-form version of the landing page. By the time somebody arrives they
+     are already on the waitlist, so asking again would be asking twice.
+     Amanda to confirm the exact address once the page is live. */
+  welcomeUrl:   "https://join.sheisai.ai/welcome",
+
+  /* The SHE IS AI privacy policy. Pointing at the page in this repo until
+     Amanda gives the real address, so the link is never broken. */
+  privacyUrl:   "/privacy.html",
+
+  /* The exact wording somebody agrees to. Sent with the lead, so the record
+     says what they actually consented to rather than what it says today. */
+  consentText:  "Send me my result and Inside Out updates by email. I can unsubscribe anytime.",
+
+  /* Brief: optional 12-second auto-redirect with a countdown she can cancel.
+     Amanda's call. Set to 12 to turn it on. */
+  autoRedirectSeconds: 0,
+
   opensLine:    "Doors open 31 October"
 };
+
+/* Attribution. Read once at boot and kept for the whole session, so a refresh
+   mid-quiz does not lose which post somebody came from. Never the name or the
+   email — those must not end up in a URL, in history or in analytics. */
+const UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content'];
+const utm = (function(){
+ const out = {};
+ let saved = {};
+ try { saved = JSON.parse(sessionStorage.getItem('io_utm') || '{}'); } catch(e){ saved = {}; }
+ const q = new URLSearchParams(location.search);
+ for(const k of UTM_KEYS) out[k] = (q.get(k) || saved[k] || '').slice(0, 120);
+ try { sessionStorage.setItem('io_utm', JSON.stringify(out)); } catch(e){}
+ return out;
+})();
 
 /* ---------------------------------------------------------------------------
    THE FOUR REFLECTIONS
@@ -256,19 +296,19 @@ const REFLECT = [
    a pattern you can watch. What undoes each one, and how it sits in a chart,
    is the Sol Map's job inside. */
 const PATTERN = {
- verdict:{name:`Judgement`,
+ verdict:{code:`judgement`, name:`Judgement`,
    line:`You reach a verdict fast, including on yourself.`,
    what:`Judgement arrives quickly and feels like clarity. It is a verdict reached before the evidence is in, and the quickest one is usually about you.`,
    ask:`Would you say to a friend what you say to yourself?`},
- measuring:{name:`Jealousy`,
+ measuring:{code:`jealousy`, name:`Jealousy`,
    line:`You measure yourself against other people.`,
    what:`Jealousy is a measurement. It only works if you agree to stand on somebody else's timeline and read your own position from it.`,
    ask:`What do you actually want — not what they have?`},
- steadiness:{name:`Neediness`,
+ steadiness:{code:`neediness`, name:`Neediness`,
    line:`Other people have more say in how you feel than you do.`,
    what:`Neediness is not wanting people. It is handing your steadiness to somebody else to hold, and then resenting them for holding it.`,
    ask:`What are you waiting for somebody else to confirm?`},
- fear:{name:`Fear`,
+ fear:{code:`fear`, name:`Fear`,
    line:`You have a good reason, and you do not quite believe it.`,
    what:`Fear is the most reasonable-sounding of the four. It borrows the language of caution, calls itself realism, and gets waved through without being questioned.`,
    ask:`Is it actually risk, or is it only unfamiliar?`}
@@ -350,7 +390,18 @@ function render(){
 function choose(i){
  picked[QUEUE[at].id] = i;
  at++;
- if(at >= QUEUE.length) finish(); else render();
+ if(at >= QUEUE.length) toDetails(); else render();
+}
+
+/* The details step. The reading is worked out here so the result is ready to
+   show the moment the lead is saved, but nothing is rendered until then. */
+let reading = null;
+function toDetails(){
+ reading = read();
+ $('quiz').style.display = 'none';
+ $('details').style.display = 'block';
+ window.scrollTo(0,0);
+ $('fname').focus({preventScroll:true});
 }
 
 /* ----------------------------------------------------------------- READING */
@@ -400,41 +451,84 @@ function readDoor(R, T){
  return {door:(steady && T.authored) ? 'ai' : 'sol', load, steady};
 }
 
-function finish(){
+/* The whole reading in one object, worked out once when the questions end. */
+function read(){
  const R = readReflections(), T = readAI(), D = readDoor(R, T);
  const P = PATTERN[R.lead];
+ const pick = R.strong.find(s => s.t === R.lead) || null;
+ const nothingSeparated = Object.keys(R.got).every(t => R.got[t] === 0);
+ return {
+   P, D,
+   said: pick ? 'You said '+pick.said+'.' : (nothingSeparated ? LIGHTEST : LIGHT),
+   result_type: P.code,
+   result_name: P.name
+ };
+}
+
+/* Every answer, keyed by question id and given as the words somebody chose
+   rather than an index, so the row is readable on its own in a year. */
+function answersJSON(){
+ const out = {};
+ for(const q of QUEUE){
+   const i = picked[q.id];
+   out[q.id] = (i === undefined) ? null : q.a[i][0];
+ }
+ return JSON.stringify(out);
+}
+
+function showResult(){
+ const {P, D, said} = reading;
 
  $('patternName').textContent = P.name;
  $('lede').textContent = P.line;
  $('what').textContent = P.what;
-
- const pick = R.strong.find(s => s.t === R.lead) || null;
- const nothingSeparated = Object.keys(R.got).every(t => R.got[t] === 0);
- $('said').innerHTML = pick ? '<p>You said '+pick.said+'.</p>'
-   : '<p>'+(nothingSeparated ? LIGHTEST : LIGHT)+'</p>';
- $('said').style.display = 'block';
-
+ $('said').innerHTML = '<p>'+said+'</p>';
  $('sitWith').textContent = P.ask;
-
  $('next').textContent = `This is one of four patterns the work inside is built around. The Sol Map tells you which is loudest in you, what undoes it, and what your birth details add to the picture. It is the first thing you get when you join.`;
 
  const d = DOORS[D.door];
  $('doorHead').textContent = d.head;
  $('doorCopy').textContent = d.copy;
+ $('cta').href = welcomeLink();
 
- /* The only two things that leave this page, and only once somebody joins. */
- outcome.pattern = P.name.toLowerCase();
- outcome.door    = D.door;
-
- $('quiz').style.display = 'none';
+ $('details').style.display = 'none';
  $('result').style.display = 'block';
  window.scrollTo(0,0);
+ if(CONFIG.autoRedirectSeconds > 0) startCountdown(CONFIG.autoRedirectSeconds);
 }
 
-/* ------------------------------------------------------------------ JOINING */
-/* The eight answers never leave the browser. What goes to the server is a
-   first name, an email, and the two words above. */
-const outcome = {pattern:null, door:null};
+/* The result code and the campaign, nothing else. A name or an email in a URL
+   ends up in browser history and in analytics, so neither ever goes here. */
+function welcomeLink(){
+ const q = new URLSearchParams({result: reading.result_type});
+ for(const k of UTM_KEYS) if(utm[k]) q.set(k, utm[k]);
+ return CONFIG.welcomeUrl + '?' + q.toString();
+}
+
+function startCountdown(secs){
+ const el = $('countdown');
+ let left = secs, cancelled = false;
+ el.hidden = false;
+ const paint = () => {
+   el.innerHTML = 'Taking you through in ' + left + ' ' + (left === 1 ? 'second' : 'seconds') +
+     ' &middot; <button type="button" id="stopGo">stay here</button>';
+   $('stopGo').addEventListener('click', function(){ cancelled = true; clearInterval(t); el.hidden = true; });
+ };
+ paint();
+ const t = setInterval(function(){
+   left--;
+   if(cancelled) return;
+   if(left <= 0){ clearInterval(t); window.location.href = welcomeLink(); return; }
+   paint();
+ }, 1000);
+}
+
+/* ------------------------------------------------------------------- SAVING */
+/* Nothing is shown until the lead is saved. The one exception is in the brief:
+   if a second attempt also fails, show the result anyway rather than holding
+   somebody's own answer hostage to our plumbing, and log it. */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+let attempts = 0;
 
 function joinError(msg){
  const e = $('joinErr');
@@ -442,48 +536,55 @@ function joinError(msg){
  e.hidden = false;
 }
 
-async function submitJoin(ev){
+async function submitLead(ev){
  ev.preventDefault();
 
  const btn   = $('joinBtn');
- const name  = $('fname').value.trim();
- const email = $('email').value.trim();
+ const first = $('fname').value.trim();
+ const email = $('email').value.trim().toLowerCase();
  const ok    = $('consent').checked;
 
  $('joinErr').hidden = true;
- $('fname').setAttribute('aria-invalid', name ? 'false' : 'true');
- $('email').setAttribute('aria-invalid', /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? 'false' : 'true');
+ $('fname').setAttribute('aria-invalid', first ? 'false' : 'true');
+ $('email').setAttribute('aria-invalid', EMAIL_RE.test(email) ? 'false' : 'true');
 
- if(!name){ $('fname').focus(); return joinError('Your first name, so the email knows who it is writing to.'); }
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ $('email').focus(); return joinError('That email address does not look right. Have another look at it.'); }
- if(!ok){ $('consent').focus(); return joinError('Tick the box and we can send it.'); }
+ if(!first){ $('fname').focus(); return joinError('Your first name, so the email knows who it is writing to.'); }
+ if(!EMAIL_RE.test(email)){ $('email').focus(); return joinError('That email address does not look right. Have another look at it.'); }
+ if(!ok){ $('consent').focus(); return joinError('Tick the box and we can send your result.'); }
 
+ attempts++;
  btn.disabled = true;
- btn.textContent = 'Joining';
+ btn.textContent = 'One moment';
 
  try{
-   const r = await fetch(CONFIG.joinEndpoint, {
+   const r = await fetch(CONFIG.leadEndpoint, {
      method: 'POST',
      headers: {'Content-Type':'application/json'},
-     body: JSON.stringify({
-       name, email, consent: true,
-       company: $('company').value,          /* honeypot, always empty for a person */
-       pattern: outcome.pattern,
-       door: outcome.door
-     })
+     body: JSON.stringify(Object.assign({
+       first_name:   first,
+       email:        email,
+       consent:      true,
+       consent_text: CONFIG.consentText,
+       result_type:  reading.result_type,
+       result_name:  reading.result_name,
+       door:         reading.D.door,
+       answers:      answersJSON(),
+       source:       'quiz',
+       company:      $('company').value      /* honeypot, empty for a person */
+     }, utm))
    });
-   if(!r.ok) throw new Error('status '+r.status);
-
-   /* Say so before leaving, in case the redirect is slow or blocked. */
-   $('join').hidden = true;
-   const j = $('joined');
-   j.hidden = false;
-   j.querySelector('p').textContent = 'You are on the list. Taking you through.';
-   window.location.href = CONFIG.successUrl;
+   if(!r.ok) throw new Error('status ' + r.status);
+   showResult();
  }catch(err){
+   if(attempts >= 2){
+     /* Second failure. Her result is hers. Show it and record what went wrong. */
+     console.error('[lead] not saved after two attempts:', err && err.message);
+     showResult();
+     return;
+   }
    btn.disabled = false;
-   btn.textContent = 'Join the waitlist';
-   joinError('That did not go through. Try once more, and if it still will not, email hello@sheisai.ai and we will add you by hand.');
+   btn.textContent = 'Try again';
+   joinError('That did not go through. Press it once more, and if it still will not, email hello@sheisai.ai and we will add you by hand.');
  }
 }
 
@@ -491,7 +592,18 @@ async function submitJoin(ev){
 document.addEventListener('DOMContentLoaded', function(){
  $('mark').innerHTML = insideOutMark();
  $('opensLine').textContent = CONFIG.opensLine || '';
- $('join').addEventListener('submit', submitJoin);
+
+ /* The consent wording is written once in CONFIG and sent with the lead, so
+    the record always says what was actually on screen. */
+ const c = document.createElement('span');
+ c.textContent = CONFIG.consentText + ' ';
+ const a = document.createElement('a');
+ a.href = CONFIG.privacyUrl; a.target = '_blank'; a.rel = 'noopener';
+ a.textContent = 'Privacy policy';
+ c.appendChild(a); c.appendChild(document.createTextNode('.'));
+ $('consentText').replaceChildren(c);
+
+ $('join').addEventListener('submit', submitLead);
  $('begin').addEventListener('click', function(){
    $('open').style.display='none'; $('quiz').style.display='block'; render();
  });
