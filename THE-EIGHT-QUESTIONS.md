@@ -102,7 +102,7 @@ because it is the only one that is not a reason.*
 
 - I go with it anyway. It is easier than arguing with it
 - Depends how much time I have
-- I trust the no, and go and check
+- I trust the no, and argue with it
 
 *AI. Third answer is the strong one. Discernment, which is the one the other two
 AI questions cannot test.*
