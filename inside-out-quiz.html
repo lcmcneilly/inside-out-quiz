@@ -75,6 +75,8 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
 #result{display:none;padding:80px 0 0}
 #result .eyebrow{display:block;margin-bottom:20px}
 /* the four, named before the reading, so it does not open on a verdict */
+.fourHead{font-family:var(--display);font-size:clamp(1.9rem,5vw,2.6rem);
+  color:var(--ink);line-height:1;margin-bottom:20px}
 .intro p{margin-bottom:1em}
 .intro p:last-child{margin-bottom:0}
 .intro p:first-child{font-family:var(--display);font-size:1.3rem;line-height:1.45;
@@ -88,6 +90,8 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
   padding:14px 0;border-bottom:1px solid var(--line-soft)}
 .levels .row:first-child{border-top:1px solid var(--line)}
 .levels .nm{font-family:var(--display);font-size:1.4rem;color:var(--ink);line-height:1.15}
+.levels .of{display:block;font-family:var(--text);font-size:.86rem;line-height:1.5;
+  color:var(--body);margin-top:3px;max-width:34ch}
 .levels .st{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
   text-transform:uppercase;color:var(--mute);white-space:nowrap;flex:none}
 .levels .row.lead .st{color:var(--gold-ink)}
@@ -96,7 +100,6 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
   color:var(--ink);margin-bottom:18px}
 .lede{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3.4vw,1.85rem);
   line-height:1.3;color:var(--gold-ink);max-width:26ch;margin-bottom:26px}
-.what{margin-bottom:36px}
 .said{border-left:2px solid var(--gold);padding:2px 0 2px 24px;margin-bottom:40px}
 .said p{font-family:var(--display);font-size:1.25rem;line-height:1.45;color:var(--ink);max-width:44ch}
 .sit{background:var(--surface);padding:30px 32px;margin-bottom:40px}
@@ -194,7 +197,7 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
 </section>
 
 <section id="result">
-  <span class="eyebrow">The four</span>
+  <h2 class="fourHead">The four</h2>
   <div class="intro">
     <p>Judgement, jealousy, neediness and fear. Four patterns, and left alone they take
       a life apart slowly. None of them announce themselves. Each arrives dressed as
@@ -210,7 +213,6 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
   <span class="sec">All four, as they came back</span>
   <div class="levels" id="levels"></div>
 
-  <p class="what" id="what"></p>
   <div class="said" id="said"></div>
   <div class="sit"><p id="sitWith"></p></div>
   <p class="next" id="next"></p>
@@ -333,19 +335,15 @@ const REFLECT = [
 const PATTERN = {
  verdict:{code:`judgement`, name:`Judgement`,
    line:`You reach a verdict fast, including on yourself.`,
-   what:`Judgement turns up quickly and feels like clarity. It's a verdict reached before the evidence is in, and the quickest one is usually about you.`,
    ask:`Would you say to a friend what you say to yourself?`},
  measuring:{code:`jealousy`, name:`Jealousy`,
    line:`You measure yourself against other people.`,
-   what:`Jealousy is a measurement. It only works if you agree to stand on someone else's timeline and read your own position off it.`,
    ask:`What do you want, when you're not looking at them?`},
  steadiness:{code:`neediness`, name:`Neediness`,
    line:`Other people have more say in how you feel than you do.`,
-   what:`This one gets mistaken for warmth. You hand someone else your steadiness to hold, then resent them for holding it.`,
    ask:`What are you waiting for someone else to confirm?`},
  fear:{code:`fear`, name:`Fear`,
    line:`You have a good reason, and you don't quite believe it.`,
-   what:`Fear is the most reasonable-sounding of the four. It borrows the language of caution and calls itself realism, so nobody questions it. Including you.`,
    ask:`Is it risk, or is it only unfamiliar?`}
 };
 /* Shown instead of a quote when no answer sat at the far end. Two versions:
@@ -533,6 +531,14 @@ function answersJSON(){
  return JSON.stringify(out);
 }
 
+/* What each pattern was looking at, in plain words, under its name. */
+const LOOKING_AT = {
+ verdict:   `How fast you reach a verdict`,
+ measuring: `What someone else's good news does to you`,
+ steadiness:`How much of your steadiness someone else holds`,
+ fear:      `The reasons you give`
+};
+
 /* Four levels, which is roughly the real resolution of the instrument. Three
    of the four patterns rest on one question, so they have three states; a
    percentage would claim a precision eight questions cannot deliver. */
@@ -552,7 +558,8 @@ function levelRows(){
  rows.sort((a,b) => (b.share - a.share) || (a.t === R.lead ? -1 : b.t === R.lead ? 1 : 0));
  return rows.map(r =>
    '<div class="row'+(r.t === R.lead ? ' lead' : '')+'">'+
-     '<span class="nm">'+r.P.name+'</span>'+
+     '<span><span class="nm">'+r.P.name+'</span>'+
+     '<span class="of">'+LOOKING_AT[r.t]+'</span></span>'+
      '<span class="st">'+levelOf(r.share)+'</span>'+
    '</div>'
  ).join('');
@@ -564,10 +571,9 @@ function showResult(){
  $('patternName').textContent = P.name;
  $('lede').textContent = P.line;
  $('levels').innerHTML = levelRows();
- $('what').textContent = P.what;
  $('said').innerHTML = '<p>'+said+'</p>';
  $('sitWith').textContent = P.ask;
- $('next').textContent = `These four are what the work inside is built around. The Sol Map goes further than eight questions can. It reads all four against the day you were born, and tells you what undoes the loudest one. It's the first thing you get when you join.`;
+ $('next').textContent = `The Sol Map goes further than eight questions can. It reads all four against the day you were born, and tells you what undoes the loudest one. It's the first thing you get when you join.`;
 
  const d = DOORS[D.door];
  $('doorHead').textContent = d.head;
