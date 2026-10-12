@@ -88,8 +88,6 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
   padding:14px 0;border-bottom:1px solid var(--line-soft)}
 .levels .row:first-child{border-top:1px solid var(--line)}
 .levels .nm{font-family:var(--display);font-size:1.4rem;color:var(--ink);line-height:1.15}
-.levels .of{display:block;font-family:var(--text);font-size:.86rem;line-height:1.5;
-  color:var(--body);margin-top:3px;max-width:34ch}
 .levels .st{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
   text-transform:uppercase;color:var(--mute);white-space:nowrap;flex:none}
 .levels .row.lead .st{color:var(--gold-ink)}
@@ -535,15 +533,6 @@ function answersJSON(){
  return JSON.stringify(out);
 }
 
-/* What each pattern was looking at, in plain words. Said once, on the result,
-   so nobody has to take the name on trust. */
-const LOOKING_AT = {
- verdict:   `How fast you reach a verdict`,
- measuring: `Where you stand when you measure`,
- steadiness:`How much of your steadiness someone else holds`,
- fear:      `The reasons you give`
-};
-
 /* Four levels, which is roughly the real resolution of the instrument. Three
    of the four patterns rest on one question, so they have three states; a
    percentage would claim a precision eight questions cannot deliver. */
@@ -563,8 +552,7 @@ function levelRows(){
  rows.sort((a,b) => (b.share - a.share) || (a.t === R.lead ? -1 : b.t === R.lead ? 1 : 0));
  return rows.map(r =>
    '<div class="row'+(r.t === R.lead ? ' lead' : '')+'">'+
-     '<span><span class="nm">'+r.P.name+'</span>'+
-     '<span class="of">'+LOOKING_AT[r.t]+'</span></span>'+
+     '<span class="nm">'+r.P.name+'</span>'+
      '<span class="st">'+levelOf(r.share)+'</span>'+
    '</div>'
  ).join('');
