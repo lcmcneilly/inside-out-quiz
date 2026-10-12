@@ -98,8 +98,6 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
   color:var(--ink);margin-bottom:18px}
 .lede{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3.4vw,1.85rem);
   line-height:1.3;color:var(--gold-ink);max-width:26ch;margin-bottom:26px}
-.said{border-left:2px solid var(--gold);padding:2px 0 2px 24px;margin-bottom:40px}
-.said p{font-family:var(--display);font-size:1.25rem;line-height:1.45;color:var(--ink);max-width:44ch}
 .sit{background:var(--surface);padding:30px 32px;margin-bottom:40px}
 .sit p{font-family:var(--display);font-style:italic;font-size:1.28rem;line-height:1.45;
   color:var(--ink);max-width:42ch}
@@ -160,9 +158,7 @@ body{padding:0}
   text-transform:uppercase;color:var(--mute);display:flex;justify-content:space-between;gap:14px;margin-bottom:16px}
 .card .id .dr{color:var(--gold-ink)}
 .card .levels{margin-bottom:18px;max-width:none}
-.card .said{margin:0 0 4px}
-.card .said p{font-size:1.05rem}
-@media(max-width:560px){.wrap{padding:46px 18px 70px}.card{padding:18px 16px}}
+.card .card @media(max-width:560px){.wrap{padding:46px 18px 70px}.card{padding:18px 16px}}
 </style>
 </head>
 <body>
@@ -245,7 +241,8 @@ const utm = (function(){
    THE FOUR REFLECTIONS
    t = territory, internal only, never shown.
    w = how present that territory is, 0–2.
-   said = how the answer gets read back. Their words, not a diagnosis.
+   said = no longer shown. It now only marks an answer as sitting at the far
+          end, which is what the door and the tie-break read.
    --------------------------------------------------------------------------- */
 const REFLECT = [
  {id:'r1', t:'verdict',
@@ -479,36 +476,6 @@ const LOOKING_AT = {
  fear:      `The reasons you give`
 };
 
-/* One true sentence about the whole reading, in the gold block where the
-   read-back quote used to sit. Every branch is checked against the levels, so
-   it cannot say 'the rest showed too' when they did not. */
-function summarise(){
- const {P, R} = reading;
- const lvl = {};
- for(const t of Object.keys(R.max)) lvl[t] = levelOf(R.got[t]/R.max[t]);
- const at   = v => Object.keys(lvl).filter(t => lvl[t] === v);
- const name = t => PATTERN[t].name;
- const loud = at('Loud'), present = at('Present'), quiet = at('Quiet');
-
- if(loud.length === 4)
-   return `All four came back loud, which is a lot to be carrying at once. ${P.name} is where it is worth starting.`;
- if(loud.length === 3)
-   return `Three of the four came back loud, which is a lot to be carrying at once. ${P.name} is where it is worth starting.`;
- if(loud.length === 2)
-   return `${P.name} and ${name(loud.filter(t => t !== R.lead)[0])} both ran loud. Start with ${P.name}.`;
- if(loud.length === 1 && present.length === 3)
-   return `${P.name} ran loudest, and the other three all showed as well. Nothing here is quiet.`;
- if(loud.length === 1 && present.length === 1)
-   return `${P.name} ran loudest, with ${name(present[0])} not far behind it.`;
- if(loud.length === 1 && present.length > 1)
-   return `${P.name} ran loudest. ${present.length === 2 ? 'Two' : 'Three'} of the others showed too, so this is not a single pattern on its own.`;
- if(loud.length === 1)
-   return `${P.name} ran loud on its own. The other three barely registered.`;
- if(present.length || quiet.length)
-   return `None of the four ran loud. ${P.name} showed more than the rest, which is a light read rather than a finding.`;
- return `Nothing ran loud, and nothing separated the four. Take ${P.name} as the lightest possible read.`;
-}
-
 /* Four levels, which is roughly the real resolution of the instrument. Three
    of the four patterns rest on one question, so they have three states; a
    percentage would claim a precision eight questions cannot deliver. */
@@ -541,7 +508,6 @@ function showResult(){
  $('patternName').textContent = P.name;
  $('lede').textContent = P.line;
  $('levels').innerHTML = levelRows();
- $('said').innerHTML = '<p>'+summarise()+'</p>';
  $('sitWith').textContent = P.ask;
  $('next').textContent = `The Sol Map goes further than eight questions can. It reads all four against the day you were born, and tells you what undoes the loudest one. It's the first thing you get when you join.`;
 
@@ -660,10 +626,8 @@ for(let n=0;n<Math.pow(3,8);n++){
 
   const order = Object.keys(R.max).map(t=>({t,n:PATTERN[t].name,s:R.got[t]/R.max[t],lead:t===R.lead}));
   order.sort((a,b)=>(b.s-a.s)||(a.lead?-1:b.lead?1:0));
-  reading = {P, D, R};
-  const said = summarise();
-  const key = P.name+'|'+order.map(o=>o.n+':'+levelOf(o.s)+':'+(o.lead?1:0)).join('/')+'|'+said+'|'+D.door;
-  if(!seen.has(key)) seen.set(key,{p:P.name,t:R.lead,order,said,door:D.door,count:0});
+  const key = P.name+'|'+order.map(o=>o.n+':'+levelOf(o.s)+':'+(o.lead?1:0)).join('/')+'|'+D.door;
+  if(!seen.has(key)) seen.set(key,{p:P.name,t:R.lead,order,door:D.door,count:0});
   seen.get(key).count++;
 }
 const all=[...seen.values()];
@@ -690,7 +654,6 @@ for(const name of ['Judgement','Jealousy','Neediness','Fear']){
         '<div class="row'+(o.lead?' lead':'')+'">'+
           '<span><span class="nm">'+o.n+'</span><span class="of">'+LOOKING_AT[o.t]+'</span></span>'+
           '<span class="st">'+levelOf(o.s)+'</span></div>').join('')+'</div>'+
-      '<div class="said"><p>'+v.said+'</p></div>'+
     '</div>');
   });
   out.push('</div>');
