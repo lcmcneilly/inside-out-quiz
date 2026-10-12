@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results, version two</title>
+<meta name="description" content="Three ways to show all four patterns, a new order for the result page, and every result as the reader will see it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#EFBD40; --ink:#1A1B20; --paper:#FAF8F4; --card:#FFFCF2; --surface:#E2DCD0;
+  --body:#55524B; --mute:#A9A398; --line:#D8D2C6; --line-soft:#E2DCD0; --gold-ink:#8A6A14;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --ui:'Inter',system-ui,sans-serif;
+  --text:'Montserrat',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--body);font-family:var(--text);
+  font-weight:400;font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+main{max-width:740px;margin:0 auto;padding:72px 28px 96px}
+p{max-width:58ch;margin-bottom:1.1em}
+em,i{font-style:italic} strong,b{font-weight:400}
+h1,h2,h3{font-family:var(--display);font-weight:400;color:var(--ink);line-height:1.06}
+h1{font-size:clamp(2.4rem,6.5vw,3.6rem);margin-bottom:22px;max-width:16ch}
+h2{font-size:clamp(1.7rem,4.2vw,2.3rem);margin:64px 0 16px}
+h3{font-size:1.25rem;margin:36px 0 10px}
+.eyebrow{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold-ink);display:block;margin-bottom:18px}
+.rule-gold{width:84px;height:2px;background:var(--gold);margin:30px 0}
+.note{font-family:var(--ui);font-size:12.5px;line-height:1.75;color:var(--mute);max-width:58ch;margin:-4px 0 30px}
+.note span{color:var(--gold-ink)}
+
+/* ---------- the three options ---------- */
+.opt{border:1px solid var(--line);background:var(--card);padding:30px 32px;margin:14px 0 10px}
+@media(max-width:560px){.opt{padding:22px 20px}}
+
+/* option one — words */
+.lv{display:flex;flex-direction:column}
+.lv .row{display:flex;justify-content:space-between;align-items:baseline;gap:20px;
+  padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.lv .row:first-child{border-top:1px solid var(--line)}
+.lv .nm{font-family:var(--display);font-size:1.45rem;color:var(--ink)}
+.lv .st{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.lv .row.lead .nm{color:var(--ink)}
+.lv .row.lead .st{color:var(--gold-ink)}
+
+/* option two — words plus a line */
+.bars{display:flex;flex-direction:column}
+.bars .row{display:grid;grid-template-columns:1fr 150px auto;gap:18px;align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.bars .row:first-child{border-top:1px solid var(--line)}
+.bars .nm{font-family:var(--display);font-size:1.45rem;color:var(--ink)}
+.bars .track{height:2px;background:var(--line)}
+.bars .fill{height:2px;background:var(--mute)}
+.bars .row.lead .fill{background:var(--gold)}
+.bars .st{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);white-space:nowrap}
+.bars .row.lead .st{color:var(--gold-ink)}
+@media(max-width:560px){.bars .row{grid-template-columns:1fr auto;gap:8px 14px}.bars .track{grid-column:1/-1}}
+
+/* option three — ranked, no magnitude */
+.rank{display:flex;flex-direction:column}
+.rank .row{display:grid;grid-template-columns:30px 1fr;gap:16px;align-items:baseline;
+  padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.rank .row:first-child{border-top:1px solid var(--line)}
+.rank .no{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--mute)}
+.rank .nm{font-family:var(--display);font-size:1.45rem;color:var(--ink)}
+.rank .sub{font-size:14.5px;color:var(--body)}
+.rank .row.lead .no{color:var(--gold-ink)}
+
+/* ---------- the full result pages ---------- */
+.page{border:1px solid var(--line);background:var(--paper);padding:52px 44px 56px;margin:16px 0 14px}
+@media(max-width:560px){.page{padding:34px 20px 40px}}
+.page .eyebrow{margin-bottom:16px}
+.pattern{font-family:var(--display);font-size:clamp(2.8rem,8vw,4.2rem);line-height:.98;
+  color:var(--ink);margin-bottom:14px}
+.lede{font-family:var(--display);font-style:italic;font-size:clamp(1.25rem,3vw,1.6rem);
+  line-height:1.3;color:var(--gold-ink);max-width:26ch;margin-bottom:26px}
+.page p{font-size:16px}
+.said{border-left:2px solid var(--gold);padding:2px 0 2px 22px;margin:28px 0}
+.said p{font-family:var(--display);font-size:1.2rem;line-height:1.45;color:var(--ink);max-width:44ch;margin:0}
+.sit{background:var(--surface);padding:26px 28px;margin:28px 0}
+.sit p{font-family:var(--display);font-style:italic;font-size:1.2rem;line-height:1.45;
+  color:var(--ink);max-width:42ch;margin:0}
+.hr{height:1px;background:var(--line-soft);margin:36px 0}
+.sec{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:16px}
+.door-h{font-family:var(--display);font-size:1.7rem;color:var(--ink);margin-bottom:12px}
+.btn{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--paper);background:var(--ink);
+  padding:15px 34px;text-decoration:none;margin-top:6px}
+.opens{font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold-ink);margin-top:20px}
+footer{margin-top:72px;padding-top:26px;border-top:1px solid var(--line-soft)}
+footer p{font-family:var(--ui);font-size:12px;color:var(--mute);line-height:1.9;max-width:62ch;margin:0}
+</style>
+</head>
+<body>
+<main>
+
+<span class="eyebrow">Inside Out quiz</span>
+<h1>Results, version two</h1>
+<p>All four patterns on the page, the loudest still leading. Three ways to show the
+levels, a new order for the page, and each of the four as the reader will see it.</p>
+<div class="rule-gold" aria-hidden="true"></div>
+
+<h2>Showing the four</h2>
+<p class="note"><span>Why no percentages.</span> Three of the four patterns rest on a
+single question, so each has only three possible states. Judgement has five. A
+percentage would read as precision the quiz cannot actually deliver, and the first
+person to get 33% would reasonably ask what the other 67% was.</p>
+
+<h3>Option one · words only</h3>
+<div class="opt">
+  <div class="lv">
+    <div class="row lead"><span class="nm">Judgement</span><span class="st">Loud</span></div>
+    <div class="row"><span class="nm">Fear</span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Neediness</span><span class="st">Quiet</span></div>
+    <div class="row"><span class="nm">Jealousy</span><span class="st">Not in your answers</span></div>
+  </div>
+</div>
+<p class="note">Four words doing four jobs. Nothing implies measurement, which is
+honest about what eight questions can tell anyone. The quietest option visually, and
+the one that sits best beside type this large.</p>
+
+<h3>Option two · words and a line</h3>
+<div class="opt">
+  <div class="bars">
+    <div class="row lead"><span class="nm">Judgement</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="st">Loud</span></div>
+    <div class="row"><span class="nm">Fear</span><span class="track"><span class="fill" style="width:50%"></span></span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Neediness</span><span class="track"><span class="fill" style="width:25%"></span></span><span class="st">Quiet</span></div>
+    <div class="row"><span class="nm">Jealousy</span><span class="track"><span class="fill" style="width:0%"></span></span><span class="st">Not in your answers</span></div>
+  </div>
+</div>
+<p class="note">The line is 2px, the same weight as the gold rule elsewhere, and gold
+only on the leader. Scannable in a second. The risk is the one above: a line invites
+people to compare lengths precisely, which these numbers do not support.</p>
+
+<h3>Option three · ranked, no magnitude</h3>
+<div class="opt">
+  <div class="rank">
+    <div class="row lead"><span class="no">01</span><span><span class="nm">Judgement</span><br><span class="sub">How fast you reach a verdict</span></span></div>
+    <div class="row"><span class="no">02</span><span><span class="nm">Fear</span><br><span class="sub">The reasons you give</span></span></div>
+    <div class="row"><span class="no">03</span><span><span class="nm">Neediness</span><br><span class="sub">How much of your steadiness someone else holds</span></span></div>
+    <div class="row"><span class="no">04</span><span><span class="nm">Jealousy</span><br><span class="sub">Where you stand when you measure</span></span></div>
+  </div>
+</div>
+<p class="note">Order only, no levels at all, and each one explains what it was
+looking at. Most informative and the best teaching, but a strict ranking claims that
+fourth is definitely quieter than third, which a one-point gap does not really earn.</p>
+
+<p><strong>My pick is option one,</strong> with the four plain-English descriptions from
+option three folded in underneath each name. It makes no claim the quiz cannot back,
+it reads at a glance, and it explains what was being looked at without naming the
+machinery.</p>
+
+<h2>The new order</h2>
+<p>Nine beats. Changes from today are marked.</p>
+<div class="opt">
+  <div class="lv">
+    <div class="row"><span class="nm">1 · What came back</span><span class="st">reworded</span></div>
+    <div class="row"><span class="nm">2 · The loudest, named</span><span class="st">same</span></div>
+    <div class="row"><span class="nm">3 · One line on what that means</span><span class="st">same</span></div>
+    <div class="row lead"><span class="nm">4 · All four, with levels</span><span class="st">new</span></div>
+    <div class="row"><span class="nm">5 · What the loudest one is</span><span class="st">same</span></div>
+    <div class="row"><span class="nm">6 · Your own answer, read back</span><span class="st">same</span></div>
+    <div class="row"><span class="nm">7 · One question to sit with</span><span class="st">same</span></div>
+    <div class="row"><span class="nm">8 · What the Sol Map adds</span><span class="st">reworded</span></div>
+    <div class="row"><span class="nm">9 · The door, and the button</span><span class="st">same</span></div>
+  </div>
+</div>
+<p class="note">The four sit at beat four, straight after the name. Early enough that
+the headline reads as <em>the loudest of four</em> rather than a label, late enough
+that the name still lands first. This also ends the contradiction: a page showing all
+four at their real levels cannot argue with itself.</p>
+
+<h2>What the reader sees</h2>
+<p>All four, each shown with the levels someone would actually have to produce to
+get it.</p>
+
+<!-- ============ ONE ============ -->
+<div class="page">
+  <span class="eyebrow">What came back</span>
+  <div class="pattern">Judgement</div>
+  <div class="lede">You reach a verdict fast, including on yourself.</div>
+
+  <span class="sec">All four, as they came back</span>
+  <div class="lv" style="margin-bottom:30px">
+    <div class="row lead"><span class="nm">Judgement</span><span class="st">Loud</span></div>
+    <div class="row"><span class="nm">Fear</span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Neediness</span><span class="st">Quiet</span></div>
+    <div class="row"><span class="nm">Jealousy</span><span class="st">Not in your answers</span></div>
+  </div>
+
+  <p>Judgement arrives quickly and feels like clarity. It is a verdict reached before
+  the evidence is in, and the quickest one is usually about you.</p>
+  <div class="said"><p>You said an ordinary day ends with you running back through how you did.</p></div>
+  <div class="sit"><p>Would you say to a friend what you say to yourself?</p></div>
+  <p>These four are what the work inside is built around. The Sol Map takes this much
+  further — it reads all four against the day you were born, and tells you what undoes
+  the loudest one. It is the first thing you get when you join.</p>
+  <div class="hr"></div>
+  <div class="door-h">Start at SHE IS SOL.</div>
+  <p>Clarity first, then capability. AI gives back whatever you hand it, so what you
+  are handing it is the thing worth working on. Both doors open onto the same place.
+  This is only which to walk through first.</p>
+  <a class="btn" href="#">See what&rsquo;s waiting for you</a>
+  <p class="opens">Doors open 31 October</p>
+</div>
+
+<!-- ============ TWO ============ -->
+<div class="page">
+  <span class="eyebrow">What came back</span>
+  <div class="pattern">Jealousy</div>
+  <div class="lede">You measure yourself against other people.</div>
+
+  <span class="sec">All four, as they came back</span>
+  <div class="lv" style="margin-bottom:30px">
+    <div class="row lead"><span class="nm">Jealousy</span><span class="st">Loud</span></div>
+    <div class="row"><span class="nm">Judgement</span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Neediness</span><span class="st">Not in your answers</span></div>
+    <div class="row"><span class="nm">Fear</span><span class="st">Not in your answers</span></div>
+  </div>
+
+  <p>Jealousy is a measurement. It only works if you agree to stand on somebody else's
+  timeline and read your own position from it.</p>
+  <div class="said"><p>You said you felt happy for them, and a bit behind.</p></div>
+  <div class="sit"><p>What do you actually want — not what they have?</p></div>
+  <p>These four are what the work inside is built around. The Sol Map takes this much
+  further — it reads all four against the day you were born, and tells you what undoes
+  the loudest one. It is the first thing you get when you join.</p>
+  <div class="hr"></div>
+  <div class="door-h">Start at SHE IS SOL.</div>
+  <p>Clarity first, then capability. AI gives back whatever you hand it, so what you
+  are handing it is the thing worth working on. Both doors open onto the same place.
+  This is only which to walk through first.</p>
+  <a class="btn" href="#">See what&rsquo;s waiting for you</a>
+  <p class="opens">Doors open 31 October</p>
+</div>
+
+<!-- ============ THREE ============ -->
+<div class="page">
+  <span class="eyebrow">What came back</span>
+  <div class="pattern">Neediness</div>
+  <div class="lede">Other people have more say in how you feel than you do.</div>
+
+  <span class="sec">All four, as they came back</span>
+  <div class="lv" style="margin-bottom:30px">
+    <div class="row lead"><span class="nm">Neediness</span><span class="st">Loud</span></div>
+    <div class="row"><span class="nm">Fear</span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Jealousy</span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Judgement</span><span class="st">Quiet</span></div>
+  </div>
+
+  <p>Neediness is not wanting people. It is handing your steadiness to somebody else to
+  hold, and then resenting them for holding it.</p>
+  <div class="said"><p>You said one conversation can change how you feel about an entire day.</p></div>
+  <div class="sit"><p>What are you waiting for somebody else to confirm?</p></div>
+  <p>These four are what the work inside is built around. The Sol Map takes this much
+  further — it reads all four against the day you were born, and tells you what undoes
+  the loudest one. It is the first thing you get when you join.</p>
+  <div class="hr"></div>
+  <div class="door-h">Start at SHE IS SOL.</div>
+  <p>Clarity first, then capability. AI gives back whatever you hand it, so what you
+  are handing it is the thing worth working on. Both doors open onto the same place.
+  This is only which to walk through first.</p>
+  <a class="btn" href="#">See what&rsquo;s waiting for you</a>
+  <p class="opens">Doors open 31 October</p>
+</div>
+
+<!-- ============ FOUR ============ -->
+<div class="page">
+  <span class="eyebrow">What came back</span>
+  <div class="pattern">Fear</div>
+  <div class="lede">You have a good reason, and you do not quite believe it.</div>
+
+  <span class="sec">All four, as they came back</span>
+  <div class="lv" style="margin-bottom:30px">
+    <div class="row lead"><span class="nm">Fear</span><span class="st">Loud</span></div>
+    <div class="row"><span class="nm">Judgement</span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Neediness</span><span class="st">Quiet</span></div>
+    <div class="row"><span class="nm">Jealousy</span><span class="st">Not in your answers</span></div>
+  </div>
+
+  <p>Fear is the most reasonable-sounding of the four. It borrows the language of
+  caution, calls itself realism, and gets waved through without being questioned.</p>
+  <div class="said"><p>You said there is a reason you always give for not having done it.</p></div>
+  <div class="sit"><p>Is it actually risk, or is it only unfamiliar?</p></div>
+  <p>These four are what the work inside is built around. The Sol Map takes this much
+  further — it reads all four against the day you were born, and tells you what undoes
+  the loudest one. It is the first thing you get when you join.</p>
+  <div class="hr"></div>
+  <div class="door-h">Start at SHE IS SOL.</div>
+  <p>Clarity first, then capability. AI gives back whatever you hand it, so what you
+  are handing it is the thing worth working on. Both doors open onto the same place.
+  This is only which to walk through first.</p>
+  <a class="btn" href="#">See what&rsquo;s waiting for you</a>
+  <p class="opens">Doors open 31 October</p>
+</div>
+
+<!-- ============ THE QUIET ONE ============ -->
+<h3>And the one that broke before</h3>
+<p class="note">Nothing ran loud. Today this prints a huge name and then denies it.
+With all four on the page it simply tells the truth, and needs no stand-in line at all.</p>
+<div class="page">
+  <span class="eyebrow">What came back</span>
+  <div class="pattern">Fear</div>
+  <div class="lede">The loudest of four that were all fairly quiet.</div>
+
+  <span class="sec">All four, as they came back</span>
+  <div class="lv" style="margin-bottom:30px">
+    <div class="row lead"><span class="nm">Fear</span><span class="st">Present</span></div>
+    <div class="row"><span class="nm">Judgement</span><span class="st">Quiet</span></div>
+    <div class="row"><span class="nm">Neediness</span><span class="st">Not in your answers</span></div>
+    <div class="row"><span class="nm">Jealousy</span><span class="st">Not in your answers</span></div>
+  </div>
+
+  <p>None of the four ran loud in your answers, which is worth knowing in itself. Fear
+  is simply the one that showed at all. Take it as the lightest possible read rather
+  than a finding.</p>
+  <div class="sit"><p>Is it actually risk, or is it only unfamiliar?</p></div>
+  <p>These four are what the work inside is built around. The Sol Map takes this much
+  further — it reads all four against the day you were born, and tells you what undoes
+  the loudest one. It is the first thing you get when you join.</p>
+  <div class="hr"></div>
+  <div class="door-h">Start at SHE IS SOL.</div>
+  <p>Clarity first, then capability. AI gives back whatever you hand it, so what you
+  are handing it is the thing worth working on. Both doors open onto the same place.
+  This is only which to walk through first.</p>
+  <a class="btn" href="#">See what&rsquo;s waiting for you</a>
+  <p class="opens">Doors open 31 October</p>
+</div>
+
+<footer>
+  <p>Inside Out &middot; SHE IS SOL and SHE IS AI<br>
+  Proposal only. Nothing here is live. Levels shown are real combinations the scoring
+  can produce.</p>
+</footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How the results are generated</title>
+<meta name="description" content="Every answer, every result, and three defects found by testing all 6,561 possible ways through the quiz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#EFBD40; --ink:#1A1B20; --paper:#FAF8F4; --card:#FFFCF2; --surface:#E2DCD0;
+  --body:#55524B; --mute:#A9A398; --line:#D8D2C6; --line-soft:#E2DCD0; --gold-ink:#8A6A14;
+  --bad:#9A3B2E;
+  --display:'Cormorant Garamond',Georgia,serif;
+  --ui:'Inter',system-ui,sans-serif;
+  --text:'Montserrat',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--body);font-family:var(--text);
+  font-weight:400;font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+main{max-width:760px;margin:0 auto;padding:72px 28px 96px}
+p{max-width:60ch;margin-bottom:1.1em}
+em,i{font-style:italic} strong,b{font-weight:400}
+h1,h2,h3{font-family:var(--display);font-weight:400;color:var(--ink);line-height:1.06}
+h1{font-size:clamp(2.4rem,6.5vw,3.6rem);margin-bottom:24px;max-width:17ch}
+h2{font-size:clamp(1.7rem,4.2vw,2.3rem);margin:60px 0 18px}
+h3{font-size:1.3rem;margin:34px 0 12px}
+.eyebrow{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold-ink);display:block;margin-bottom:18px}
+.rule-gold{width:84px;height:2px;background:var(--gold);margin:32px 0}
+a{color:var(--gold-ink)}
+table{border-collapse:collapse;width:100%;margin:18px 0 26px;font-size:15px}
+th,td{text-align:left;padding:11px 14px 11px 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
+th{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line)}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.flag{background:var(--surface);padding:24px 26px;margin:22px 0 30px;border-left:2px solid var(--bad)}
+.flag p{margin:0;max-width:52ch}
+.flag .h{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--bad);display:block;margin-bottom:9px}
+.ok{border-left-color:var(--gold)}
+.ok .h{color:var(--gold-ink)}
+.screen{border:1px solid var(--line);background:var(--card);padding:26px 28px;margin:16px 0 28px}
+.screen .lbl{font-family:var(--ui);font-size:10.5px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:14px}
+.screen .nm{font-family:var(--display);font-size:2.1rem;color:var(--ink);line-height:1;margin-bottom:10px}
+.screen .ld{font-family:var(--display);font-style:italic;font-size:1.2rem;color:var(--gold-ink);margin-bottom:14px;max-width:30ch}
+.screen p{font-size:15.5px;margin-bottom:12px}
+.screen .quote{border-left:2px solid var(--gold);padding-left:18px;margin:16px 0;
+  font-family:var(--display);font-size:1.1rem;color:var(--ink)}
+.screen .ask{background:var(--surface);padding:16px 18px;margin:16px 0 0;
+  font-family:var(--display);font-style:italic;font-size:1.1rem;color:var(--ink)}
+ul{margin:0 0 1.1em 0;padding-left:0;list-style:none;max-width:60ch}
+li{padding:7px 0 7px 22px;position:relative}
+li::before{content:"";position:absolute;left:0;top:17px;width:7px;height:7px;
+  border:1px solid var(--ink);transform:rotate(45deg)}
+.w{font-family:var(--ui);font-size:10.5px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);margin-left:8px}
+.w.loud{color:var(--bad)} .w.mid{color:var(--gold-ink)} .w.calm{color:#4F6F5A}
+footer{margin-top:76px;padding-top:26px;border-top:1px solid var(--line-soft)}
+footer p{font-family:var(--ui);font-size:12px;color:var(--mute);line-height:1.9;max-width:62ch;margin:0}
+@media(max-width:560px){main{padding:52px 20px 72px} .screen{padding:20px 18px}}
+</style>
+</head>
+<body>
+<main>
+
+<span class="eyebrow">Inside Out quiz</span>
+<h1>How the results are generated</h1>
+<p>Every answer, every result, and what I found by running all 6,561 possible ways
+through the quiz against the live scoring code.</p>
+<div class="rule-gold" aria-hidden="true"></div>
+
+<h2>The mechanism, in order</h2>
+
+<p><strong>1 · Four territories.</strong> Five of the eight questions score. Each belongs
+to one of four territories, which become the four results. The territory names are
+internal and never appear on screen.</p>
+
+<table>
+  <tr><th>Territory</th><th>Result</th><th>Questions</th><th>Max</th></tr>
+  <tr><td>verdict</td><td>Judgement</td><td class="n">2</td><td class="n">4</td></tr>
+  <tr><td>measuring</td><td>Jealousy</td><td class="n">1</td><td class="n">2</td></tr>
+  <tr><td>steadiness</td><td>Neediness</td><td class="n">1</td><td class="n">2</td></tr>
+  <tr><td>fear</td><td>Fear</td><td class="n">1</td><td class="n">2</td></tr>
+</table>
+
+<p><strong>2 · Each answer carries a weight</strong> of 2, 1 or 0. Two is the loud end,
+zero is settled.</p>
+
+<p><strong>3 · Scored as a share of its own maximum,</strong> not as a raw total. Judgement
+has two questions behind it, so a raw total would hand it the result almost every time.</p>
+
+<p><strong>4 · The highest share names the result.</strong> This is where the first defect
+lives.</p>
+
+<p><strong>5 · The quote block</strong> reads back the answer that caused it, in the
+person's own words. If no answer sat at the far end there is nothing to quote, so a
+stand-in line appears instead. This is where the second defect lives.</p>
+
+<p><strong>6 · The door.</strong> SHE IS SOL unless two things both hold: no answer at the
+far end anywhere, and all three AI answers at the strong end.</p>
+
+<h2>What the test found</h2>
+
+<table>
+  <tr><th>Result</th><th>How often</th><th>Share of all 6,561</th></tr>
+  <tr><td>Jealousy</td><td class="n">2,268</td><td class="n">34.6%</td></tr>
+  <tr><td>Judgement</td><td class="n">1,890</td><td class="n">28.8%</td></tr>
+  <tr><td>Neediness</td><td class="n">1,458</td><td class="n">22.2%</td></tr>
+  <tr><td>Fear</td><td class="n">945</td><td class="n">14.4%</td></tr>
+  <tr><td>SHE IS AI door</td><td class="n">26</td><td class="n">0.4%</td></tr>
+</table>
+
+<div class="flag">
+  <span class="h">Defect one · the contradiction you hit</span>
+  <p>864 of 6,561 routes — 13.2% — print a pattern name in large type and then say
+  underneath it that none of the four ran loud. Those are two opposite claims on one
+  screen. It happens whenever the leading territory has no answer at the far end,
+  which a single middling answer is enough to cause.</p>
+</div>
+
+<div class="flag">
+  <span class="h">Defect two · ties always go to Jealousy</span>
+  <p>When two territories score identically, the winner is decided by the order they
+  happen to sit in the code, not by anything meaningful. Of 810 tied cases, Jealousy
+  won 810 and Neediness won none. Answer loudly on three different patterns and you
+  will be told it is Jealousy every time.</p>
+</div>
+
+<div class="flag">
+  <span class="h">Defect three · Jealousy is over-represented</span>
+  <p>34.6% against an even quarter. Partly defect two, partly that one question can
+  reach a full score while Judgement needs both of its questions at the far end.
+  "Nothing much" scoring a middle point means indifference alone can name Jealousy.</p>
+</div>
+
+<h2>The four results in full</h2>
+
+<h3>Judgement</h3>
+<div class="screen">
+  <span class="lbl">The pattern to watch</span>
+  <div class="nm">Judgement</div>
+  <div class="ld">You reach a verdict fast, including on yourself.</div>
+  <p>Judgement arrives quickly and feels like clarity. It is a verdict reached before
+  the evidence is in, and the quickest one is usually about you.</p>
+  <div class="quote">You said an ordinary day ends with you running back through how you did.<br>
+    <em>or</em><br>You said the first thing that turns up is what you would have done instead.</div>
+  <div class="ask">Would you say to a friend what you say to yourself?</div>
+</div>
+<ul>
+  <li><em>At the end of an ordinary day, which is closer?</em></li>
+  <li>I run back through how I did <span class="w loud">loud · 2</span></li>
+  <li>It depends on the day <span class="w mid">middle · 1</span></li>
+  <li>The day just ends <span class="w calm">settled · 0</span></li>
+  <li><em>You hear how someone else handled something difficult. What turns up first?</em></li>
+  <li>What I would have done instead <span class="w loud">loud · 2</span></li>
+  <li>A question about why <span class="w mid">middle · 1</span></li>
+  <li>Nothing much. It was theirs to handle <span class="w calm">settled · 0</span></li>
+</ul>
+
+<h3>Jealousy</h3>
+<div class="screen">
+  <span class="lbl">The pattern to watch</span>
+  <div class="nm">Jealousy</div>
+  <div class="ld">You measure yourself against other people.</div>
+  <p>Jealousy is a measurement. It only works if you agree to stand on somebody else's
+  timeline and read your own position from it.</p>
+  <div class="quote">You said you felt happy for them, and a bit behind.</div>
+  <div class="ask">What do you actually want — not what they have?</div>
+</div>
+<ul>
+  <li><em>You open your phone and the first thing you see is somebody else's good news. What do you feel?</em></li>
+  <li>Happy for them, and a bit behind <span class="w loud">loud · 2</span></li>
+  <li>Happy for them, and nothing else <span class="w calm">settled · 0</span></li>
+  <li>Nothing much <span class="w mid">middle · 1</span></li>
+</ul>
+
+<h3>Neediness</h3>
+<div class="screen">
+  <span class="lbl">The pattern to watch</span>
+  <div class="nm">Neediness</div>
+  <div class="ld">Other people have more say in how you feel than you do.</div>
+  <p>Neediness is not wanting people. It is handing your steadiness to somebody else to
+  hold, and then resenting them for holding it.</p>
+  <div class="quote">You said one conversation can change how you feel about an entire day.</div>
+  <div class="ask">What are you waiting for somebody else to confirm?</div>
+</div>
+<ul>
+  <li><em>How much can one conversation change how you feel about an entire day?</em></li>
+  <li>Completely. It sets the tone <span class="w loud">loud · 2</span></li>
+  <li>Somewhat <span class="w mid">middle · 1</span></li>
+  <li>Barely <span class="w calm">settled · 0</span></li>
+</ul>
+
+<h3>Fear</h3>
+<div class="screen">
+  <span class="lbl">The pattern to watch</span>
+  <div class="nm">Fear</div>
+  <div class="ld">You have a good reason, and you do not quite believe it.</div>
+  <p>Fear is the most reasonable-sounding of the four. It borrows the language of
+  caution, calls itself realism, and gets waved through without being questioned.</p>
+  <div class="quote">You said there is a reason you always give for not having done it.</div>
+  <div class="ask">Is it actually risk, or is it only unfamiliar?</div>
+</div>
+<ul>
+  <li><em>Somebody asks why you have not done the thing yet. What comes out of your mouth?</em></li>
+  <li>The reason I always give <span class="w loud">loud · 2</span></li>
+  <li>Something roughly honest <span class="w mid">middle · 1</span></li>
+  <li>A date <span class="w calm">settled · 0</span></li>
+</ul>
+
+<h2>Shared on every result</h2>
+<div class="screen">
+  <p>This is one of four patterns the work inside is built around. The Sol Map tells you
+  which is loudest in you, what undoes it, and what your birth details add to the
+  picture. It is the first thing you get when you join.</p>
+  <div class="nm" style="font-size:1.5rem;margin:22px 0 8px">Start at SHE IS SOL.</div>
+  <p>Clarity first, then capability. AI gives back whatever you hand it, so what you are
+  handing it is the thing worth working on. Both doors open onto the same place. This is
+  only which to walk through first.</p>
+  <div class="nm" style="font-size:1.5rem;margin:22px 0 8px">Start at SHE IS AI.</div>
+  <p>Your answers came back steady, and your own thinking already sits at the centre of
+  what you make with it. That combination is rare, and it is what the capability side is
+  for. SHE IS SOL is in the same place whenever you want it.</p>
+</div>
+
+<h2>The two stand-in lines</h2>
+<p>These replace the quote when nothing sat at the far end. The first is the one that
+contradicted you.</p>
+<div class="screen">
+  <div class="quote">None of the four ran loud in your answers. This is the one that
+  showed at all, which is a different thing from it being a problem.</div>
+  <div class="quote">Nothing ran loud, and nothing separated the four. Take the pattern
+  above as the lightest possible read rather than a finding.</div>
+</div>
+
+<h2>The three AI questions</h2>
+<p>These do not affect which pattern you get. They decide the door, and all three must
+be at the strong end for SHE IS AI.</p>
+<ul>
+  <li><em>Before you ask AI something, how clear are you on what you actually want?</em> — strong answer: <strong>Clear first, then I ask</strong></li>
+  <li><em>When you use AI on something that matters, whose thinking ends up in the finished thing?</em> — strong answer: <strong>Mostly mine. It speeds up work I had already decided on</strong></li>
+  <li><em>When AI gives you an answer and something in you says no, what usually happens?</em> — strong answer: <strong>I trust the no, and argue with it</strong></li>
+</ul>
+
+<footer>
+  <p>Inside Out &middot; SHE IS SOL and SHE IS AI<br>
+  Audited against the live site, 12 October 2026. Counts are exact, from running every
+  one of the 6,561 combinations through the deployed scoring code.</p>
+</footer>
+
+</main>
+</body>
+</html>
