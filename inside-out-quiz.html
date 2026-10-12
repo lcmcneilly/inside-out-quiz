@@ -79,6 +79,21 @@ h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
 .intro p:last-child{margin-bottom:0}
 .intro p:first-child{font-family:var(--display);font-size:1.3rem;line-height:1.45;
   color:var(--ink);max-width:46ch}
+/* all four, with what each one was looking at. No numbers: three of the four
+   rest on a single question, so a bar would imply precision that is not there. */
+.sec{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:14px}
+.levels{margin-bottom:38px;max-width:560px}
+.levels .row{display:flex;justify-content:space-between;align-items:baseline;gap:22px;
+  padding:14px 0;border-bottom:1px solid var(--line-soft)}
+.levels .row:first-child{border-top:1px solid var(--line)}
+.levels .nm{font-family:var(--display);font-size:1.4rem;color:var(--ink);line-height:1.15}
+.levels .of{display:block;font-family:var(--text);font-size:.86rem;line-height:1.5;
+  color:var(--body);margin-top:3px;max-width:34ch}
+.levels .st{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);white-space:nowrap;flex:none}
+.levels .row.lead .st{color:var(--gold-ink)}
+@media(max-width:560px){.levels .row{gap:14px}.levels .nm{font-size:1.25rem}}
 .pattern{font-family:var(--display);font-size:clamp(3.4rem,11vw,5.6rem);line-height:.98;
   color:var(--ink);margin-bottom:18px}
 .lede{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3.4vw,1.85rem);
@@ -186,8 +201,6 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
     <p>Judgement, jealousy, neediness and fear. Four patterns, and left alone they take
       a life apart slowly. None of them announce themselves. Each arrives dressed as
       something reasonable.</p>
-    <p>This isn't a score or a type. It's a reading of which one is loudest in you
-      right now.</p>
   </div>
 
   <div class="hr" aria-hidden="true"></div>
@@ -195,6 +208,10 @@ footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:
   <span class="eyebrow">The pattern to watch</span>
   <h2 class="pattern" id="patternName"></h2>
   <p class="lede" id="lede"></p>
+
+  <span class="sec">All four, as they came back</span>
+  <div class="levels" id="levels"></div>
+
   <p class="what" id="what"></p>
   <div class="said" id="said"></div>
   <div class="sit"><p id="sitWith"></p></div>
@@ -500,7 +517,7 @@ function read(){
  const pick = R.strong.find(s => s.t === R.lead) || null;
  const nothingSeparated = Object.keys(R.got).every(t => R.got[t] === 0);
  return {
-   P, D,
+   P, D, R,
    said: pick ? 'You said '+pick.said+'.' : (nothingSeparated ? LIGHTEST(P.name) : LIGHT(P.name)),
    result_type: P.code,
    result_name: P.name
@@ -518,11 +535,47 @@ function answersJSON(){
  return JSON.stringify(out);
 }
 
+/* What each pattern was looking at, in plain words. Said once, on the result,
+   so nobody has to take the name on trust. */
+const LOOKING_AT = {
+ verdict:   `How fast you reach a verdict`,
+ measuring: `Where you stand when you measure`,
+ steadiness:`How much of your steadiness someone else holds`,
+ fear:      `The reasons you give`
+};
+
+/* Four levels, which is roughly the real resolution of the instrument. Three
+   of the four patterns rest on one question, so they have three states; a
+   percentage would claim a precision eight questions cannot deliver. */
+function levelOf(share){
+ if(share >= 1)    return 'Loud';
+ if(share >= 0.5)  return 'Present';
+ if(share > 0)     return 'Quiet';
+ return 'Not in your answers';
+}
+
+function levelRows(){
+ const {R} = reading;
+ const rows = Object.keys(R.max).map(t => ({
+   t, P: PATTERN[t], share: R.got[t]/R.max[t]
+ }));
+ /* Loudest first, and the leader always sits at the top of its own group. */
+ rows.sort((a,b) => (b.share - a.share) || (a.t === R.lead ? -1 : b.t === R.lead ? 1 : 0));
+ return rows.map(r =>
+   '<div class="row'+(r.t === R.lead ? ' lead' : '')+'">'+
+     '<span><span class="nm">'+r.P.name+'</span>'+
+     '<span class="of">'+LOOKING_AT[r.t]+'</span></span>'+
+     '<span class="st">'+levelOf(r.share)+'</span>'+
+   '</div>'
+ ).join('');
+}
+
 function showResult(){
  const {P, D, said} = reading;
 
  $('patternName').textContent = P.name;
  $('lede').textContent = P.line;
+ $('levels').innerHTML = levelRows();
  $('what').textContent = P.what;
  $('said').innerHTML = '<p>'+said+'</p>';
  $('sitWith').textContent = P.ask;
