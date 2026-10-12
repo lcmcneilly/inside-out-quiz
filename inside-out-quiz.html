@@ -346,13 +346,6 @@ const PATTERN = {
    line:`You have a good reason, and you don't quite believe it.`,
    ask:`Is it risk, or is it only unfamiliar?`}
 };
-/* Shown instead of a quote when no answer sat at the far end. Two versions:
-   one where something still separated the four, one where nothing did. */
-/* Both name the pattern, so the page reads as one thought. The old version put
-   a name in large type and then said none of the four ran loud, which is two
-   opposite claims on one screen. */
-const LIGHT    = n => `None of the four ran loud in your answers, which eight questions can't always pick up. ${n} is the one that showed at all. Take it as the lightest possible read rather than a finding.`;
-const LIGHTEST = n => `Nothing ran loud, and nothing separated the four. Take ${n} as the lightest possible read rather than a finding.`;
 
 /* ---------------------------------------------------------------------------
    THE THREE ON AI
@@ -510,11 +503,8 @@ function readDoor(R, T){
 function read(){
  const R = readReflections(), T = readAI(), D = readDoor(R, T);
  const P = PATTERN[R.lead];
- const pick = R.strong.find(s => s.t === R.lead) || null;
- const nothingSeparated = Object.keys(R.got).every(t => R.got[t] === 0);
  return {
    P, D, R,
-   said: pick ? 'You said '+pick.said+'.' : (nothingSeparated ? LIGHTEST(P.name) : LIGHT(P.name)),
    result_type: P.code,
    result_name: P.name
  };
@@ -538,6 +528,36 @@ const LOOKING_AT = {
  steadiness:`How much of your steadiness someone else holds`,
  fear:      `The reasons you give`
 };
+
+/* One true sentence about the whole reading, in the gold block where the
+   read-back quote used to sit. Every branch is checked against the levels, so
+   it cannot say 'the rest showed too' when they did not. */
+function summarise(){
+ const {P, R} = reading;
+ const lvl = {};
+ for(const t of Object.keys(R.max)) lvl[t] = levelOf(R.got[t]/R.max[t]);
+ const at   = v => Object.keys(lvl).filter(t => lvl[t] === v);
+ const name = t => PATTERN[t].name;
+ const loud = at('Loud'), present = at('Present'), quiet = at('Quiet');
+
+ if(loud.length === 4)
+   return `All four came back loud, which is a lot to be carrying at once. ${P.name} is where it is worth starting.`;
+ if(loud.length === 3)
+   return `Three of the four came back loud, which is a lot to be carrying at once. ${P.name} is where it is worth starting.`;
+ if(loud.length === 2)
+   return `${P.name} and ${name(loud.filter(t => t !== R.lead)[0])} both ran loud. Start with ${P.name}.`;
+ if(loud.length === 1 && present.length === 3)
+   return `${P.name} ran loudest, and the other three all showed as well. Nothing here is quiet.`;
+ if(loud.length === 1 && present.length === 1)
+   return `${P.name} ran loudest, with ${name(present[0])} not far behind it.`;
+ if(loud.length === 1 && present.length > 1)
+   return `${P.name} ran loudest. ${present.length} of the others showed too, so this is not a single pattern on its own.`;
+ if(loud.length === 1)
+   return `${P.name} ran loud on its own. The other three barely registered.`;
+ if(present.length || quiet.length)
+   return `None of the four ran loud. ${P.name} showed more than the rest, which is a light read rather than a finding.`;
+ return `Nothing ran loud, and nothing separated the four. Take ${P.name} as the lightest possible read.`;
+}
 
 /* Four levels, which is roughly the real resolution of the instrument. Three
    of the four patterns rest on one question, so they have three states; a
@@ -566,12 +586,12 @@ function levelRows(){
 }
 
 function showResult(){
- const {P, D, said} = reading;
+ const {P, D} = reading;
 
  $('patternName').textContent = P.name;
  $('lede').textContent = P.line;
  $('levels').innerHTML = levelRows();
- $('said').innerHTML = '<p>'+said+'</p>';
+ $('said').innerHTML = '<p>'+summarise()+'</p>';
  $('sitWith').textContent = P.ask;
  $('next').textContent = `The Sol Map goes further than eight questions can. It reads all four against the day you were born, and tells you what undoes the loudest one. It's the first thing you get when you join.`;
 
