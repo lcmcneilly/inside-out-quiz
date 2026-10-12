@@ -551,7 +551,7 @@ function summarise(){
  if(loud.length === 1 && present.length === 1)
    return `${P.name} ran loudest, with ${name(present[0])} not far behind it.`;
  if(loud.length === 1 && present.length > 1)
-   return `${P.name} ran loudest. ${present.length} of the others showed too, so this is not a single pattern on its own.`;
+   return `${P.name} ran loudest. ${present.length === 2 ? 'Two' : 'Three'} of the others showed too, so this is not a single pattern on its own.`;
  if(loud.length === 1)
    return `${P.name} ran loud on its own. The other three barely registered.`;
  if(present.length || quiet.length)
