@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ten results</title>
+<meta name="description" content="Ten full result pages from the Inside Out quiz, rendered from the live code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================================
+   INSIDE OUT — brand direction v2, October 2026
+   Gold #EFBD40 · Ink #1A1B20, the only dark ground · Ivory #E8DCC4
+   Cormorant display (never below 20px) · Inter labels and UI · Montserrat
+   body at 1.7 minimum. Never bold. Italics for emphasis. Ragged right,
+   never justified, never centred.
+   =========================================================================== */
+:root{
+  --gold:#EFBD40; --ink:#1A1B20; --ivory:#E8DCC4; --paper:#FAF8F4;
+  --card:#FFFCF2; --surface:#E2DCD0;
+  --body:#55524B; --mute:#A9A398; --line:#D8D2C6; --line-soft:#E2DCD0;
+  --gold-ink:#8A6A14;                   /* gold darkened so it passes on paper */
+  --display:'Cormorant Garamond',Georgia,serif;
+  --ui:'Inter',system-ui,sans-serif;
+  --text:'Montserrat',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--body);font-family:var(--text);
+  font-weight:400;font-size:16.5px;line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+main{max-width:700px;margin:0 auto;padding:0 28px 88px}
+em,i{font-style:italic}
+strong,b{font-weight:400}                     /* never bold */
+p{max-width:58ch}
+h1,h2{font-family:var(--display);font-weight:400;color:var(--ink);line-height:1.05}
+h1{font-size:clamp(2.7rem,7.6vw,4.3rem)}
+.eyebrow{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--gold-ink)}
+.mark{display:block;width:150px;height:78px}      /* the arched doors, 192:100 */
+.mark svg{width:150px;height:78px;display:block}
+.btn{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--ink);background:transparent;
+  border:1px solid var(--ink);border-radius:0;padding:16px 38px;cursor:pointer;
+  transition:background .2s,color .2s;text-decoration:none}
+.btn:hover,.btn:focus-visible{background:var(--ink);color:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:#000}
+.rule-gold{width:84px;height:2px;background:var(--gold);margin:38px 0}
+/* opening — the questions are the content, so almost nothing sits in front */
+.open{padding:84px 0 40px}
+.open .mark{margin-bottom:44px}
+.open .eyebrow{display:block;margin-bottom:18px}
+.open h1{margin-bottom:26px;max-width:16ch}
+/* the seven */
+#quiz{display:none;padding:52px 0 40px;min-height:78vh}
+.bar{height:2px;background:var(--line);margin-bottom:12px;position:relative}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--gold);transition:width .35s ease}
+.count{font-family:var(--ui);font-size:11px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:50px}
+.q{font-family:var(--display);font-size:clamp(1.8rem,4.6vw,2.7rem);line-height:1.16;
+  color:var(--ink);max-width:21ch;margin-bottom:44px}
+.answers{display:flex;flex-direction:column;gap:12px;max-width:560px}
+.answers button{font-family:var(--text);font-size:1.02rem;line-height:1.5;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:0;padding:19px 24px;
+  text-align:left;cursor:pointer;transition:border-color .16s,background .16s}
+.answers button:hover,.answers button:focus-visible{border-color:var(--ink);background:#fff}
+.back{margin-top:40px;background:none;border:0;cursor:pointer;font-family:var(--ui);
+  font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);padding:0}
+.back:hover{color:var(--ink)}
+/* the result — four short beats and a door */
+#result{display:none;padding:80px 0 0}
+#result .eyebrow{display:block;margin-bottom:20px}
+/* the four, named before the reading, so it does not open on a verdict */
+.fourHead{font-family:var(--display);font-size:clamp(1.9rem,5vw,2.6rem);
+  color:var(--ink);line-height:1;margin-bottom:20px}
+.intro p{margin-bottom:1em}
+.intro p:last-child{margin-bottom:0}
+.intro p:first-child{font-family:var(--display);font-size:1.3rem;line-height:1.45;
+  color:var(--ink);max-width:46ch}
+/* all four, with what each one was looking at. No numbers: three of the four
+   rest on a single question, so a bar would imply precision that is not there. */
+.sec{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--mute);display:block;margin-bottom:14px}
+.levels{margin-bottom:38px;max-width:560px}
+.levels .row{display:flex;justify-content:space-between;align-items:baseline;gap:22px;
+  padding:14px 0;border-bottom:1px solid var(--line-soft)}
+.levels .row:first-child{border-top:1px solid var(--line)}
+.levels .nm{font-family:var(--display);font-size:1.4rem;color:var(--ink);line-height:1.15}
+.levels .of{display:block;font-family:var(--text);font-size:.86rem;line-height:1.5;
+  color:var(--body);margin-top:3px;max-width:34ch}
+.levels .st{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);white-space:nowrap;flex:none}
+.levels .row.lead .st{color:var(--gold-ink)}
+@media(max-width:560px){.levels .row{gap:14px}.levels .nm{font-size:1.25rem}}
+.pattern{font-family:var(--display);font-size:clamp(3.4rem,11vw,5.6rem);line-height:.98;
+  color:var(--ink);margin-bottom:18px}
+.lede{font-family:var(--display);font-style:italic;font-size:clamp(1.4rem,3.4vw,1.85rem);
+  line-height:1.3;color:var(--gold-ink);max-width:26ch;margin-bottom:26px}
+.sit{background:var(--surface);padding:30px 32px;margin-bottom:40px}
+.sit p{font-family:var(--display);font-style:italic;font-size:1.28rem;line-height:1.45;
+  color:var(--ink);max-width:42ch}
+@media(max-width:560px){.sit{padding:24px 22px}}
+.next{margin-bottom:44px}
+.hr{height:1px;background:var(--line-soft);margin:48px 0}
+.door h2{font-size:clamp(1.7rem,4.2vw,2.3rem);margin-bottom:14px;max-width:20ch}
+.door p{margin-bottom:28px}
+.opens{font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--gold-ink);margin-top:22px}
+/* joining — the result is already given, so this asks after rather than before */
+/* the details step — its own screen, between the last question and the result */
+#details{display:none;padding:52px 0 40px;min-height:78vh}
+#details h2{font-size:clamp(1.9rem,4.8vw,2.7rem);line-height:1.14;margin-bottom:18px;max-width:18ch}
+.join{max-width:460px;margin-top:4px}
+.join-lead{margin-bottom:30px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.field label{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute)}
+.field input{font-family:var(--text);font-size:1.02rem;line-height:1.5;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:0;padding:15px 16px;
+  outline:none;transition:border-color .16s}
+.field input:focus{border-color:var(--ink)}
+.field input[aria-invalid="true"]{border-color:#9A3B2E}
+.consent{display:flex;gap:12px;align-items:flex-start;margin:22px 0 26px;
+  font-size:.94rem;line-height:1.6;color:var(--body);cursor:pointer}
+.consent input{width:17px;height:17px;margin-top:4px;flex:none;accent-color:var(--ink);cursor:pointer}
+.consent a{color:var(--gold-ink)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.join button[disabled]{opacity:.45;cursor:default}
+.join-err{font-family:var(--ui);font-size:13px;line-height:1.65;color:#9A3B2E;margin-top:18px;max-width:46ch}
+.join-note{font-family:var(--ui);font-size:12px;line-height:1.7;color:var(--mute);margin-top:20px;max-width:46ch}
+.countdown{font-family:var(--ui);font-size:11.5px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mute);margin-top:18px}
+.countdown button{background:none;border:0;padding:0;cursor:pointer;font:inherit;
+  color:var(--gold-ink);text-decoration:underline;text-underline-offset:3px}
+footer{margin-top:80px;padding-top:28px;border-top:1px solid var(--line-soft)}
+footer p{font-family:var(--ui);font-size:12px;color:var(--mute);line-height:1.9}
+footer .aw{font-family:var(--display);font-style:italic;font-size:1.15rem;color:var(--gold-ink);margin-bottom:8px}
+/* review scaffolding, never ships */
+.sheet{max-width:820px;margin:0 auto;padding:60px 24px 80px}
+.lead-in{font-family:var(--ui);font-size:12.5px;line-height:1.8;color:var(--mute);max-width:58ch;margin-bottom:10px}
+.lead-in b{color:var(--gold-ink);font-weight:600}
+.slug{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  font-family:var(--ui);font-size:10.5px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);margin:58px 0 12px}
+.slug .r{color:var(--gold-ink)}
+.screen{border:1px solid var(--line);background:var(--paper);padding:48px 44px 52px}
+@media(max-width:600px){.screen{padding:32px 20px 38px}.sheet{padding:44px 16px 60px}}
+.screen .hr{height:1px;background:var(--line-soft);margin:34px 0}
+.screen .btn{margin-top:4px}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <span class="eyebrow">Inside Out quiz</span>
+  <h1 style="font-family:var(--display);font-weight:400;color:var(--ink);font-size:clamp(2.2rem,6vw,3.2rem);line-height:1.02;margin:16px 0 20px">Ten results</h1>
+  <p class="lead-in">Ten full result pages, each from a different real set of answers.
+  Rendered by the <b>live scoring code</b>, so these are what people actually get.
+  Chosen to cover all four patterns, both doors, and the full range from every pattern
+  loud to nothing showing at all.</p>
+  <div class="rule-gold" aria-hidden="true"></div>
+  <div id="out"></div>
+</div>
+<script>
+'use strict';
+/* ===========================================================================
+   WHAT HAVE YOU NOT LOOKED AT?  ·  Inside Out funnel quiz
+
+   Eight questions: five reflections and three on how someone works with AI.
+   Nothing is named. No pattern, no archetype, no score — the Sol Map names
+   it properly and reads it against the day you were born, and spending that
+   headline here would leave the real instrument with nothing to say.
+
+   The result is four short beats: one line, their own answer back, one
+   question, and a door.
+   =========================================================================== */
+
+const CONFIG = {
+  /* Same origin, so the Airtable token and the Ivorey webhook stay on the
+     server and never reach this page. */
+  leadEndpoint: "/api/lead",
+
+  /* Should be the no-form version, join.sheisai.ai/welcome — by the time
+     somebody arrives they are already on the waitlist, so a second form is
+     asking twice. That page does not exist yet and returns 404, so this points
+     at the main landing page, which works. Put /welcome back the day Amanda
+     builds it; this one line is the only change needed. */
+  welcomeUrl:   "https://join.sheisai.ai",
+
+  /* The SHE IS AI privacy policy. Pointing at the page in this repo until
+     Amanda gives the real address, so the link is never broken. */
+  privacyUrl:   "/privacy.html",
+
+  /* The exact wording somebody agrees to. Sent with the lead, so the record
+     says what they actually consented to rather than what it says today. */
+  consentText:  "Send me my result and Inside Out updates by email. I can unsubscribe anytime.",
+
+  /* Brief: optional 12-second auto-redirect with a countdown she can cancel.
+     Amanda's call. Set to 12 to turn it on. */
+  autoRedirectSeconds: 0,
+
+  opensLine:    "Doors open 31 October"
+};
+
+/* Attribution. Read once at boot and kept for the whole session, so a refresh
+   mid-quiz does not lose which post somebody came from. Never the name or the
+   email — those must not end up in a URL, in history or in analytics. */
+const UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_content'];
+const utm = (function(){
+ const out = {};
+ let saved = {};
+ try { saved = JSON.parse(sessionStorage.getItem('io_utm') || '{}'); } catch(e){ saved = {}; }
+ const q = new URLSearchParams(location.search);
+ for(const k of UTM_KEYS) out[k] = (q.get(k) || saved[k] || '').slice(0, 120);
+ try { sessionStorage.setItem('io_utm', JSON.stringify(out)); } catch(e){}
+ return out;
+})();
+
+/* ---------------------------------------------------------------------------
+   THE FOUR REFLECTIONS
+   t = territory, internal only, never shown.
+   w = how present that territory is, 0–2.
+   said = no longer shown. It now only marks an answer as sitting at the far
+          end, which is what the door and the tie-break read.
+   --------------------------------------------------------------------------- */
+const REFLECT = [
+ {id:'r1', t:'verdict',
+  q:`At the end of an ordinary day, which is closer?`,
+  a:[[`I run back through how I did`,2,`an ordinary day ends with you running back through how you did`],
+     [`It depends on the day`,1,null],
+     [`The day just ends`,0,null]]},
+ {id:'r2', t:'measuring',
+  q:`You open your phone and the first thing you see is somebody else's good news. What do you feel?`,
+  /* Weights are per answer, not per position. Clean gladness is the settled
+     end, so it scores nothing. "Nothing much" sits in the middle: not
+     measuring, but not glad either, which is a different thing from being
+     free of the comparison. */
+  a:[[`Happy for them, and a bit behind`,2,`you felt happy for them, and a bit behind`],
+     [`Happy for them, and nothing else`,0,null],
+     [`Nothing much`,1,null]]},
+ {id:'r3', t:'steadiness',
+  q:`How much can one conversation change how you feel about an entire day?`,
+  a:[[`Completely. It sets the tone`,2,`one conversation can change how you feel about an entire day`],
+     [`Somewhat`,1,null],
+     [`Barely`,0,null]]},
+ {id:'r4', t:'verdict',
+  q:`You hear how someone else handled something difficult. What turns up first?`,
+  a:[[`What I would have done instead`,2,`the first thing that turns up is what you would have done instead`],
+     [`A question about why`,1,null],
+     [`Nothing much. It was theirs to handle`,0,null]]},
+ {id:'r5', t:'fear',
+  q:`Somebody asks why you have not done the thing yet. What comes out of your mouth?`,
+  a:[[`The reason I always give`,2,`there is a reason you always give for not having done it`],
+     [`Something roughly honest`,1,null],
+     [`A date`,0,null]]}
+];
+
+/* Four patterns, one per territory. Named, because a pattern you can name is
+   a pattern you can watch. What undoes each one, and how it sits in a chart,
+   is the Sol Map's job inside. */
+const PATTERN = {
+ verdict:{code:`judgement`, name:`Judgement`,
+   line:`You reach a verdict fast, including on yourself.`,
+   ask:`Would you say to a friend what you say to yourself?`},
+ measuring:{code:`jealousy`, name:`Jealousy`,
+   line:`You measure yourself against other people.`,
+   ask:`What do you want, when you're not looking at them?`},
+ steadiness:{code:`neediness`, name:`Neediness`,
+   line:`Other people have more say in how you feel than you do.`,
+   ask:`What are you waiting for someone else to confirm?`},
+ fear:{code:`fear`, name:`Fear`,
+   line:`You have a good reason, and you don't quite believe it.`,
+   ask:`Is it risk, or is it only unfamiliar?`}
+};
+
+/* ---------------------------------------------------------------------------
+   THE THREE ON AI
+   Not fear and not skill level. Authorship: what gets handed to it, what it is
+   allowed to decide, and what happens on disagreeing with it.
+   --------------------------------------------------------------------------- */
+const AI = [
+ {id:'a1',
+  q:`Before you ask AI something, how clear are you on what you actually want?`,
+  a:[[`I work that out by asking`,0],[`Roughly clear`,1],[`Clear first, then I ask`,2]]},
+ {id:'a2',
+  q:`When you use AI on something that matters, whose thinking ends up in the finished thing?`,
+  a:[[`Mostly mine. It speeds up work I had already decided on`,2],
+     [`A mix, and I could not always tell you where the line is`,0],
+     [`I do not use it for anything that matters`,0]]},
+ {id:'a3',
+  q:`When AI gives you an answer and something in you says no, what usually happens?`,
+  a:[[`I go with it anyway. It is easier than arguing with it`,0],
+     [`Depends how much time I have`,1],
+     [`I trust the no, and argue with it`,2]]}
+];
+/* THE DOOR
+   Two conditions, both required, in this order:
+     1. Steady. No reflection answer at the far end, and the total load low.
+     2. Authored. All three AI answers at the strong end.
+   Capability handed to somebody who is not steady only moves faster in the
+   wrong direction, so SOL is the default and the AI door has to be earned.
+   STEADY_MAX is out of 10 (five reflections, two points each). */
+const STEADY_MAX = 3;
+
+const DOORS = {
+ sol:{head:`Start at SHE IS SOL.`,
+   copy:`Clarity first, then capability. AI gives back whatever you hand it, so what you're handing it is the thing worth working on. Both doors open onto the same place. This is only which one to walk through first.`},
+ ai:{head:`Start at SHE IS AI.`,
+   copy:`Your answers came back steady, and your own thinking already sits at the centre of what you make with it. That's rarer than it sounds. It's what the capability side is for, and SHE IS SOL is in the same place whenever you want it.`}
+};
+
+/* -------------------------------------------------------------------- MARK */
+/* The arched doors, from the graphic library in the brand direction: SOL in
+   gold and AI in ink, standing side by side on one line. Two doors, one room.
+   The quiz ends on a door, so it opens with the pair.
+   Proportions are the brand's own — 300 wide, 350 high, 72 apart — scaled to
+   a 192 x 100 box, which puts each arch at 85.7 wide and the gap at 20.6. */
+function insideOutMark(){
+ return `<svg viewBox="0 0 192 100" role="img" aria-label="Inside Out">
+  <g fill="none" stroke-width="1.8">
+   <path d="M0.9 99 V42.85 A41.95 41.95 0 0 1 84.8 42.85 V99" stroke="#EFBD40"/>
+   <path d="M107.2 99 V42.85 A41.95 41.95 0 0 1 191.1 42.85 V99" stroke="#1A1B20"/>
+  </g>
+  <rect x="0" y="98.1" width="192" height="1.9" fill="#1A1B20"/>
+ </svg>`;
+}
+
+/* ------------------------------------------------------------------- STATE */
+const $ = id => document.getElementById(id);
+/* Interleaved so the three on AI do not arrive as a block. */
+const QUEUE = [REFLECT[0], AI[0], REFLECT[1], AI[1], REFLECT[2], REFLECT[4], REFLECT[3], AI[2]];
+const picked = {};
+let at = 0;
+
+/* -------------------------------------------------------------------- QUIZ */
+function render(){
+ const q = QUEUE[at];
+ $('barFill').style.width = ((at/QUEUE.length)*100).toFixed(1)+'%';
+ $('count').textContent = 'Question '+(at+1)+' of '+QUEUE.length;
+ $('qText').textContent = q.q;
+ $('answers').innerHTML = q.a.map((o,i)=>'<button type="button" data-i="'+i+'">'+o[0]+'</button>').join('');
+ $('back').style.visibility = at===0 ? 'hidden' : 'visible';
+ window.scrollTo(0,0);
+}
+function choose(i){
+ picked[QUEUE[at].id] = i;
+ at++;
+ if(at >= QUEUE.length) toDetails(); else render();
+}
+
+/* The details step. The reading is worked out here so the result is ready to
+   show the moment the lead is saved, but nothing is rendered until then. */
+let reading = null;
+function toDetails(){
+ reading = read();
+ $('quiz').style.display = 'none';
+ $('details').style.display = 'block';
+ window.scrollTo(0,0);
+ $('fname').focus({preventScroll:true});
+}
+
+/* ----------------------------------------------------------------- READING */
+/* Verdict carries two questions and the other two carry one each, so a raw
+   total would hand verdict the result almost every time. Each territory is
+   scored as a share of its own maximum instead; a tie goes to the territory
+   with more questions behind it. */
+function readReflections(){
+ const got = {}, max = {}, strong = [];
+ for(const q of REFLECT){
+   max[q.t] = (max[q.t]||0) + 2;
+   got[q.t] = got[q.t]||0;
+   const i = picked[q.id]; if(i === undefined) continue;
+   const [,w,said] = q.a[i];
+   got[q.t] += w;
+   if(w === 2 && said) strong.push({t:q.t, said:said});
+ }
+ const terrs = Object.keys(max);
+ const hasStrong = {};
+ for(const s of strong) hasStrong[s.t] = true;
+
+ /* Ties used to go to whichever territory sat earliest in this list, which
+    handed Jealousy 810 of 810 tied readings and Neediness none.
+    Decide on evidence first: an answer at the far end beats one that is
+    merely present, and two questions behind a pattern beat one. */
+ let best = -1;
+ for(const t of terrs){ const s = got[t]/max[t]; if(s > best) best = s; }
+ let topped = terrs.filter(t => got[t]/max[t] === best);
+ if(topped.length > 1 && best > 0){
+   const strongOnes = topped.filter(t => hasStrong[t]);
+   if(strongOnes.length) topped = strongOnes;
+   const mostQ = Math.max(...topped.map(t => max[t]));
+   topped = topped.filter(t => max[t] === mostQ);
+ }
+
+ /* Still tied means genuinely equally loud, and any pick is as true as any
+    other. What must not happen is the same one winning every time. This hashes
+    the person's own answers, so a retake with the same answers gives the same
+    result, and across everybody the tied cases land evenly. */
+ let lead = topped[0];
+ if(topped.length > 1){
+   let h = 0x811c9dc5;
+   for(const q of REFLECT){
+     h ^= (picked[q.id] === undefined ? 9 : picked[q.id]) + 1;
+     h = Math.imul(h, 0x01000193) >>> 0;
+   }
+   lead = topped[h % topped.length];
+ }
+ return {lead, strong, got, max, tied: topped.length > 1 ? topped.length : 0};
+}
+function readAI(){
+ let total = 0, authored = true;
+ for(const q of AI){
+   const i = picked[q.id];
+   const w = (i === undefined) ? 0 : q.a[i][1];
+   total += w;
+   if(w !== 2) authored = false;
+ }
+ return {total, authored};
+}
+function readDoor(R, T){
+ const load = Object.keys(R.got).reduce((n,t)=>n+R.got[t],0);   /* 0–10 */
+ /* A low total is not steadiness on its own: one pattern at full intensity
+    is not centred, however quiet the rest is. Both have to hold. */
+ const steady = R.strong.length === 0 && load <= STEADY_MAX;
+ return {door:(steady && T.authored) ? 'ai' : 'sol', load, steady};
+}
+
+/* The whole reading in one object, worked out once when the questions end. */
+function read(){
+ const R = readReflections(), T = readAI(), D = readDoor(R, T);
+ const P = PATTERN[R.lead];
+ return {
+   P, D, R,
+   result_type: P.code,
+   result_name: P.name
+ };
+}
+
+/* Every answer, keyed by question id and given as the words somebody chose
+   rather than an index, so the row is readable on its own in a year. */
+function answersJSON(){
+ const out = {};
+ for(const q of QUEUE){
+   const i = picked[q.id];
+   out[q.id] = (i === undefined) ? null : q.a[i][0];
+ }
+ return JSON.stringify(out);
+}
+
+/* What each pattern was looking at, in plain words, under its name. */
+const LOOKING_AT = {
+ verdict:   `How fast you reach a verdict`,
+ measuring: `What someone else's good news does to you`,
+ steadiness:`How much of your steadiness someone else holds`,
+ fear:      `The reasons you give`
+};
+
+/* Four levels, which is roughly the real resolution of the instrument. Three
+   of the four patterns rest on one question, so they have three states; a
+   percentage would claim a precision eight questions cannot deliver. */
+function levelOf(share){
+ if(share >= 1)    return 'Loud';
+ if(share >= 0.5)  return 'Present';
+ if(share > 0)     return 'Quiet';
+ return 'Not in your answers';
+}
+
+function levelRows(){
+ const {R} = reading;
+ const rows = Object.keys(R.max).map(t => ({
+   t, P: PATTERN[t], share: R.got[t]/R.max[t]
+ }));
+ /* Loudest first, and the leader always sits at the top of its own group. */
+ rows.sort((a,b) => (b.share - a.share) || (a.t === R.lead ? -1 : b.t === R.lead ? 1 : 0));
+ return rows.map(r =>
+   '<div class="row'+(r.t === R.lead ? ' lead' : '')+'">'+
+     '<span><span class="nm">'+r.P.name+'</span>'+
+     '<span class="of">'+LOOKING_AT[r.t]+'</span></span>'+
+     '<span class="st">'+levelOf(r.share)+'</span>'+
+   '</div>'
+ ).join('');
+}
+
+function showResult(){
+ const {P, D} = reading;
+
+ $('patternName').textContent = P.name;
+ $('lede').textContent = P.line;
+ $('levels').innerHTML = levelRows();
+ $('sitWith').textContent = P.ask;
+ $('next').textContent = `The Sol Map goes further than eight questions can. It reads all four against the day you were born, and tells you what undoes the loudest one. It's the first thing you get when you join.`;
+
+ const d = DOORS[D.door];
+ $('doorHead').textContent = d.head;
+ $('doorCopy').textContent = d.copy;
+ $('cta').href = welcomeLink();
+
+ $('details').style.display = 'none';
+ $('result').style.display = 'block';
+ window.scrollTo(0,0);
+ if(CONFIG.autoRedirectSeconds > 0) startCountdown(CONFIG.autoRedirectSeconds);
+}
+
+/* The result code and the campaign, nothing else. A name or an email in a URL
+   ends up in browser history and in analytics, so neither ever goes here. */
+function welcomeLink(){
+ const q = new URLSearchParams({result: reading.result_type});
+ for(const k of UTM_KEYS) if(utm[k]) q.set(k, utm[k]);
+ return CONFIG.welcomeUrl + '?' + q.toString();
+}
+
+function startCountdown(secs){
+ const el = $('countdown');
+ let left = secs, cancelled = false;
+ el.hidden = false;
+ const paint = () => {
+   el.innerHTML = 'Taking you through in ' + left + ' ' + (left === 1 ? 'second' : 'seconds') +
+     ' &middot; <button type="button" id="stopGo">stay here</button>';
+   $('stopGo').addEventListener('click', function(){ cancelled = true; clearInterval(t); el.hidden = true; });
+ };
+ paint();
+ const t = setInterval(function(){
+   left--;
+   if(cancelled) return;
+   if(left <= 0){ clearInterval(t); window.location.href = welcomeLink(); return; }
+   paint();
+ }, 1000);
+}
+
+/* ------------------------------------------------------------------- SAVING */
+/* Nothing is shown until the lead is saved. The one exception is in the brief:
+   if a second attempt also fails, show the result anyway rather than holding
+   somebody's own answer hostage to our plumbing, and log it. */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+let attempts = 0;
+
+function joinError(msg){
+ const e = $('joinErr');
+ e.textContent = msg;
+ e.hidden = false;
+}
+
+async function submitLead(ev){
+ ev.preventDefault();
+
+ const btn   = $('joinBtn');
+ const first = $('fname').value.trim();
+ const email = $('email').value.trim().toLowerCase();
+ const ok    = $('consent').checked;
+
+ $('joinErr').hidden = true;
+ $('fname').setAttribute('aria-invalid', first ? 'false' : 'true');
+ $('email').setAttribute('aria-invalid', EMAIL_RE.test(email) ? 'false' : 'true');
+
+ if(!first){ $('fname').focus(); return joinError('Your first name, so the email knows who it is writing to.'); }
+ if(!EMAIL_RE.test(email)){ $('email').focus(); return joinError('That email address does not look right. Have another look at it.'); }
+ if(!ok){ $('consent').focus(); return joinError('Tick the box and we can send your result.'); }
+
+ attempts++;
+ btn.disabled = true;
+ btn.textContent = 'One moment';
+
+ try{
+   const r = await fetch(CONFIG.leadEndpoint, {
+     method: 'POST',
+     headers: {'Content-Type':'application/json'},
+     body: JSON.stringify(Object.assign({
+       first_name:   first,
+       email:        email,
+       consent:      true,
+       consent_text: CONFIG.consentText,
+       result_type:  reading.result_type,
+       result_name:  reading.result_name,
+       door:         reading.D.door,
+       answers:      answersJSON(),
+       source:       'quiz',
+       company:      $('company').value      /* honeypot, empty for a person */
+     }, utm))
+   });
+   if(!r.ok) throw new Error('status ' + r.status);
+   showResult();
+ }catch(err){
+   if(attempts >= 2){
+     /* Second failure. Her result is hers. Show it and record what went wrong. */
+     console.error('[lead] not saved after two attempts:', err && err.message);
+     showResult();
+     return;
+   }
+   btn.disabled = false;
+   btn.textContent = 'Try again';
+   joinError('That did not go through. Press it once more, and if it still will not, email hello@sheisai.ai and we will add you by hand.');
+ }
+}
+
+
+
+/* ---- pick ten genuinely different routes ---- */
+const ids = QUEUE.map(q=>q.id);
+function readAt(combo){
+  for(const k in picked) delete picked[k];
+  ids.forEach((id,i)=>picked[id]=combo[i]);
+  const R=readReflections(), T=readAI(), D=readDoor(R,T);
+  return {R,T,D,P:PATTERN[R.lead]};
+}
+const all=[];
+for(let n=0;n<Math.pow(3,8);n++){
+  let x=n,c=[]; for(let i=0;i<8;i++){ c.push(x%3); x=Math.floor(x/3); }
+  const r=readAt(c);
+  const lv=Object.keys(r.R.max).map(t=>levelOf(r.R.got[t]/r.R.max[t]));
+  all.push({c, p:r.P.name, door:r.D.door,
+            loud:lv.filter(v=>v==='Loud').length,
+            none:lv.filter(v=>v==='Not in your answers').length});
+}
+const pick=(fn)=>{ const m=all.find(fn); return m?m.c:null; };
+const wanted=[
+ ['Judgement, loud on its own',        a=>a.p==='Judgement'&&a.loud===1&&a.none===3],
+ ['Jealousy, loud on its own',         a=>a.p==='Jealousy'&&a.loud===1&&a.none===3],
+ ['Neediness, loud on its own',        a=>a.p==='Neediness'&&a.loud===1&&a.none===3],
+ ['Fear, loud on its own',             a=>a.p==='Fear'&&a.loud===1&&a.none===3],
+ ['Two running loud',                  a=>a.loud===2],
+ ['Three running loud',                a=>a.loud===3],
+ ['All four running loud',             a=>a.loud===4],
+ ['Nothing loud, one showing',         a=>a.loud===0&&a.none===3],
+ ['Nothing loud, nothing separating',  a=>a.loud===0&&a.none===4],
+ ['The SHE IS AI door',                a=>a.door==='ai']
+].map(([label,fn])=>({label, combo:pick(fn)})).filter(w=>w.combo);
+
+const out=[];
+wanted.forEach((w,i)=>{
+  const r = readAt(w.combo);
+  reading = {P:r.P, D:r.D, R:r.R};
+  out.push(
+   '<div class="slug"><span>'+(i+1)+' of '+wanted.length+' &middot; '+w.label+'</span>'+
+   '<span class="r">'+(r.D.door==='ai'?'SHE IS AI':'SHE IS SOL')+'</span></div>'+
+   '<div class="screen">'+
+     '<h2 class="fourHead">The four</h2>'+
+     '<div class="intro"><p>Judgement, jealousy, neediness and fear. Four patterns, and left alone they take       a life apart slowly. None of them announce themselves. Each arrives dressed as       something reasonable.</p></div>'+
+     '<div class="hr"></div>'+
+     '<span class="eyebrow" style="display:block;margin-bottom:20px">The pattern to watch</span>'+
+     '<h2 class="pattern">'+r.P.name+'</h2>'+
+     '<p class="lede">'+r.P.line+'</p>'+
+     '<span class="sec">All four, as they came back</span>'+
+     '<div class="levels">'+levelRows()+'</div>'+
+     '<div class="sit"><p>'+r.P.ask+'</p></div>'+
+     '<p class="next">'+`The Sol Map goes further than eight questions can. It reads all four against the day you were born, and tells you what undoes the loudest one. It's the first thing you get when you join.`+'</p>'+
+     '<div class="hr"></div>'+
+     '<div class="door"><h2>'+DOORS[r.D.door].head+'</h2><p>'+DOORS[r.D.door].copy+'</p>'+
+     '<a class="btn solid" href="https://join.sheisai.ai">See what&rsquo;s waiting for you</a>'+
+     '<p class="opens">Doors open 31 October</p></div>'+
+   '</div>');
+});
+document.getElementById('out').innerHTML = out.join('');
+</script>
+</body>
+</html>
