@@ -7,7 +7,7 @@ landing page already signed up.
 ```
 quiz.sheisai.ai  →  intro  →  8 questions  →  your details  →  POST /api/lead
                  →  Ivorey inbound webhook  →  result on screen
-                 →  join.sheisai.ai/welcome?result=…&utm_…
+                 →  join.sheisai.ai/?result=…&utm_…
 ```
 
 Plain static HTML and one serverless function. No build step, no `package.json`,
@@ -78,8 +78,9 @@ The function sends the fields; the tags are added by the Ivorey workflow, not he
 the page in this repo, so the consent link is never broken. Swap it for the SHE IS AI
 privacy policy when that address exists.
 
-**`CONFIG.welcomeUrl`**. Currently `https://join.sheisai.ai/welcome`. Amanda to
-confirm once the no-form page is live.
+**`CONFIG.welcomeUrl`**. Currently `https://join.sheisai.ai/`, which works and
+returns 200. `/welcome`, the version without the form, still returns 404, so it is
+not in use. One line changes it the day Amanda builds it.
 
 **`CONFIG.autoRedirectSeconds`**. `0`, so the result sits there until the button is
 pressed. Set it to `12` for the optional auto-redirect with a countdown somebody can
